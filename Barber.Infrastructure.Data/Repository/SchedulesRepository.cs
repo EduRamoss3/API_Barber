@@ -1,5 +1,7 @@
 ﻿using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
+using Barber.Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,44 +12,56 @@ namespace Barber.Infrastructure.Data.Repository
 {
     public class SchedulesRepository : ISchedulesRepository
     {
-        public Task<bool> AddNewSchedule(Schedules schedule)
+        private readonly AppDbContext _context;
+        public SchedulesRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<bool> AddNewSchedule(Schedules schedule)
+        {
+            await _context.Schedules.AddAsync(schedule);
+            await _context.SaveChangesAsync();
+            return Task.CompletedTask.IsCompleted;
         }
 
-        public Task<Schedules> GetScheduleByClientId(int clientId)
+        public async Task<Schedules> GetScheduleByClientId(int clientId)
         {
-            throw new NotImplementedException();
+            return await _context.Schedules.FirstOrDefaultAsync(p => p.IdClient == clientId);
         }
 
-        public Task<Schedules> GetScheduleById(int id)
+        public async Task<Schedules> GetScheduleById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Schedules.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public Task<IEnumerable<Schedules>> GetSchedules()
+        public async Task<IEnumerable<Schedules>> GetSchedules()
         {
-            throw new NotImplementedException();
+            return await _context.Schedules.ToListAsync();
         }
 
-        public Task<IEnumerable<Schedules>> GetSchedulesByBarberId(int barberId)
+        public async Task<IEnumerable<Schedules>> GetSchedulesByBarberId(int barberId)
         {
-            throw new NotImplementedException();
+            return await _context.Schedules.Where(p => p.IdBarber == barberId).ToListAsync();
         }
 
-        public Task<bool> RemoveSchedule(Schedules schedule)
+        public async Task<bool> RemoveSchedule(Schedules schedule)
         {
-            throw new NotImplementedException();
+            _context.Schedules.Remove(schedule);
+            await _context.SaveChangesAsync();
+            return Task.CompletedTask.IsCompleted;
         }
 
-        public Task<bool> UpdateSchedule(Schedules schedule)
+        public async Task<bool> UpdateSchedule(Schedules schedule)
         {
-            throw new NotImplementedException();
+            _context.Schedules.Update(schedule);
+            await _context.SaveChangesAsync();
+            return Task.CompletedTask.IsCompleted;
         }
 
-        public Task UpdateValueForSchedule(Schedules schedule, decimal amount)
+        public async Task UpdateValueForSchedule(Schedules schedule)
         {
-            throw new NotImplementedException();
+            _context.Entry(schedule).Property(p => p.ValueForService).IsModified = true;
+            await _context.SaveChangesAsync();
         }
     }
 }

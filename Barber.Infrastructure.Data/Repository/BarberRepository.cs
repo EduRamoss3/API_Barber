@@ -1,4 +1,7 @@
-﻿using Barber.Domain.Interfaces;
+﻿using Barber.Domain.Entities;
+using Barber.Domain.Interfaces;
+using Barber.Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +12,36 @@ namespace Barber.Infrastructure.Data.Repository
 {
     public class BarberRepository : IBarberRepository
     {
-        public Task AddNewBarber(Domain.Entities.Barber barber)
+        private readonly AppDbContext _context;
+        public BarberRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<IEnumerable<Domain.Entities.Barber>> GetBarbers()
+        public async Task AddNewBarber(Domain.Entities.Barber barber)
         {
-            throw new NotImplementedException();
+            if(barber is Barber.Domain.Entities.Barber)
+            {
+                await _context.Barbers.AddAsync(barber);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task RemoveBarber(Domain.Entities.Barber barber)
+        public async Task<IEnumerable<Domain.Entities.Barber>> GetBarbers()
         {
-            throw new NotImplementedException();
+            return await _context.Barbers.ToListAsync();
         }
 
-        public Task SetDisponibility(bool disponibility)
+        public async Task RemoveBarber(Domain.Entities.Barber barber)
         {
-            throw new NotImplementedException();
+            _context.Barbers.Remove(barber);
+            await _context.SaveChangesAsync();
         }
 
-        public Task SetTimeClose()
+        public async Task SetDisponibility(Domain.Entities.Barber barber, bool disponibility)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task SetTimeFree()
-        {
-            throw new NotImplementedException();
-        }
+            _context.Entry(barber).Property(p => p.Disponibility).IsModified = true;
+            await _context.SaveChangesAsync();
+        }  
     }
 }

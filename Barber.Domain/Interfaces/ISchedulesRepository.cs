@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Barber.Domain.Interfaces
 {
-    public interface  ISchedulesRepository
+    public interface ISchedulesRepository
     {
         Task<bool> AddNewSchedule(Schedules schedule);
         Task<bool> RemoveSchedule(Schedules schedule);
         Task<IEnumerable<Schedules>> GetSchedules();
         Task<bool> UpdateSchedule(Schedules schedule);  
-        Task UpdateValueForSchedule(Schedules schedule, decimal amount);
+        Task UpdateValueForSchedule(Schedules schedule);
         Task<Schedules> GetScheduleById(int id);
         Task<IEnumerable<Schedules>> GetSchedulesByBarberId(int barberId);
         Task<Schedules> GetScheduleByClientId(int clientId);

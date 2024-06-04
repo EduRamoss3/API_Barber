@@ -32,6 +32,10 @@ namespace Barber.Domain.Entities
         {
             Schedules.Add(schedule);
         }
+        public void SetDisponibility(bool disponibility)
+        {
+            Disponibility = disponibility;
+        }
 
     }
 }

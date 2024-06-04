@@ -9,11 +9,9 @@ namespace Barber.Domain.Interfaces
 {
     public interface IBarberRepository
     {
-        Task SetTimeFree();
-        Task SetTimeClose();
         Task AddNewBarber(Barber.Domain.Entities.Barber barber);
         Task RemoveBarber(Barber.Domain.Entities.Barber barber);
         Task<IEnumerable<Barber.Domain.Entities.Barber>> GetBarbers();  
-        Task SetDisponibility(bool disponibility);
+        Task SetDisponibility(Barber.Domain.Entities.Barber barber, bool disponibility);
     }
 }
