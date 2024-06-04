@@ -2672,9 +2672,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\API_Barber.csproj",
-      "projectName": "API_Barber",
-      "projectPath": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\API_Barber.csproj",
+      "projectUniqueName": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\Barber.API.csproj",
+      "projectName": "Barber.API",
+      "projectPath": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\Barber.API.csproj",
       "packagesPath": "C:\\Users\\Eduardo\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\obj\\",
       "projectStyle": "PackageReference",

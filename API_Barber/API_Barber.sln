@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_Barber", "API_Barber.csproj", "{1F27D0E6-C470-4D6D-AAB5-912AFC304206}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barber.API", "Barber.API.csproj", "{1F27D0E6-C470-4D6D-AAB5-912AFC304206}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barber.Domain", "..\Barber.Domain\Barber.Domain.csproj", "{134803C1-409E-44D1-9A5E-20E6712B8D39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barber.Domain", "..\Barber.Domain\Barber.Domain.csproj", "{134803C1-409E-44D1-9A5E-20E6712B8D39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barber.Application", "..\Barber.Application\Barber.Application.csproj", "{13C344CD-D2EB-45B6-B16E-8DCBBA621C5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barber.Application", "..\Barber.Application\Barber.Application.csproj", "{13C344CD-D2EB-45B6-B16E-8DCBBA621C5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barber.Infrastructure.IoC", "..\Barber.Infrastructure.IoC\Barber.Infrastructure.IoC.csproj", "{DAD306CA-C78E-4289-A525-49039E9AACE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barber.Infrastructure.IoC", "..\Barber.Infrastructure.IoC\Barber.Infrastructure.IoC.csproj", "{DAD306CA-C78E-4289-A525-49039E9AACE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barber.Infrastructure.Data", "..\Barber.Infrastructure.Data\Barber.Infrastructure.Data.csproj", "{DF2F4ADB-D38A-48EB-B33C-EA418A12E97C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barber.Infrastructure.Data", "..\Barber.Infrastructure.Data\Barber.Infrastructure.Data.csproj", "{DF2F4ADB-D38A-48EB-B33C-EA418A12E97C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barber.Tests", "..\Barber.Tests\Barber.Tests.csproj", "{74FB9772-EF1D-4D7D-B625-B0843E32D586}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barber.Tests", "..\Barber.Tests\Barber.Tests.csproj", "{74FB9772-EF1D-4D7D-B625-B0843E32D586}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
