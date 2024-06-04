@@ -1,0 +1,12 @@
+C:\Users\Eduardo\source\API_Barber\Barber.Application\bin\Debug\net7.0\Barber.Application.deps.json
+C:\Users\Eduardo\source\API_Barber\Barber.Application\bin\Debug\net7.0\Barber.Application.dll
+C:\Users\Eduardo\source\API_Barber\Barber.Application\bin\Debug\net7.0\Barber.Application.pdb
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.csproj.AssemblyReference.cache
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.AssemblyInfoInputs.cache
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.AssemblyInfo.cs
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.csproj.CoreCompileInputs.cache
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.dll
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\refint\Barber.Application.dll
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.pdb
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\ref\Barber.Application.dll
