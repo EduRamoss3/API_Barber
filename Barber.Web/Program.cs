@@ -5,7 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IBarber, BarberService>();
+builder.Services.AddHttpClient<IBarber, BarberService>(
+    c=> c.BaseAddress = new Uri(builder.Configuration["ServiceUrls: BarberAPI"]));
 
 var app = builder.Build();
 
