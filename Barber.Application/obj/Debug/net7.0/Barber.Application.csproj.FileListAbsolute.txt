@@ -10,3 +10,6 @@ C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Ap
 C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\refint\Barber.Application.dll
 C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.pdb
 C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\ref\Barber.Application.dll
+C:\Users\Eduardo\source\API_Barber\Barber.Application\bin\Debug\net7.0\Barber.Domain.dll
+C:\Users\Eduardo\source\API_Barber\Barber.Application\bin\Debug\net7.0\Barber.Domain.pdb
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.csproj.CopyComplete

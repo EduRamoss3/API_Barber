@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Barber.Domain\Barber.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CQRS\Barber\Commands\" />
+    <Folder Include="CQRS\Barber\Handlers\" />
+    <Folder Include="CQRS\Barber\Queries\" />
+    <Folder Include="CQRS\Client\Commands\" />
+    <Folder Include="CQRS\Client\Handlers\" />
+    <Folder Include="CQRS\Client\Queries\" />
+    <Folder Include="CQRS\Schedules\Commands\" />
+    <Folder Include="CQRS\Schedules\NewFolder\" />
+  </ItemGroup>
+
+</Project>

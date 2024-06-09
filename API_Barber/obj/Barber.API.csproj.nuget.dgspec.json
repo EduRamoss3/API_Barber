@@ -110,7 +110,11 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Domain\\Barber.Domain.csproj": {
+                "projectPath": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Domain\\Barber.Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -122,6 +126,16 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.2.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

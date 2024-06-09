@@ -18,7 +18,7 @@ namespace Barber.Domain.Entities
         public decimal ValueForService { get; private set; }
 
         public Client _Client { get; private set; }  
-        public Barber _Barber { get; private set; }
+        public BarberMain _Barber { get; private set; }
         
         private void ValidateDomain(int idBarber, int idClient, TypeOfService typeOfService, DateTime dateSchedule, decimal valueOfService)
         {
@@ -43,7 +43,7 @@ namespace Barber.Domain.Entities
             ValidateDomain(idBarber, idClient, typeOfService, dateSchedule, valueForService);
         }
 
-        public void SetBarber(Barber barber)
+        public void SetBarber(BarberMain barber)
         {
             _Barber = barber;
         }

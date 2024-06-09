@@ -9,9 +9,9 @@ namespace Barber.Domain.Interfaces
 {
     public interface IBarberRepository
     {
-        Task AddNewBarber(Barber.Domain.Entities.Barber barber);
-        Task RemoveBarber(Barber.Domain.Entities.Barber barber);
-        Task<IEnumerable<Barber.Domain.Entities.Barber>> GetBarbers();  
-        Task SetDisponibility(Barber.Domain.Entities.Barber barber, bool disponibility);
+        Task<BarberMain> AddNewBarberAsync(Barber.Domain.Entities.BarberMain barber);
+        Task<BarberMain> RemoveBarberAsync(Barber.Domain.Entities.BarberMain barber);
+        Task<IEnumerable<Barber.Domain.Entities.BarberMain>> GetBarbersAsync();  
+        Task<BarberMain> SetDisponibilityAsync(Barber.Domain.Entities.BarberMain barber, bool disponibility);
     }
 }

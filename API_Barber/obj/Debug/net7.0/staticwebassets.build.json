@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "6myG2rUQysNlb2Q5NFrLQQyhrc6iH8HqqliTUveP6IQ=",
-  "Source": "API_Barber",
-  "BasePath": "_content/API_Barber",
+  "Hash": "wabA87gd6R6PQ/4OLvtBfMZnQeF0lJRA83La51pCRUE=",
+  "Source": "Barber.API",
+  "BasePath": "_content/Barber.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

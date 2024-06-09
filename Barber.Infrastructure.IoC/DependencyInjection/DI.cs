@@ -1,4 +1,5 @@
 ﻿
+using Barber.Application.Mappings;
 using Barber.Domain.Interfaces;
 using Barber.Infrastructure.Data.Context;
 using Barber.Infrastructure.Data.Repository;
@@ -25,7 +26,9 @@ namespace Barber.Infrastructure.IoC.DependencyInjection
             services.AddScoped<IBarberRepository, BarberRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ISchedulesRepository, SchedulesRepository>();
-
+            services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
+            services.AddAutoMapper(typeof(CQRSToDTOMappingProfile));
+            services.AddAuthentication();
             return services;
         }
     }

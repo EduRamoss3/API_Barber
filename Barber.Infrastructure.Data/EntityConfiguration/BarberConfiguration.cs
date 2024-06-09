@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Barber.Infrastructure.Data.EntityConfiguration
 {
-    public class BarberConfiguration : IEntityTypeConfiguration<Barber.Domain.Entities.Barber>
+    public class BarberConfiguration : IEntityTypeConfiguration<Barber.Domain.Entities.BarberMain>
     {
-        public void Configure(EntityTypeBuilder<Domain.Entities.Barber> builder)
+        public void Configure(EntityTypeBuilder<Domain.Entities.BarberMain> builder)
         {
             builder.HasKey(p => p.Id);
 

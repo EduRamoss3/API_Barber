@@ -3,14 +3,26 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Mappings\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Barber.Domain\Barber.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CQRS\Barber\Queries\" />
+    <Folder Include="CQRS\Client\Commands\" />
+    <Folder Include="CQRS\Client\Handlers\" />
+    <Folder Include="CQRS\Client\Queries\" />
+    <Folder Include="CQRS\Schedules\Commands\" />
+    <Folder Include="CQRS\Schedules\Handlers\" />
+    <Folder Include="CQRS\Schedules\Queries\" />
   </ItemGroup>
 
 </Project>

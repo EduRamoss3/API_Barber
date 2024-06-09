@@ -18,30 +18,33 @@ namespace Barber.Infrastructure.Data.Repository
             _context = context;
         }
 
-        public async Task AddNewBarber(Domain.Entities.Barber barber)
+        public async Task<BarberMain> AddNewBarberAsync(Domain.Entities.BarberMain barber)
         {
-            if(barber is Barber.Domain.Entities.Barber)
+            if (barber is Barber.Domain.Entities.BarberMain)
             {
                 await _context.Barbers.AddAsync(barber);
                 await _context.SaveChangesAsync();
             }
+            return barber;
         }
 
-        public async Task<IEnumerable<Domain.Entities.Barber>> GetBarbers()
+        public async Task<IEnumerable<Domain.Entities.BarberMain>> GetBarbersAsync()
         {
             return await _context.Barbers.ToListAsync();
         }
 
-        public async Task RemoveBarber(Domain.Entities.Barber barber)
+        public async Task<BarberMain> RemoveBarberAsync(Domain.Entities.BarberMain barber)
         {
             _context.Barbers.Remove(barber);
             await _context.SaveChangesAsync();
+            return barber;
         }
 
-        public async Task SetDisponibility(Domain.Entities.Barber barber, bool disponibility)
+        public async Task<BarberMain> SetDisponibilityAsync(Domain.Entities.BarberMain barber, bool disponibility)
         {
             _context.Entry(barber).Property(p => p.Disponibility).IsModified = true;
             await _context.SaveChangesAsync();
-        }  
+            return barber;
+        }
     }
 }
