@@ -1,0 +1,24 @@
+﻿@model IEnumerable<BarberVO>
+
+@foreach (var item in Model)
+{
+    <h1>@item.Name</h1>
+    <p>@item.Disponibility.ToString()</p>
+    
+        @if (item.Schedules.Count() == 0)
+        {
+            <h3>No one schedules register yet.</h3>
+        }
+        else
+        {
+            foreach (var schedule in item.Schedules)
+            {
+                <h1>ID Schedule: @schedule.Id</h1>
+                <h3>Barber ID: @schedule.IdBarber</h3>
+                <p>Type of Service: @schedule.TypeOfService.ToString()</p>
+                <p>Client ID: @schedule.IdClient</p>
+                <p>Date: @schedule.DateSchedule.ToString("dd/MM/yyyy HH:mm")</p>
+            }
+        }
+    }
+}

@@ -36,6 +36,11 @@ namespace Barber.Domain.Entities
         {
             Disponibility = disponibility;
         }
+        public void Update(bool disponibility, string name)
+        {
+            Disponibility = disponibility;
+            Name = name;        
+        }
 
     }
 }

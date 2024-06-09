@@ -1,5 +1,6 @@
 ﻿using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
+using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace Barber.Application.Interfaces
 {
     public interface IBarberService 
     {
-        Task<BarberRegisterDTO> AddNewBarberAsync(BarberRegisterDTO barberDTO);
-        Task<BarberDTO> RemoveBarberAsync(BarberDTO barberDTO);
+        Task AddNewBarberAsync(BarberRegisterDTO barberDTO);
+        Task RemoveBarberByIdAsync(int id);
         Task<IEnumerable<BarberDTO>> GetBarbersAsync();
-        Task<BarberDTO> SetDisponibilityAsync(BarberDTO barberDTO, bool disponibility);
+        Task SetDisponibilityAsync(BarberDTO barberDTO, bool disponibility);
     }
 }

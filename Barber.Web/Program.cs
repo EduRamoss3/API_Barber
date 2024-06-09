@@ -1,7 +1,11 @@
+using Barber.Web.Services;
+using Barber.Web.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IBarber, BarberService>();
 
 var app = builder.Build();
 

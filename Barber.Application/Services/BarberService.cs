@@ -23,10 +23,10 @@ namespace Barber.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<BarberRegisterDTO> AddNewBarberAsync(BarberRegisterDTO barberDTO)
+        public async Task AddNewBarberAsync(BarberRegisterDTO barberDTO)
         {
             var registerBarberCommand = _mapper.Map<RegisterBarberCommand>(barberDTO);
-            return await _mediator.Send(registerBarberCommand);
+            await _mediator.Send(registerBarberCommand);
         }
 
         public Task<IEnumerable<BarberDTO>> GetBarbersAsync()
@@ -34,14 +34,16 @@ namespace Barber.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<BarberDTO> RemoveBarberAsync(BarberDTO barberDTO)
+        public async Task RemoveBarberByIdAsync(int id)
+        {
+            var removeBarberCommand = new RemoveBarberCommand(id);
+            await _mediator.Send(removeBarberCommand);
+        }
+
+        public Task SetDisponibilityAsync(BarberDTO barberDTO, bool disponibility)
         {
             throw new NotImplementedException();
         }
 
-        public Task<BarberDTO> SetDisponibilityAsync(BarberDTO barberDTO, bool disponibility)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -10,6 +10,10 @@ namespace Barber.Application.Mappings
         public CQRSToDTOMappingProfile()
         {
             CreateMap<BarberRegisterDTO, RegisterBarberCommand>().ReverseMap();
+            CreateMap<BarberDTO, UpdateBarberCommand>().ReverseMap();   
+            CreateMap<BarberDTO, RemoveBarberCommand>().ReverseMap();   
+
+            
         }
 
     }

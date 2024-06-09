@@ -46,5 +46,17 @@ namespace Barber.Infrastructure.Data.Repository
             await _context.SaveChangesAsync();
             return barber;
         }
+
+        public async Task<BarberMain> GetBarberByIdAsync(int id)
+        {
+            return await _context.Barbers.FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<BarberMain> UpdateAsync(BarberMain barber)
+        {
+            _context.Barbers.Update(barber);
+            await _context.SaveChangesAsync();
+            return barber;
+        }
     }
 }

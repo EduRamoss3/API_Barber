@@ -13,5 +13,8 @@ namespace Barber.Domain.Interfaces
         Task<BarberMain> RemoveBarberAsync(Barber.Domain.Entities.BarberMain barber);
         Task<IEnumerable<Barber.Domain.Entities.BarberMain>> GetBarbersAsync();  
         Task<BarberMain> SetDisponibilityAsync(Barber.Domain.Entities.BarberMain barber, bool disponibility);
+        Task<BarberMain> GetBarberByIdAsync(int id);
+        Task<BarberMain> UpdateAsync(BarberMain barber);
+
     }
 }
