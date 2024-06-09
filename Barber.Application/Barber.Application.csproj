@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Barber\Queries\" />
     <Folder Include="CQRS\Client\Commands\" />
     <Folder Include="CQRS\Client\Handlers\" />
     <Folder Include="CQRS\Client\Queries\" />

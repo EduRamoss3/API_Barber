@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Barber.Application.CQRS.Barber.Commands;
+using Barber.Application.CQRS.Barber.Queries;
 using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
@@ -29,9 +30,11 @@ namespace Barber.Application.Services
             await _mediator.Send(registerBarberCommand);
         }
 
-        public Task<IEnumerable<BarberDTO>> GetBarbersAsync()
+        public async Task<IEnumerable<BarberDTO>> GetBarbersAsync()
         {
-            throw new NotImplementedException();
+            GetBarbersQuery getBarbersQuery = new GetBarbersQuery();
+            var barbersEntity = await _mediator.Send(getBarbersQuery);
+            return _mapper.Map<IEnumerable<BarberDTO>>(barbersEntity);
         }
 
         public async Task RemoveBarberByIdAsync(int id)
@@ -40,10 +43,17 @@ namespace Barber.Application.Services
             await _mediator.Send(removeBarberCommand);
         }
 
-        public Task SetDisponibilityAsync(BarberDTO barberDTO, bool disponibility)
+        public async Task SetDisponibilityAsync(int id, bool disponibility)
         {
-            throw new NotImplementedException();
+            UpdateBarberCommand updateBarberCommand = new UpdateBarberCommand(id);
+            await _mediator.Send(updateBarberCommand);
         }
 
+        public async Task<BarberDTO> GetBarberByIdAsync(int id)
+        {
+            GetBarberByIdQuery getBarberByIdQuery = new GetBarberByIdQuery(id);
+            var barbersEntity = await _mediator.Send(getBarberByIdQuery);
+            return _mapper.Map<BarberDTO>(barbersEntity);
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace Barber.Application.Interfaces
         Task AddNewBarberAsync(BarberRegisterDTO barberDTO);
         Task RemoveBarberByIdAsync(int id);
         Task<IEnumerable<BarberDTO>> GetBarbersAsync();
-        Task SetDisponibilityAsync(BarberDTO barberDTO, bool disponibility);
+        Task SetDisponibilityAsync(int id, bool disponibility);
+        Task<BarberDTO> GetBarberByIdAsync(int id);
     }
 }
