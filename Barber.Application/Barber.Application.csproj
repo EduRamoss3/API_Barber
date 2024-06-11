@@ -16,9 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Client\Commands\" />
-    <Folder Include="CQRS\Client\Handlers\" />
-    <Folder Include="CQRS\Client\Queries\" />
+    <Folder Include="CQRS\Clients\Handlers\" />
+    <Folder Include="CQRS\Clients\Queries\" />
     <Folder Include="CQRS\Schedules\Commands\" />
     <Folder Include="CQRS\Schedules\Handlers\" />
     <Folder Include="CQRS\Schedules\Queries\" />

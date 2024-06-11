@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "rsIIke70sh0j+OhzqOG9ZC8YS1GaHT0fzZmvI09ypv00RCFPYswlZYd5xQFkj+Betqb3QsZKEqEhK1e36dL+iw==",
+  "dgSpecHash": "8L23ei50qqQg0BA4FfPdjyFR3tlvgn8wLBGNeg4hZkHaEU2Dj6AY+AkbwoJX95SSOcN7Rkor6keVwrAaSgoYuQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Message\\Barber.Message.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Eduardo\\.nuget\\packages\\rabbitmq.client\\6.8.1\\rabbitmq.client.6.8.1.nupkg.sha512",
+    "C:\\Users\\Eduardo\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\Eduardo\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

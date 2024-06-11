@@ -5,12 +5,8 @@ using System.ComponentModel;
 
 namespace Barber.CartAPI.Model
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        [Key]
-        [DisplayName("Código do Produto")]
-        public long  Id{ get; set; }
-
         [Required(ErrorMessage = "O nome do produto é obrigatório!")]
         [StringLength(100, ErrorMessage = "O tamanho máximo do nome é de 100 caracteres.")]
         public string Nome { get; set; }
