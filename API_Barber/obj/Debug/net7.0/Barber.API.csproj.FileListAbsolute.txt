@@ -51,4 +51,4 @@ C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\ref\Barber.API.dl
 C:\Users\Eduardo\source\API_Barber\API_Barber\bin\Debug\net7.0\AutoMapper.dll
 C:\Users\Eduardo\source\API_Barber\API_Barber\bin\Debug\net7.0\MediatR.dll
 C:\Users\Eduardo\source\API_Barber\API_Barber\bin\Debug\net7.0\MediatR.Contracts.dll
-C:\Users\Eduardo\source\API_Barber\API_Barber\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Eduardo\source\API_Barber\API_Barber\bin\Debug\net7.0\MediatR.Extensions.Microsoft.DependencyInjection.dll

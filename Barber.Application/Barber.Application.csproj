@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
-    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="MediatR" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,8 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Clients\Handlers\" />
-    <Folder Include="CQRS\Clients\Queries\" />
     <Folder Include="CQRS\Schedules\Commands\" />
     <Folder Include="CQRS\Schedules\Handlers\" />
     <Folder Include="CQRS\Schedules\Queries\" />

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Barber.Domain.Entities
 {
@@ -34,6 +35,10 @@ namespace Barber.Domain.Entities
         public void SetSchedule(Schedules schedule)
         {
             Schedule = schedule;
+        }
+        public void Update(string name,int points, bool scheduled, DateTime lastTimeHere)
+        {
+            ValidateDomain(name, points, scheduled, lastTimeHere);
         }
     }
 }
