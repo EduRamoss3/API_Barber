@@ -16,10 +16,22 @@ namespace Barber.API.Controllers
         }
 
         [HttpGet]
+        [Route("get-all-barbers")]
         public async Task<IEnumerable<BarberDTO>> GetAllBarbers()
         {
             var barbers = await _barberService.GetBarbersAsync();
             return barbers;
+        }
+        [HttpGet]
+        [Route("get-barber-by-id/{id}")]
+        public async Task<ActionResult<BarberDTO>> GetBarberById(int id)
+        {
+            var barber = await _barberService.GetBarberByIdAsync(id);
+            if(barber is null)
+            {
+                return new NotFoundObjectResult("Barber not found!");
+            }
+            return barber;
         }
     }
 }

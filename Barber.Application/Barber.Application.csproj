@@ -15,10 +15,4 @@
     <ProjectReference Include="..\Barber.Domain\Barber.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CQRS\Schedules\Commands\" />
-    <Folder Include="CQRS\Schedules\Handlers\" />
-    <Folder Include="CQRS\Schedules\Queries\" />
-  </ItemGroup>
-
 </Project>

@@ -25,7 +25,7 @@ namespace Barber.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<SchedulesDTO> GetScheduleByClientId(int clientId)
+        public Task<IEnumerable<SchedulesDTO>> GetScheduleByClientId(int clientId)
         {
             throw new NotImplementedException();
         }

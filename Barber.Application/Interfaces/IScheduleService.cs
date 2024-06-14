@@ -17,6 +17,6 @@ namespace Barber.Application.Interfaces
         Task UpdateValueForSchedule(SchedulesDTO scheduleDTO);
         Task<SchedulesDTO> GetScheduleById(int id);
         Task<IEnumerable<SchedulesDTO>> GetSchedulesByBarberId(int barberId);
-        Task<SchedulesDTO> GetScheduleByClientId(int clientId);
+        Task<IEnumerable<SchedulesDTO>> GetScheduleByClientId(int clientId);
     }
 }

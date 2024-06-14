@@ -10,7 +10,7 @@ namespace Barber.Domain.Entities
 {
     public sealed class Schedules
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public int IdBarber { get; private set; }
         public int IdClient { get; private set; }
         public TypeOfService TypeOfService { get; private set; }    
