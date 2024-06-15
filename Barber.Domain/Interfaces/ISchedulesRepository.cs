@@ -16,7 +16,7 @@ namespace Barber.Domain.Interfaces
         Task UpdateValueForSchedule(Schedules schedule);
         Task<Schedules> GetScheduleById(int id);
         Task<IEnumerable<Schedules>> GetSchedulesByBarberId(int barberId);
-        Task<Schedules> GetScheduleByClientId(int clientId);
-
+        Task<IEnumerable<Schedules>> GetScheduleByClientId(int clientId);
+ 
     }
 }

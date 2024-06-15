@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Barber.Application.CQRS.Schedule.Commands;
+using Barber.Domain.Entities;
+using Barber.Domain.Interfaces;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +10,23 @@ using System.Threading.Tasks;
 
 namespace Barber.Application.CQRS.Schedule.Handlers
 {
-    internal class RemoveScheduleCommand
+    public class RemoveScheduleHandler : IRequestHandler<RemoveScheduleCommand, Schedules>
     {
+        private readonly ISchedulesRepository _scheduleRepository;
+        public RemoveScheduleHandler(ISchedulesRepository scheduleRepository)
+        {
+            _scheduleRepository = scheduleRepository;
+        }
+
+        public async Task<Schedules> Handle(RemoveScheduleCommand request, CancellationToken cancellationToken)
+        {
+            if (request is null)
+            {
+                throw new ApplicationException("Error args is null");
+            }
+            var schedule = await _scheduleRepository.GetScheduleById(request.Id) ?? throw new ApplicationException("Schedule no exist");
+            await _scheduleRepository.RemoveSchedule(schedule);
+            return schedule;
+        }
     }
 }
