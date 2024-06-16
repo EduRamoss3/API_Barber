@@ -1,5 +1,6 @@
 ﻿using Barber.Application.DTOs;
 using Barber.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace Barber.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class BarberController : ControllerBase
     {
         private readonly IBarberService _barberService;

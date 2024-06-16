@@ -4,6 +4,7 @@ using Barber.Application.Mappings;
 using Barber.Application.Services;
 using Barber.Domain.Interfaces;
 using Barber.Infrastructure.Data.Context;
+using Barber.Infrastructure.Data.Identitys;
 using Barber.Infrastructure.Data.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -36,6 +37,7 @@ namespace Barber.Infrastructure.IoC.DependencyInjection
             services.AddScoped<IBarberService, BarberService>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IScheduleService, ScheduleService>();
+            services.AddScoped<IAuthenticate, AuthenticateService>();
 
             services.AddMediatR(myhandlers);
 
