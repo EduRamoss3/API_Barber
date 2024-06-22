@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Barber.Domain.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace Barber.Domain.Interfaces
 {
     public interface IAuthenticate
     {
-        Task<bool> Authenticate(string email, string password);
-        Task<bool> RegisterUser(string email, string password);
+        Task<Validator> Authenticate(string email, string password);
+        Task<Validator> RegisterUser(string email, string password);
         Task Logout();
     }
 }

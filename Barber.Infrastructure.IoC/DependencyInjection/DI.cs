@@ -30,7 +30,14 @@ namespace Barber.Infrastructure.IoC.DependencyInjection
             services.AddIdentity<IdentityUser, IdentityRole>()
            .AddEntityFrameworkStores<AppDbContext>()
           .AddDefaultTokenProviders();
-
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = false;
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireUppercase = false;
+            });
             services.AddScoped<IBarberRepository, BarberRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ISchedulesRepository, SchedulesRepository>();

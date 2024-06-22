@@ -1,4 +1,5 @@
 ﻿using Barber.Domain.Interfaces;
+using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,14 @@ namespace Barber.Infrastructure.Data.Identitys
             _signInManager = signInManager;
         }
     
-        public async Task<bool> Authenticate(string email, string password)
+        public async Task<Validator> Authenticate(string email, string password)
         {
             var result = await _signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure: false);
-            return result.Succeeded;
+            Validator validate = new Validator()
+            {
+                IsSucceded = result.Succeeded,
+            };
+            return validate;       
         }
 
         public async Task Logout()
@@ -29,20 +34,31 @@ namespace Barber.Infrastructure.Data.Identitys
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<bool> RegisterUser(string email, string password)
+        public async Task<Validator> RegisterUser(string email, string password)
         {
             var identityUser = new IdentityUser()
             {
                 UserName = email,
                 Email = email
             };
+
             var result = await _userManager.CreateAsync(identityUser, password);
+            
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(identityUser, isPersistent: false);
-                return true;
             }
-            return result.Succeeded;
+            Validator validate = new Validator()
+            {
+                IsSucceded = result.Succeeded,
+
+            };
+            foreach (var errors in result.Errors)
+            {
+                validate.Message.Add(errors.Description.ToString());
+            }
+            
+            return validate;
         }
     }
 }

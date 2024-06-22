@@ -2,6 +2,7 @@
 using Barber.Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -26,18 +27,22 @@ namespace Barber.API.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             var result = await _authenticate.RegisterUser(model.Email, model.Password);
-            if (result)
+            if (result.IsSucceded)
             {
                 return new OkObjectResult("Register!");
             }
-            ModelState.AddModelError("Error", "Invalid login attempt");
+            foreach(var str in result.Message)
+            {
+                ModelState.AddModelError($"{str.GetHashCode()}", str);
+            }
+            
             return BadRequest(ModelState);
         }
         [HttpPost("LoginUser")]
         public async Task<ActionResult<UserToken>> Login ([FromBody] LoginModel userInfo)
         {
             var result = await _authenticate.Authenticate(userInfo.Email, userInfo.Password);
-            if (result)
+            if (result.IsSucceded)
             {
                 return GenerateToken(userInfo);
             }
@@ -52,7 +57,7 @@ namespace Barber.API.Controllers
         {
             var claims = new[]
             {
-                new Claim("emial", userInfo.Email),
+                new Claim("email", userInfo.Email),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
             };
             var privateKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
