@@ -55,5 +55,9 @@ namespace Barber.Domain.Entities
         {
             ValueForService = amount;
         }
+        public void Update(int idBarber, int idClient, TypeOfService typeOfService, DateTime dateSchedule, decimal valueForService)
+        {
+            ValidateDomain(idBarber, idClient, typeOfService, dateSchedule, valueForService);
+        }
     }
 }

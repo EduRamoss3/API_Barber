@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
+using Barber.Application.CQRS.Schedule.Commands;
+using Barber.Application.CQRS.Schedule.Queries;
 using Barber.Application.DTOs;
 using Barber.Application.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barber.Application.Services
 {
@@ -20,44 +17,58 @@ namespace Barber.Application.Services
             _mapper = mapper;
         }
     
-        public Task<bool> AddNewSchedule(SchedulesDTO scheduleDTO)
+        public async Task AddNewSchedule(SchedulesDTO scheduleDTO)
         {
-            throw new NotImplementedException();
+            var addScheduleCommand = _mapper.Map<AddScheduleCommand>(scheduleDTO);
+            await _mediator.Send(addScheduleCommand);
         }
 
-        public Task<IEnumerable<SchedulesDTO>> GetScheduleByClientId(int clientId)
+        public async Task<IEnumerable<SchedulesDTO>> GetScheduleByClientId(int? clientId)
         {
-            throw new NotImplementedException();
+            var getScheduleByClientId = new GetScheduleByClientIdQuery(clientId.Value);
+            var schedules = await _mediator.Send(getScheduleByClientId);
+            return _mapper.Map<IEnumerable<SchedulesDTO>>(schedules);
         }
 
-        public Task<SchedulesDTO> GetScheduleById(int id)
+        public async Task<SchedulesDTO> GetScheduleById(int? id)
         {
-            throw new NotImplementedException();
+            var getScheduleById = new GetScheduleByIdQuery(id.Value);
+            var schedules = await _mediator.Send(getScheduleById);
+            return _mapper.Map<SchedulesDTO>(schedules);
         }
 
-        public Task<IEnumerable<SchedulesDTO>> GetSchedules()
+        public async Task<IEnumerable<SchedulesDTO>> GetSchedules()
         {
-            throw new NotImplementedException();
+            var getSchedules = new GetSchedulesQuery();
+            var schedules = await _mediator.Send(getSchedules);
+            return _mapper.Map<IEnumerable<SchedulesDTO>>(schedules);
         }
 
-        public Task<IEnumerable<SchedulesDTO>> GetSchedulesByBarberId(int barberId)
+        public async Task<IEnumerable<SchedulesDTO>> GetSchedulesByBarberId(int? barberId)
         {
-            throw new NotImplementedException();
+            var getScheduleByBarberId = new GetSchedulesByBarberIdQuery(barberId.Value);
+            var schedules = await _mediator.Send(getScheduleByBarberId);
+            return _mapper.Map<IEnumerable<SchedulesDTO>>(schedules);
         }
 
-        public Task<bool> RemoveSchedule(SchedulesDTO scheduleDTO)
+        public async Task<SchedulesDTO> RemoveSchedule(SchedulesDTO scheduleDTO)
         {
-            throw new NotImplementedException();
+            var removeScheduleCommand = new RemoveScheduleCommand(scheduleDTO.Id);
+            var entity = await _mediator.Send(removeScheduleCommand);
+            return _mapper.Map<SchedulesDTO>(removeScheduleCommand);
         }
 
-        public Task<bool> UpdateSchedule(SchedulesDTO scheduleDTO)
+        public async Task UpdateSchedule(SchedulesDTO scheduleDTO)
         {
-            throw new NotImplementedException();
+            var updateScheduleCommand = _mapper.Map<UpdateScheduleCommand>(scheduleDTO);
+            await _mediator.Send(updateScheduleCommand);
         }
 
-        public Task UpdateValueForSchedule(SchedulesDTO scheduleDTO)
+        public async Task UpdateValueForSchedule(SchedulesDTO scheduleDTO)
         {
-            throw new NotImplementedException();
+            var updateValueForScheduleCommand = _mapper.Map<UpdateValueForScheduleCommand>(scheduleDTO);
+            await _mediator.Send(updateValueForScheduleCommand);
         }
+
     }
 }

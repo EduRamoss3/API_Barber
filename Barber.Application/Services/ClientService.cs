@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Barber.Application.CQRS.Clients.Commands;
+using Barber.Application.CQRS.Clients.Queries;
 using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
@@ -17,24 +19,28 @@ namespace Barber.Application.Services
             _mapper = mapper;
         }
     
-        public Task AddNewClient(ClientRegisterDTO clientDTO)
+        public async Task AddNewClient(ClientRegisterDTO clientDTO)
         {
-            throw new NotImplementedException();
+            var registerClientCommand = _mapper.Map<RegisterClientCommand>(clientDTO);
+            await _mediator.Send(registerClientCommand);
         }
 
-        public Task<Client> GetClientById(int id)
+        public async Task<Client> GetClientById(int id)
         {
-            throw new NotImplementedException();
+            var getClientByIdQuery = new GetClientByIdQuery(id);
+            return await _mediator.Send(getClientByIdQuery);
         }
 
-        public Task<IEnumerable<Client>> GetClients()
+        public async Task<IEnumerable<Client>> GetClients()
         {
-            throw new NotImplementedException();
+            var getClientsQuery = new GetClientsQuery();
+            return await _mediator.Send(getClientsQuery);
         }
 
-        public Task RemoveClient(ClientDTO clientDTOt)
+        public async Task RemoveClient(ClientDTO clientDTO)
         {
-            throw new NotImplementedException();
+            var removeClientCommand = _mapper.Map<RemoveClientCommand>(clientDTO);
+            await _mediator.Send(removeClientCommand);
         }
     }
 }

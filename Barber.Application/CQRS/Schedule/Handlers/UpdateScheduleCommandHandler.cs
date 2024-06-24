@@ -2,25 +2,31 @@
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
 using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Barber.Application.CQRS.Schedule.Handlers
 {
-    public class UpdateScheduleCommandHandler : IRequestHandler<UpdateValueForScheduleCommand, Schedules>
+    public class UpdateScheduleCommandHandler : IRequestHandler<UpdateScheduleCommand, Schedules>
     {
         private readonly ISchedulesRepository _schedulesRepository;
         public UpdateScheduleCommandHandler(ISchedulesRepository schedulesRepository)
         {
             _schedulesRepository = schedulesRepository;
         }
-        public async Task<Schedules> Handle(UpdateValueForScheduleCommand request, CancellationToken cancellationToken)
+
+        public async Task<Schedules> Handle(UpdateScheduleCommand request, CancellationToken cancellationToken)
         {
-            if (request is null)
+            if(request is null)
             {
-                throw new ApplicationException("Request is null");
+                throw new ApplicationException("Cant update this schedule!");
             }
-            var schedule = await _schedulesRepository.GetScheduleById(request.Id) ?? throw new ApplicationException("Schedule no exist");
-            schedule.UpdateValueForService(request.ValueForService);
-            await _schedulesRepository.UpdateValueForSchedule(schedule);
+            var schedule = await _schedulesRepository.GetScheduleById(request.Id) 
+                ?? throw new ApplicationException("Schedule no exist!");
+            schedule.Update(request.IdBarber,request.IdClient,request.TypeOfService, request.DateSchedule, request.ValueForService);
             return schedule;
         }
     }
