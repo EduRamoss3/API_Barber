@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Barber.API.Controllers
 {
+    
     [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize]
@@ -18,7 +19,7 @@ namespace Barber.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-all-barbers")]
+        [Route("get-all-barbers")]  
         public async Task<IEnumerable<BarberDTO>> GetAllBarbers()
         {
             var barbers = await _barberService.GetBarbersAsync();

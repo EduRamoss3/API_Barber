@@ -1,5 +1,6 @@
 ﻿using Barber.API.Models;
 using Barber.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -12,6 +13,7 @@ namespace Barber.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class TokenController : ControllerBase
     {
         private readonly IAuthenticate _authenticate;

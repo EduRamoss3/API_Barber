@@ -45,12 +45,14 @@ namespace Barber.Infrastructure.IoC.DependencyInjection
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IAuthenticate, AuthenticateService>();
+            services.AddScoped<ISeedRolesInitial, SeedRolesInitial>();
 
             services.AddMediatR(myhandlers);
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
             services.AddAutoMapper(typeof(CQRSToDTOMappingProfile));
             services.AddAuthentication();
+            
             return services;
         }
     }

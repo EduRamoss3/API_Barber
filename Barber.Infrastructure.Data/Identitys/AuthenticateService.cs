@@ -12,7 +12,8 @@ namespace Barber.Infrastructure.Data.Identitys
     public class AuthenticateService : IAuthenticate
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;    
+        private readonly SignInManager<IdentityUser> _signInManager;
+
         public AuthenticateService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
@@ -39,13 +40,15 @@ namespace Barber.Infrastructure.Data.Identitys
             var identityUser = new IdentityUser()
             {
                 UserName = email,
-                Email = email
+                Email = email,
             };
 
             var result = await _userManager.CreateAsync(identityUser, password);
+           
             
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(identityUser, "Member");
                 await _signInManager.SignInAsync(identityUser, isPersistent: false);
             }
             Validator validate = new Validator()
@@ -60,5 +63,6 @@ namespace Barber.Infrastructure.Data.Identitys
             
             return validate;
         }
+      
     }
 }

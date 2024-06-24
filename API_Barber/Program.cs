@@ -1,3 +1,4 @@
+using Barber.Domain.Interfaces;
 using Barber.Infrastructure.IoC.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+CreateRoles(app);
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -25,3 +27,13 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void CreateRoles(WebApplication api)
+{
+    var scopedFactory = api.Services.GetService<IServiceScopeFactory>();
+    using (var scope = scopedFactory.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<ISeedRolesInitial>();
+        service.SeedRoles();
+    }
+}
