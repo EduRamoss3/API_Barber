@@ -31,7 +31,7 @@ namespace Barber.Infrastructure.Data.Identitys
             }
         }
 
-        public async Task SeedUsers()
+        public void SeedUsers()
         {
             if (_userManager.FindByEmailAsync("admin@localhost").Result == null)
             {

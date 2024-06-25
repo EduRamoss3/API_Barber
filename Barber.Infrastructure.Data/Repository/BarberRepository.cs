@@ -44,11 +44,11 @@ namespace Barber.Infrastructure.Data.Repository
             return true;
         }
 
-        public async Task<BarberMain> SetDisponibilityAsync(Domain.Entities.BarberMain barber, bool disponibility)
+        public async Task<bool> SetDisponibilityAsync(Domain.Entities.BarberMain barber, bool disponibility)
         {
             _context.Entry(barber).Property(p => p.Disponibility).IsModified = true;
             await _context.SaveChangesAsync();
-            return barber;
+            return true;
         }
 
         public async Task<BarberMain> GetBarberByIdAsync(int id)
@@ -56,11 +56,11 @@ namespace Barber.Infrastructure.Data.Repository
             return await _context.Barbers.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<BarberMain> UpdateAsync(BarberMain barber)
+        public async Task<bool> UpdateAsync(BarberMain barber)
         {
             _context.Barbers.Update(barber);
             await _context.SaveChangesAsync();
-            return barber;
+            return true;
         }
     }
 }

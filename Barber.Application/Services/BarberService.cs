@@ -4,13 +4,7 @@ using Barber.Application.CQRS.Barber.Queries;
 using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
-using Barber.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barber.Application.Services
 {
@@ -24,10 +18,11 @@ namespace Barber.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AddNewBarberAsync(BarberRegisterDTO barberDTO)
+        public async Task<bool>AddNewBarberAsync(BarberRegisterDTO barberRegisterDTO)
         {
-            var registerBarberCommand = _mapper.Map<RegisterBarberCommand>(barberDTO);
-            await _mediator.Send(registerBarberCommand);
+            var registerBarberCommand = _mapper.Map<RegisterBarberCommand>(barberRegisterDTO);
+            var entity = await _mediator.Send(registerBarberCommand);
+            return entity is not null ? true : false;
         }
 
         public async Task<IEnumerable<BarberDTO>> GetBarbersAsync()
@@ -43,10 +38,10 @@ namespace Barber.Application.Services
             return await _mediator.Send(removeBarberCommand);
         }
 
-        public async Task SetDisponibilityAsync(int id, bool disponibility)
+        public async Task<bool> SetDisponibilityAsync(int id, bool disponibility)
         {
-            UpdateBarberCommand updateBarberCommand = new UpdateBarberCommand(id);
-            await _mediator.Send(updateBarberCommand);
+            UpdateBarberCommand updateBarberCommand = new UpdateBarberCommand(id, disponibility);
+            return await _mediator.Send(updateBarberCommand);
         }
 
         public async Task<BarberDTO> GetBarberByIdAsync(int id)

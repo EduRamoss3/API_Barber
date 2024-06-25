@@ -13,5 +13,6 @@ namespace Barber.Domain.Interfaces
         Task RemoveClient(Client client);
         Task<Client> GetClientById(int id);
         Task<IEnumerable<Client>> GetClients();  
+        Task<bool> Update(Client client);
     }
 }

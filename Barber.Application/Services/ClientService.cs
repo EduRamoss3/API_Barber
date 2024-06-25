@@ -19,28 +19,37 @@ namespace Barber.Application.Services
             _mapper = mapper;
         }
     
-        public async Task AddNewClient(ClientRegisterDTO clientDTO)
+        public async Task<bool> AddNewClient(ClientRegisterDTO clientDTO)
         {
             var registerClientCommand = _mapper.Map<RegisterClientCommand>(clientDTO);
-            await _mediator.Send(registerClientCommand);
+            var entity = await _mediator.Send(registerClientCommand);
+            return entity is not null ? true : false;
         }
 
-        public async Task<Client> GetClientById(int id)
+        public async Task<ClientDTO> GetClientById(int id)
         {
             var getClientByIdQuery = new GetClientByIdQuery(id);
-            return await _mediator.Send(getClientByIdQuery);
+            var entity = await _mediator.Send(getClientByIdQuery);
+            return _mapper.Map<ClientDTO>(entity);
         }
 
-        public async Task<IEnumerable<Client>> GetClients()
+        public async Task<IEnumerable<ClientDTO>> GetClients()
         {
             var getClientsQuery = new GetClientsQuery();
-            return await _mediator.Send(getClientsQuery);
+            var entities = await _mediator.Send(getClientsQuery);
+            return _mapper.Map<IEnumerable<ClientDTO>>(entities);
         }
 
-        public async Task RemoveClient(ClientDTO clientDTO)
+        public async Task<bool> RemoveClient(ClientDTO clientDTO)
         {
             var removeClientCommand = _mapper.Map<RemoveClientCommand>(clientDTO);
-            await _mediator.Send(removeClientCommand);
+            var entity = await _mediator.Send(removeClientCommand);
+            return entity is not null ? true : false;
+        }
+        public async Task<bool> UpdateClient(ClientDTO clientDTO)
+        {
+            var updateClientCommand = _mapper.Map<UpdateClientCommand>(clientDTO);
+            return  await _mediator.Send(updateClientCommand);
         }
     }
 }

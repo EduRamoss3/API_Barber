@@ -17,10 +17,11 @@ namespace Barber.Application.Services
             _mapper = mapper;
         }
     
-        public async Task AddNewSchedule(SchedulesDTO scheduleDTO)
+        public async Task<bool> AddNewSchedule(SchedulesDTO scheduleDTO)
         {
             var addScheduleCommand = _mapper.Map<AddScheduleCommand>(scheduleDTO);
-            await _mediator.Send(addScheduleCommand);
+            var entity = await _mediator.Send(addScheduleCommand);
+            return entity is not null ? true : false;
         }
 
         public async Task<IEnumerable<SchedulesDTO>> GetScheduleByClientId(int? clientId)
@@ -51,23 +52,25 @@ namespace Barber.Application.Services
             return _mapper.Map<IEnumerable<SchedulesDTO>>(schedules);
         }
 
-        public async Task<SchedulesDTO> RemoveSchedule(SchedulesDTO scheduleDTO)
+        public async Task<bool> RemoveSchedule(SchedulesDTO scheduleDTO)
         {
             var removeScheduleCommand = new RemoveScheduleCommand(scheduleDTO.Id);
             var entity = await _mediator.Send(removeScheduleCommand);
-            return _mapper.Map<SchedulesDTO>(removeScheduleCommand);
+            return entity is not null ? true : false;
         }
 
-        public async Task UpdateSchedule(SchedulesDTO scheduleDTO)
+        public async Task<bool> UpdateSchedule(SchedulesDTO scheduleDTO)
         {
             var updateScheduleCommand = _mapper.Map<UpdateScheduleCommand>(scheduleDTO);
-            await _mediator.Send(updateScheduleCommand);
+            var entity = await _mediator.Send(updateScheduleCommand);
+            return entity is not null ? true : false;
         }
 
-        public async Task UpdateValueForSchedule(SchedulesDTO scheduleDTO)
+        public async Task<bool> UpdateValueForSchedule(SchedulesDTO scheduleDTO)
         {
             var updateValueForScheduleCommand = _mapper.Map<UpdateValueForScheduleCommand>(scheduleDTO);
-            await _mediator.Send(updateValueForScheduleCommand);
+            var entity = await _mediator.Send(updateValueForScheduleCommand);
+            return entity is not null ? true : false;
         }
 
     }

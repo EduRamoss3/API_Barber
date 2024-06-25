@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Barber.Application.CQRS.Clients.Handlers
 {
-    public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand, Client>
+    public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand, bool>
     {
         private readonly IClientRepository _clientRepository;
         public UpdateClientCommandHandler(IClientRepository clientRepository)
@@ -18,15 +18,16 @@ namespace Barber.Application.CQRS.Clients.Handlers
             _clientRepository = clientRepository;
         }
 
-        public async Task<Client> Handle(UpdateClientCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateClientCommand request, CancellationToken cancellationToken)
         {
             if(request is null)
             {
-                throw new ApplicationException("Error, client not exist");
+                return false;
             }
             var client = await _clientRepository.GetClientById(request.Id);
             client.Update(request.Name, request.Points, request.Scheduled, request.LastTimeHere);
-            return client;
+            await _clientRepository.Update(client);
+            return true;
             
         }
     }

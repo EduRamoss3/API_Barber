@@ -6,9 +6,10 @@ namespace Barber.Application.Interfaces
 {
     public interface IClientService
     {
-        Task AddNewClient(ClientRegisterDTO clientDTO);
-        Task RemoveClient(ClientDTO clientDTOt);
-        Task<Client> GetClientById(int id);
-        Task<IEnumerable<Client>> GetClients();
+        Task<bool> AddNewClient(ClientRegisterDTO clientDTO);
+        Task<bool> RemoveClient(ClientDTO clientDTOt);
+        Task<ClientDTO> GetClientById(int id);
+        Task<IEnumerable<ClientDTO>> GetClients();
+        Task<bool> UpdateClient(ClientDTO clientDTO);
     }
 }

@@ -38,5 +38,18 @@ namespace Barber.Infrastructure.Data.Repository
              _context.Clients.Remove(client);
              await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> Update(Client client)
+        {
+            if(client is not Client)
+            {
+                return false;
+            }
+            var cliente = await GetClientById(client.Id);
+            cliente.Update(client.Name, client.Points, client.Scheduled, client.LastTimeHere);
+            _context.Clients.Update(client);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -1,13 +1,7 @@
 ﻿using Barber.Application.CQRS.Barber.Commands;
-using Barber.Application.DTOs.Register;
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barber.Application.CQRS.Barber.Handlers
 {

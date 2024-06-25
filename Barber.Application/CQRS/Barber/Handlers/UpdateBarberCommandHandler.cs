@@ -3,15 +3,11 @@ using Barber.Application.DTOs;
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Barber.Application.CQRS.Barber.Handlers
 {
-    public class UpdateBarberCommandHandler : IRequestHandler<UpdateBarberCommand, BarberMain>
+    public class UpdateBarberCommandHandler : IRequestHandler<UpdateBarberCommand, bool>
     {
         private readonly IBarberRepository _barberRepository;
         public UpdateBarberCommandHandler(IBarberRepository barberRepository)
@@ -19,7 +15,7 @@ namespace Barber.Application.CQRS.Barber.Handlers
             _barberRepository = barberRepository;
         }
 
-        public async Task<BarberMain> Handle(UpdateBarberCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateBarberCommand request, CancellationToken cancellationToken)
         {
             if (request is null)
             {
@@ -31,7 +27,9 @@ namespace Barber.Application.CQRS.Barber.Handlers
                 throw new ApplicationException("Error, barber no exist");
             }
             barber.SetDisponibility(request.Disponibility);
-            return await _barberRepository.SetDisponibilityAsync(barber, request.Disponibility); 
+            var result = await _barberRepository.SetDisponibilityAsync(barber, request.Disponibility);
+
+            return result;
         }
     }
 }

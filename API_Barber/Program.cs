@@ -32,13 +32,13 @@ app.MapControllers();
 
 app.Run();
 
-async void CreateRoles(WebApplication api)
+ void CreateRoles(WebApplication api)
 {
     var scopedFactory = api.Services.GetService<IServiceScopeFactory>();
     using (var scope = scopedFactory.CreateScope())
     {
         var service = scope.ServiceProvider.GetService<ISeedRolesInitial>();
         service.SeedRoles();
-        await service.SeedUsers();
+        service.SeedUsers();
     }
 }

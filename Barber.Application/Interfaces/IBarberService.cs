@@ -12,10 +12,10 @@ namespace Barber.Application.Interfaces
 {
     public interface IBarberService 
     {
-        Task AddNewBarberAsync(BarberRegisterDTO barberDTO);
+        Task<bool> AddNewBarberAsync(BarberRegisterDTO barberDTO);
         Task<bool> RemoveBarberByIdAsync(int id);
         Task<IEnumerable<BarberDTO>> GetBarbersAsync();
-        Task SetDisponibilityAsync(int id, bool disponibility);
+        Task<bool> SetDisponibilityAsync(int id, bool disponibility);
         Task<BarberDTO> GetBarberByIdAsync(int id);
     }
 }

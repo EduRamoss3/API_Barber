@@ -10,11 +10,11 @@ namespace Barber.Application.Interfaces
 {
     public interface IScheduleService
     {
-        Task AddNewSchedule(SchedulesDTO scheduleDTO);
-        Task<SchedulesDTO> RemoveSchedule(SchedulesDTO scheduleDTO);
+        Task<bool> AddNewSchedule(SchedulesDTO scheduleDTO);
+        Task<bool> RemoveSchedule(SchedulesDTO scheduleDTO);
         Task<IEnumerable<SchedulesDTO>> GetSchedules();
-        Task UpdateSchedule(SchedulesDTO scheduleDTO);
-        Task UpdateValueForSchedule(SchedulesDTO scheduleDTO);
+        Task<bool> UpdateSchedule(SchedulesDTO scheduleDTO);
+        Task<bool> UpdateValueForSchedule(SchedulesDTO scheduleDTO);
         Task<SchedulesDTO> GetScheduleById(int? id);
         Task<IEnumerable<SchedulesDTO>> GetSchedulesByBarberId(int? barberId);
         Task<IEnumerable<SchedulesDTO>> GetScheduleByClientId(int? clientId);
