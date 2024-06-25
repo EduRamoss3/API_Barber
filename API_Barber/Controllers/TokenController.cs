@@ -1,4 +1,7 @@
 ﻿using Barber.API.Models;
+using Barber.Application.DTOs;
+using Barber.Application.DTOs.Register;
+using Barber.Application.Interfaces;
 using Barber.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,10 +21,12 @@ namespace Barber.API.Controllers
     {
         private readonly IAuthenticate _authenticate;
         private readonly IConfiguration _configuration;
-        public TokenController(IAuthenticate authenticate, IConfiguration configuration)
+        private readonly IClientService _clientService;
+        public TokenController(IAuthenticate authenticate, IConfiguration configuration, IClientService clientService)
         {
             _authenticate = authenticate;
             _configuration = configuration;
+            _clientService = clientService;
         }
 
         [HttpPost]
@@ -31,6 +36,7 @@ namespace Barber.API.Controllers
             var result = await _authenticate.RegisterUser(model.Email, model.Password);
             if (result.IsSucceded)
             {
+                
                 return new OkObjectResult("Register!");
             }
             foreach(var str in result.Message)
@@ -40,7 +46,7 @@ namespace Barber.API.Controllers
             
             return BadRequest(ModelState);
         }
-        [HttpPost("LoginUser")]
+        [HttpPost("login-user")]
         public async Task<ActionResult<UserToken>> Login ([FromBody] LoginModel userInfo)
         {
             var result = await _authenticate.Authenticate(userInfo.Email, userInfo.Password);

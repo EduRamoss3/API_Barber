@@ -38,6 +38,7 @@ namespace Barber.Infrastructure.IoC.DependencyInjection
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequireUppercase = false;
             });
+            
             services.AddScoped<IBarberRepository, BarberRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ISchedulesRepository, SchedulesRepository>();

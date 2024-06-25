@@ -33,11 +33,15 @@ namespace Barber.Infrastructure.Data.Repository
             return await _context.Barbers.ToListAsync();
         }
 
-        public async Task<BarberMain> RemoveBarberAsync(Domain.Entities.BarberMain barber)
+        public async Task<bool> RemoveBarberAsync(Domain.Entities.BarberMain barber)
         {
+            if(barber is null)
+            {
+                return false;
+            }
             _context.Barbers.Remove(barber);
             await _context.SaveChangesAsync();
-            return barber;
+            return true;
         }
 
         public async Task<BarberMain> SetDisponibilityAsync(Domain.Entities.BarberMain barber, bool disponibility)

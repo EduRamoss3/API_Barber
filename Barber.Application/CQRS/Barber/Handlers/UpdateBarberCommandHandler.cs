@@ -31,7 +31,7 @@ namespace Barber.Application.CQRS.Barber.Handlers
                 throw new ApplicationException("Error, barber no exist");
             }
             barber.SetDisponibility(request.Disponibility);
-            return await _barberRepository.UpdateAsync(barber); 
+            return await _barberRepository.SetDisponibilityAsync(barber, request.Disponibility); 
         }
     }
 }

@@ -9,6 +9,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddAntiforgery(options =>
+{
+    options.SuppressXFrameOptionsHeader = true;
+});
 
 var app = builder.Build();
 
@@ -28,12 +32,13 @@ app.MapControllers();
 
 app.Run();
 
-void CreateRoles(WebApplication api)
+async void CreateRoles(WebApplication api)
 {
     var scopedFactory = api.Services.GetService<IServiceScopeFactory>();
     using (var scope = scopedFactory.CreateScope())
     {
         var service = scope.ServiceProvider.GetService<ISeedRolesInitial>();
         service.SeedRoles();
+        await service.SeedUsers();
     }
 }

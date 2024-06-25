@@ -9,5 +9,6 @@ namespace Barber.Domain.Interfaces
     public interface ISeedRolesInitial
     {
        public void SeedRoles();
+       public Task SeedUsers();
     }
 }

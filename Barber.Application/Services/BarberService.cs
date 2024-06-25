@@ -37,10 +37,10 @@ namespace Barber.Application.Services
             return _mapper.Map<IEnumerable<BarberDTO>>(barbersEntity);
         }
 
-        public async Task RemoveBarberByIdAsync(int id)
+        public async Task<bool> RemoveBarberByIdAsync(int id)
         {
             var removeBarberCommand = new RemoveBarberCommand(id);
-            await _mediator.Send(removeBarberCommand);
+            return await _mediator.Send(removeBarberCommand);
         }
 
         public async Task SetDisponibilityAsync(int id, bool disponibility)

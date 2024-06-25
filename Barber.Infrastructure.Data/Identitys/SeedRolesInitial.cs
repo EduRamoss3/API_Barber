@@ -1,21 +1,18 @@
 ﻿using Barber.Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barber.Infrastructure.Data.Identitys
 {
     public class SeedRolesInitial : ISeedRolesInitial
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        public SeedRolesInitial(RoleManager<IdentityRole> roleManager)
+        private readonly UserManager<IdentityUser> _userManager;
+        public SeedRolesInitial(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             _roleManager = roleManager;
+            _userManager = userManager;
         }
-    
+
         public void SeedRoles()
         {
             if (!_roleManager.RoleExistsAsync("Member").Result)
@@ -31,6 +28,29 @@ namespace Barber.Infrastructure.Data.Identitys
                 role.Name = "Admin";
                 role.NormalizedName = "ADMIN";
                 IdentityResult roleResult = _roleManager.CreateAsync(role).Result;
+            }
+        }
+
+        public async Task SeedUsers()
+        {
+            if (_userManager.FindByEmailAsync("admin@localhost").Result == null)
+            {
+                IdentityUser user = new IdentityUser();
+                user.UserName = "admin@localhost";
+                user.Email = "admin@localhost";
+                user.NormalizedEmail = "ADMIN@LOCALHOST";
+                user.NormalizedUserName = "ADMIN@LOCALHOST";
+                user.EmailConfirmed = true;
+                user.LockoutEnabled = false;
+                user.SecurityStamp = Guid.NewGuid().ToString();
+
+                IdentityResult result = _userManager.CreateAsync(user, "Numsey#2022").Result;
+                if (result.Succeeded)
+                {
+                    _userManager.AddToRoleAsync(user, "Admin").Wait();
+                }
+
+
             }
         }
     }
