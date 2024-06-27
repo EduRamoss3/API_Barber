@@ -20,10 +20,15 @@ namespace Barber.API.Controllers
 
         [HttpGet]
         [Route("get-all-barbers")]  
-        public async Task<IEnumerable<BarberDTO>> GetAllBarbers()
+        public async Task<ActionResult<IEnumerable<BarberDTO>>> GetAllBarbers()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return BadRequest("Get permission to do this!");
+            }
             var barbers = await _barberService.GetBarbersAsync();
-            return barbers;
+
+            return Ok(barbers);
         }
         [HttpGet]
         [Route("get-barber-by-id/{id}")]
@@ -32,7 +37,7 @@ namespace Barber.API.Controllers
             var barber = await _barberService.GetBarberByIdAsync(id);
             if(barber is null)
             {
-                return new NotFoundObjectResult("Barber not found!");
+                return NotFound("Barber not found!");
             }
             return barber;
         }
@@ -45,13 +50,13 @@ namespace Barber.API.Controllers
             {
                 if (barberRegisterDTO is null)
                 {
-                    return new BadRequestObjectResult("barber cannot be null!");
+                    return BadRequest("barber cannot be null!");
                 }
                 await _barberService.AddNewBarberAsync(barberRegisterDTO);
-                return new OkObjectResult("successfully registered barber!");
+                return Ok("successfully registered barber!");
             }
            
-            return new BadRequestObjectResult("check all fields and try again");
+            return BadRequest("check all fields and try again");
         }
         [Authorize(Roles = "Admin")]
         [HttpDelete]
@@ -60,16 +65,20 @@ namespace Barber.API.Controllers
         {
             try
             {
+                if (!User.IsInRole("Admin"))
+                {
+                    return BadRequest("Get permission to do this!");
+                }
                 var result = await _barberService.RemoveBarberByIdAsync(id.Value);
                 if (result)
                 {
-                    return new OkObjectResult("Barber removed!");
+                    return Ok("Barber removed!");
                 }
-                return new BadRequestObjectResult("Barber no exist in the system"); 
+                return BadRequest("Barber no exist in the system"); 
             }
             catch(ApplicationException e)
             {
-                return new BadRequestObjectResult(e.Message);
+                return BadRequest(e.Message);
             }
             
         }
@@ -80,13 +89,27 @@ namespace Barber.API.Controllers
         {
             try
             {
+                var field = VerifyPermissionAdmin();
+                if (field)
+                {
+                    return BadRequest("Get permission to do this!");
+                }
                 await _barberService.SetDisponibilityAsync(barberId.Value, disponibility);
-                return new OkObjectResult("Disponibility updated!");
+                return Ok("Disponibility updated!");
             }
             catch(ApplicationException e)
             {
-                return new BadRequestObjectResult(e.Message);
+                return BadRequest(e.InnerException.Message);
             }
+           
+        }
+        private bool VerifyPermissionAdmin()
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return true;
+            }
+            return false;
            
         }
         

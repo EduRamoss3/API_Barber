@@ -24,9 +24,9 @@ namespace Barber.API.Controllers
             if (ModelState.IsValid)
             {
                 await _clientService.AddNewClient(clientRegisterDTO);
-                return new OkObjectResult("Client registered!");
+                return Ok("Client registered!");
             }
-            return new BadRequestObjectResult("error, verify all fields before register!");
+            return BadRequest("error, verify all fields before register!");
         }
         [HttpPut]
         [Route("update-client")]
@@ -40,9 +40,9 @@ namespace Barber.API.Controllers
                 {
                     return new OkObjectResult($"client id: {clientDTO.Id} was updated!");
                 }
-                return new BadRequestObjectResult("Data is null or you have to verify all fields and try again!");
+                return BadRequest("Data is null or you have to verify all fields and try again!");
             }
-            return new BadRequestObjectResult("Error, verify all fields and try again!");
+            return BadRequest("Error, verify all fields and try again!");
 
         }
         [HttpDelete]
@@ -50,8 +50,8 @@ namespace Barber.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(ClientDTO clientDTO)
         {
-            await _clientService.RemoveClient(clientDTO);
-            return NoContent();
+            var isDeleted = await _clientService.RemoveClient(clientDTO);
+            return isDeleted ? Ok("Successfully deleted!") : BadRequest("Something is wrong, try again and verify all fields.");
         }
 
     }

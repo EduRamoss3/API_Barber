@@ -23,6 +23,7 @@ namespace Barber.Application.Mappings
             CreateMap<ClientDTO, RegisterClientCommand>().ReverseMap();
             CreateMap<ClientDTO, RemoveClientCommand>().ReverseMap();
             CreateMap<ClientDTO, UpdateClientCommand>().ReverseMap();
+            CreateMap<ClientRegisterDTO, RegisterClientCommand>().ReverseMap();
 
         }
 
