@@ -1,6 +1,7 @@
 ﻿using Barber.Domain.Entities.Enums;
 using Barber.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Barber.Application.DTOs
 {
@@ -17,8 +18,9 @@ namespace Barber.Application.DTOs
         public DateTime DateSchedule { get; set; }
         [Required(ErrorMessage ="The value for service is required!")]
         public decimal ValueForService { get; set; }
-
+        [JsonIgnore]
         public Client _Client { get; set; }
+        [JsonIgnore]
         public Barber.Domain.Entities.BarberMain _Barber { get; set; }
     }
 }
