@@ -31,13 +31,14 @@ namespace Barber.API.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody] ClientRegisterDTO model)
         {
             var result = await _authenticate.RegisterUser(model.Email, model.Password);
             if (result.IsSucceded)
             {
-                
-                return new OkObjectResult("Register!");
+                await _clientService.AddNewClient(model);
+                return Ok("Register!");
             }
             foreach(var str in result.Message)
             {
@@ -46,7 +47,8 @@ namespace Barber.API.Controllers
             
             return BadRequest(ModelState);
         }
-        [HttpPost("login-user")]
+        [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<ActionResult<UserToken>> Login ([FromBody] LoginModel userInfo)
         {
             var result = await _authenticate.Authenticate(userInfo.Email, userInfo.Password);
@@ -61,6 +63,7 @@ namespace Barber.API.Controllers
             }
 
         }
+       
         private UserToken GenerateToken(LoginModel userInfo)
         {
             var claims = new[]

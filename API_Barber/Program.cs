@@ -26,6 +26,8 @@ if (app.Environment.IsDevelopment())
 CreateRoles(app);
 app.UseHttpsRedirection();
 
+app.UseHsts();
+
 app.UseAuthorization();
 
 app.MapControllers();

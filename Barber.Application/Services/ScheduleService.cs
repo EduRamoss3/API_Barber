@@ -66,9 +66,9 @@ namespace Barber.Application.Services
             return entity is not null ? true : false;
         }
 
-        public async Task<bool> UpdateValueForSchedule(SchedulesDTO scheduleDTO)
+        public async Task<bool> UpdateValueForSchedule(int id, decimal amount)
         {
-            var updateValueForScheduleCommand = _mapper.Map<UpdateValueForScheduleCommand>(scheduleDTO);
+            UpdateValueForScheduleCommand updateValueForScheduleCommand = new UpdateValueForScheduleCommand(id, amount);
             var entity = await _mediator.Send(updateValueForScheduleCommand);
             return entity is not null ? true : false;
         }

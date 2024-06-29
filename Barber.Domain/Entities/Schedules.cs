@@ -29,6 +29,7 @@ namespace Barber.Domain.Entities
             DomainExceptionValidation.When(decimal.IsNegative(valueOfService),"Error!, Value of service has to be positive!");
             DomainExceptionValidation.When(valueOfService > 999,"Error, 999 Is maximum value!");
             IdBarber = idBarber;
+            IdClient = idClient;
             TypeOfService = typeOfService;
             DateSchedule = dateSchedule;
             ValueForService = valueOfService;

@@ -14,7 +14,7 @@ namespace Barber.Application.DTOs
         public int IdClient { get; set; }
         [Required(ErrorMessage ="Type of service is required!")]
         public TypeOfService TypeOfService { get; set; }
-        [Required(ErrorMessage ="Date to schedule is required!")]
+        [Required(ErrorMessage ="Date to schedule is required!")] 
         public DateTime DateSchedule { get; set; }
         [Required(ErrorMessage ="The value for service is required!")]
         public decimal ValueForService { get; set; }

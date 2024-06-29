@@ -19,7 +19,7 @@ namespace Barber.Infrastructure.Data.Migrations
                 .HasAnnotation("ProductVersion", "6.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Barber.Domain.Entities.Barber", b =>
+            modelBuilder.Entity("Barber.Domain.Entities.BarberMain", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -290,7 +290,7 @@ namespace Barber.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Barber.Domain.Entities.Schedules", b =>
                 {
-                    b.HasOne("Barber.Domain.Entities.Barber", "_Barber")
+                    b.HasOne("Barber.Domain.Entities.BarberMain", "_Barber")
                         .WithMany("Schedules")
                         .HasForeignKey("IdBarber")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -360,7 +360,7 @@ namespace Barber.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Barber.Domain.Entities.Barber", b =>
+            modelBuilder.Entity("Barber.Domain.Entities.BarberMain", b =>
                 {
                     b.Navigation("Schedules");
                 });

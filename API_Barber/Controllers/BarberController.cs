@@ -19,19 +19,19 @@ namespace Barber.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-all-barbers")]  
+        [Route("get/all")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<BarberDTO>>> GetAllBarbers()
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return BadRequest("Get permission to do this!");
+                return Unauthorized("Get permission to do this!");
             }
             var barbers = await _barberService.GetBarbersAsync();
-
             return Ok(barbers);
         }
         [HttpGet]
-        [Route("get-barber-by-id/{id}")]
+        [Route("get/barber-id/{id}")]
         public async Task<ActionResult<BarberDTO>> GetBarberById(int id)
         {
             var barber = await _barberService.GetBarberByIdAsync(id);
@@ -43,10 +43,10 @@ namespace Barber.API.Controllers
         }
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        [Route("add-new-barber")]
+        [Route("add")]
         public async Task<ActionResult<BarberDTO>> AddNewBarber([FromBody]BarberRegisterDTO barberRegisterDTO)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && IsAuthenticatedLikeAdmin())
             {
                 if (barberRegisterDTO is null)
                 {
@@ -60,21 +60,21 @@ namespace Barber.API.Controllers
         }
         [Authorize(Roles = "Admin")]
         [HttpDelete]
-        [Route("delete-barber/{id}")]
+        [Route("delete/{id}")]
         public async Task<ActionResult> DeleteBarberById(int? id)
         {
             try
             {
-                if (!User.IsInRole("Admin"))
+                if (IsAuthenticatedLikeAdmin())
                 {
-                    return BadRequest("Get permission to do this!");
+                    var result = await _barberService.RemoveBarberByIdAsync(id.Value);
+                    if (result)
+                    {
+                        return Ok("Barber removed!");
+                    }
+                    return BadRequest("Barber no exist in the system");
                 }
-                var result = await _barberService.RemoveBarberByIdAsync(id.Value);
-                if (result)
-                {
-                    return Ok("Barber removed!");
-                }
-                return BadRequest("Barber no exist in the system"); 
+                return Unauthorized("Get permission to do this!");  
             }
             catch(ApplicationException e)
             {
@@ -89,13 +89,13 @@ namespace Barber.API.Controllers
         {
             try
             {
-                var field = VerifyPermissionAdmin();
-                if (field)
+                if (IsAuthenticatedLikeAdmin())
                 {
-                    return BadRequest("Get permission to do this!");
+                    await _barberService.SetDisponibilityAsync(barberId.Value, disponibility);
+                    return Ok("Disponibility updated!");
                 }
-                await _barberService.SetDisponibilityAsync(barberId.Value, disponibility);
-                return Ok("Disponibility updated!");
+                return Unauthorized("Get permission to do this!");
+                
             }
             catch(ApplicationException e)
             {
@@ -103,7 +103,7 @@ namespace Barber.API.Controllers
             }
            
         }
-        private bool VerifyPermissionAdmin()
+        private bool IsAuthenticatedLikeAdmin()
         {
             if (!User.IsInRole("Admin"))
             {

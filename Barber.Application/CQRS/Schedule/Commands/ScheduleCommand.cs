@@ -16,6 +16,6 @@ namespace Barber.Application.CQRS.Schedule.Commands
         public int IdClient { get; private set; }
         public TypeOfService TypeOfService { get; private set; }
         public DateTime DateSchedule { get; private set; }
-        public decimal ValueForService { get; private set; }
+        public decimal ValueForService { get; set; }
     }
 }

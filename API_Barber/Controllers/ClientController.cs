@@ -17,20 +17,24 @@ namespace Barber.API.Controllers
             _clientService = clientService;
         }
         [HttpPost]
-        [Route("create-client")]
-        [AllowAnonymous]
+        [Route("create")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create([FromBody] ClientRegisterDTO clientRegisterDTO)
         {
             if (ModelState.IsValid)
             {
-                await _clientService.AddNewClient(clientRegisterDTO);
-                return Ok("Client registered!");
+                var isValid = await _clientService.AddNewClient(clientRegisterDTO);
+                if (isValid)
+                {
+                    return Created("ClientRegistered", clientRegisterDTO);
+                }
+                return BadRequest();
             }
-            return BadRequest("error, verify all fields before register!");
+            return BadRequest(ModelState);
         }
         [HttpPut]
-        [Route("update-client")]
-        [Authorize(Roles ="Member")]
+        [Route("update")]
+        [Authorize(Roles = "Member")]
         public async Task<ActionResult> Update([FromBody] ClientDTO clientDTO)
         {
             if (ModelState.IsValid)
@@ -42,16 +46,39 @@ namespace Barber.API.Controllers
                 }
                 return BadRequest("Data is null or you have to verify all fields and try again!");
             }
-            return BadRequest("Error, verify all fields and try again!");
+            return BadRequest(ModelState);
 
         }
         [HttpDelete]
-        [Route("delete-client")]
+        [Route("delete")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(ClientDTO clientDTO)
         {
-            var isDeleted = await _clientService.RemoveClient(clientDTO);
-            return isDeleted ? Ok("Successfully deleted!") : BadRequest("Something is wrong, try again and verify all fields.");
+            if (ModelState.IsValid)
+            {
+                var isDeleted = await _clientService.RemoveClient(clientDTO);
+                return isDeleted ? Ok("Successfully deleted!") : BadRequest("Something is wrong, try again and verify all fields.");
+            }
+            return BadRequest(ModelState);
+        }
+        [Authorize(Roles = "Admin")]
+        [Route("get/all")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients()
+        {
+            return Ok(await _clientService.GetClients());
+        }
+        [Authorize(Roles = "Admin")]
+        [Route("get/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClientById(int? id)
+        {
+            var client = await _clientService.GetClientById(id.Value);
+            if(client is not null)
+            {
+                return Ok(client);
+            }
+            return NotFound();
         }
 
     }
