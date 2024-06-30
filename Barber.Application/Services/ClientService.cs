@@ -39,15 +39,16 @@ namespace Barber.Application.Services
             return _mapper.Map<IEnumerable<ClientDTO>>(entities);
         }
 
-        public async Task<bool> RemoveAsync(ClientDTO clientDTO)
+        public async Task<bool> RemoveAsync(int? id)
         {
-            var removeClientCommand = _mapper.Map<RemoveClientCommand>(clientDTO);
+            var removeClientCommand = new RemoveClientCommand(id.Value);
             var entity = await _mediator.Send(removeClientCommand);
             return entity is not null ? true : false;
         }
-        public async Task<bool> UpdateAsync(ClientDTO clientDTO)
+        public async Task<bool> UpdateAsync(ClientDTO clientDTO, int? id)
         {
             var updateClientCommand = _mapper.Map<UpdateClientCommand>(clientDTO);
+            updateClientCommand.Id = id.Value;
             return  await _mediator.Send(updateClientCommand);
         }
     }

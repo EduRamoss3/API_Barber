@@ -52,16 +52,17 @@ namespace Barber.Application.Services
             return _mapper.Map<IEnumerable<SchedulesDTO>>(schedules);
         }
 
-        public async Task<bool> RemoveAsync(SchedulesDTO scheduleDTO)
+        public async Task<bool> RemoveAsync(int? id)
         {
-            var removeScheduleCommand = new RemoveScheduleCommand(scheduleDTO.Id);
+            var removeScheduleCommand = new RemoveScheduleCommand(id.Value);
             var entity = await _mediator.Send(removeScheduleCommand);
             return entity is not null ? true : false;
         }
 
-        public async Task<bool> UpdateAsync(SchedulesDTO scheduleDTO)
+        public async Task<bool> UpdateAsync(SchedulesDTO scheduleDTO, int? id)
         {
             var updateScheduleCommand = _mapper.Map<UpdateScheduleCommand>(scheduleDTO);
+            updateScheduleCommand.Id = id.Value;
             var entity = await _mediator.Send(updateScheduleCommand);
             return entity is not null ? true : false;
         }

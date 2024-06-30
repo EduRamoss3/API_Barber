@@ -4,6 +4,7 @@ using Barber.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace Barber.API.Controllers
 {
@@ -19,11 +20,11 @@ namespace Barber.API.Controllers
         }
         [HttpDelete]
         [Route("delete/{id}")]
-        public async Task<IActionResult> Delete(SchedulesDTO schedulesDTO)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (ModelState.IsValid)
             {
-                var isRemoved  = await _scheduleService.RemoveAsync(schedulesDTO);
+                var isRemoved  = await _scheduleService.RemoveAsync(id.Value);
                 if (isRemoved)
                 {
                     return Ok();
@@ -35,14 +36,20 @@ namespace Barber.API.Controllers
         }
         [HttpHead]
         [Route("last-modified/{id}")]
-        public IActionResult LastModified()
-        {
-            return Ok();
+        public IActionResult LastModified(int id)
+        {          
+            DateTime lastModified = DateTime.ParseExact("30/06/2024", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            Response.Headers.Add("Last-Modified", lastModified.ToString("R"));
+
+            return Ok(); 
         }
+
         [HttpOptions]
         [Route("available/responses")]
         public IActionResult Options()
         {
+            Response.Headers.Add("Allow", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+
             return Ok();
         }
         [HttpGet]
@@ -99,11 +106,11 @@ namespace Barber.API.Controllers
         }
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> UpdateSchedule(SchedulesDTO schedulesDTO)
+        public async Task<IActionResult> UpdateSchedule(SchedulesDTO schedulesDTO, int? id)
         {
             if (ModelState.IsValid)
             {
-                var scheduleUpdate = await _scheduleService.UpdateAsync(schedulesDTO);
+                var scheduleUpdate = await _scheduleService.UpdateAsync(schedulesDTO, id.Value);
                 if (scheduleUpdate)
                 {
                     return Ok("Updated!");
