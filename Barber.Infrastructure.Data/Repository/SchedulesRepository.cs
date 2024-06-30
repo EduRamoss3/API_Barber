@@ -34,7 +34,7 @@ namespace Barber.Infrastructure.Data.Repository
             return await _context.Schedules.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<IEnumerable<Schedules>> GetSchedules()
+        public async Task<IEnumerable<Schedules>> GetAllAsync()
         {
             return await _context.Schedules.ToListAsync();
         }

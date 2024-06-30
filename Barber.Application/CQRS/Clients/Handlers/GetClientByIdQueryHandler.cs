@@ -2,11 +2,7 @@
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Barber.Application.CQRS.Clients.Handlers
 {
@@ -24,7 +20,7 @@ namespace Barber.Application.CQRS.Clients.Handlers
             {
                 throw new ApplicationException("Request is null");
             }
-            var client = await _clientRepository.GetClientById(request.Id);
+            var client = await _clientRepository.GetByIdAsync(request.Id);
             if(client is not Client)
             {
                 throw new ApplicationException("Data format error");

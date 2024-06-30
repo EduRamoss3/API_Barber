@@ -1,6 +1,4 @@
 ﻿using Barber.Application.CQRS.Barber.Commands;
-using Barber.Application.DTOs;
-using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
 using MediatR;
 

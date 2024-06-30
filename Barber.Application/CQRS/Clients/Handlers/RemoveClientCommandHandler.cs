@@ -2,11 +2,6 @@
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barber.Application.CQRS.Clients.Handlers
 {
@@ -24,8 +19,8 @@ namespace Barber.Application.CQRS.Clients.Handlers
             {
                 throw new ApplicationException("Client dont exist");
             }
-            var client = await _clientRepository.GetClientById(request.Id);
-            await _clientRepository.RemoveClient(client);
+            var client = await _clientRepository.GetByIdAsync(request.Id);
+            await _clientRepository.RemoveAsync(client);
             return client;
         }
     }

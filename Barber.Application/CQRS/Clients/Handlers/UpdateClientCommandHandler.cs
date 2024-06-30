@@ -1,12 +1,6 @@
 ﻿using Barber.Application.CQRS.Clients.Commands;
-using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barber.Application.CQRS.Clients.Handlers
 {
@@ -24,7 +18,7 @@ namespace Barber.Application.CQRS.Clients.Handlers
             {
                 return false;
             }
-            var client = await _clientRepository.GetClientById(request.Id);
+            var client = await _clientRepository.GetByIdAsync(request.Id);
             client.Update(request.Name, request.Points, request.Scheduled, request.LastTimeHere);
             await _clientRepository.Update(client);
             return true;

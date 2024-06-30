@@ -18,21 +18,21 @@ namespace Barber.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<bool>AddNewBarberAsync(BarberRegisterDTO barberRegisterDTO)
+        public async Task<bool>AddAsync(BarberRegisterDTO barberRegisterDTO)
         {
             var registerBarberCommand = _mapper.Map<RegisterBarberCommand>(barberRegisterDTO);
             var entity = await _mediator.Send(registerBarberCommand);
             return entity is not null ? true : false;
         }
 
-        public async Task<IEnumerable<BarberDTO>> GetBarbersAsync()
+        public async Task<IEnumerable<BarberDTO>> GetAllAsync()
         {
             GetBarbersQuery getBarbersQuery = new GetBarbersQuery();
             var barbersEntity = await _mediator.Send(getBarbersQuery);
             return _mapper.Map<IEnumerable<BarberDTO>>(barbersEntity);
         }
 
-        public async Task<bool> RemoveBarberByIdAsync(int id)
+        public async Task<bool> RemoveByIdAsync(int id)
         {
             var removeBarberCommand = new RemoveBarberCommand(id);
             return await _mediator.Send(removeBarberCommand);
@@ -44,7 +44,7 @@ namespace Barber.Application.Services
             return await _mediator.Send(updateBarberCommand);
         }
 
-        public async Task<BarberDTO> GetBarberByIdAsync(int id)
+        public async Task<BarberDTO> GetByIdAsync(int id)
         {
             GetBarberByIdQuery getBarberByIdQuery = new GetBarberByIdQuery(id);
             var barbersEntity = await _mediator.Send(getBarberByIdQuery);

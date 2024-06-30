@@ -37,7 +37,7 @@ namespace Barber.API.Controllers
             var result = await _authenticate.RegisterUser(model.Email, model.Password);
             if (result.IsSucceded)
             {
-                await _clientService.AddNewClient(model);
+                await _clientService.AddAsync(model);
                 return Ok("Register!");
             }
             foreach(var str in result.Message)

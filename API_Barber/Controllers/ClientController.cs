@@ -23,7 +23,7 @@ namespace Barber.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var isValid = await _clientService.AddNewClient(clientRegisterDTO);
+                var isValid = await _clientService.AddAsync(clientRegisterDTO);
                 if (isValid)
                 {
                     return Created("ClientRegistered", clientRegisterDTO);
@@ -39,10 +39,10 @@ namespace Barber.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var isSucceded = await _clientService.UpdateClient(clientDTO);
+                var isSucceded = await _clientService.UpdateAsync(clientDTO);
                 if (isSucceded)
                 {
-                    return new OkObjectResult($"client id: {clientDTO.Id} was updated!");
+                    return NoContent();
                 }
                 return BadRequest("Data is null or you have to verify all fields and try again!");
             }
@@ -56,8 +56,8 @@ namespace Barber.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var isDeleted = await _clientService.RemoveClient(clientDTO);
-                return isDeleted ? Ok("Successfully deleted!") : BadRequest("Something is wrong, try again and verify all fields.");
+                var isDeleted = await _clientService.RemoveAsync(clientDTO);
+                return isDeleted ? NoContent() : BadRequest("Something is wrong, try again and verify all fields.");
             }
             return BadRequest(ModelState);
         }
@@ -66,14 +66,14 @@ namespace Barber.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients()
         {
-            return Ok(await _clientService.GetClients());
+            return Ok(await _clientService.GetAllAsync());
         }
         [Authorize(Roles = "Admin")]
         [Route("get/{id}")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClientById(int? id)
         {
-            var client = await _clientService.GetClientById(id.Value);
+            var client = await _clientService.GetByIdAsync(id.Value);
             if(client is not null)
             {
                 return Ok(client);

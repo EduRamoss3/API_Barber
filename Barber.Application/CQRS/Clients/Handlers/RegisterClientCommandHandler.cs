@@ -2,11 +2,6 @@
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barber.Application.CQRS.Clients.Handlers
 {
@@ -24,7 +19,7 @@ namespace Barber.Application.CQRS.Clients.Handlers
                 throw new ApplicationException("Request is null");
             }
             Client client = new Client(request.Name,request.Points, request.Scheduled, request.LastTimeHere);
-            await _clientRepository.AddNewClient(client);
+            await _clientRepository.AddAsync(client);
             return client;
             
         }

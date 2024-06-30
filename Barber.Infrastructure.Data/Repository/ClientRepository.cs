@@ -17,23 +17,23 @@ namespace Barber.Infrastructure.Data.Repository
         {
             _context = context;
         }
-        public async Task AddNewClient(Client client)
+        public async Task AddAsync(Client client)
         {
             await _context.Clients.AddAsync(client);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Client> GetClientById(int id)
+        public async Task<Client> GetByIdAsync(int id)
         {
             return await _context.Clients.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Client>> GetClients()
+        public async Task<IEnumerable<Client>> GetAllAsync()
         {
             return await _context.Clients.ToListAsync();
         }
 
-        public async Task RemoveClient(Client client)
+        public async Task RemoveAsync(Client client)
         {
              _context.Clients.Remove(client);
              await _context.SaveChangesAsync();
@@ -45,7 +45,7 @@ namespace Barber.Infrastructure.Data.Repository
             {
                 return false;
             }
-            var cliente = await GetClientById(client.Id);
+            var cliente = await GetByIdAsync(client.Id);
             cliente.Update(client.Name, client.Points, client.Scheduled, client.LastTimeHere);
             _context.Clients.Update(client);
             await _context.SaveChangesAsync();

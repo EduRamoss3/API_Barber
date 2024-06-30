@@ -19,7 +19,7 @@ namespace Barber.Application.CQRS.Barber.Handlers
                 throw new ApplicationException("Error adding new barber, verify all data and try again");
             }
             BarberMain barberMain = new BarberMain(request.Name, request.Disponibility);
-            return await _barberRepository.AddNewBarberAsync(barberMain);
+            return await _barberRepository.AddAsync(barberMain);
         }
     }
 

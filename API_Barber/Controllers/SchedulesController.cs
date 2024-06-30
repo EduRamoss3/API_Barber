@@ -23,10 +23,10 @@ namespace Barber.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var isRemoved  = await _scheduleService.RemoveSchedule(schedulesDTO);
+                var isRemoved  = await _scheduleService.RemoveAsync(schedulesDTO);
                 if (isRemoved)
                 {
-                    return Ok(isRemoved);
+                    return Ok();
                 }
                 return BadRequest();
             }
@@ -52,7 +52,7 @@ namespace Barber.API.Controllers
         {
             if (isAuthenticatedLikeAdmin())
             {
-                var schedules = await _scheduleService.GetSchedules();
+                var schedules = await _scheduleService.GetAllAsync();
                 return Ok(schedules);
             }
             return Unauthorized("Get Permission to do this");
@@ -63,7 +63,7 @@ namespace Barber.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByBarberId(int? idBarber)
         {
-            var schedules = await _scheduleService.GetSchedulesByBarberId(idBarber.Value);
+            var schedules = await _scheduleService.GetByBarberIdAsync(idBarber.Value);
             return Ok(schedules);
         }
         [HttpGet]
@@ -71,7 +71,7 @@ namespace Barber.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByClientId(int? idClient)
         {
-            var schedules = await _scheduleService.GetScheduleByClientId(idClient.Value);
+            var schedules = await _scheduleService.GetByClientIdAsync(idClient.Value);
             return Ok(schedules);
         }
         [HttpGet]
@@ -79,7 +79,7 @@ namespace Barber.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesById(int? idSchedule)
         {
-            var schedules = await _scheduleService.GetScheduleById(idSchedule.Value);
+            var schedules = await _scheduleService.GetByIdAsync(idSchedule.Value);
             return Ok(schedules);
         }
         [HttpPost]
@@ -88,10 +88,10 @@ namespace Barber.API.Controllers
         {
             if (ModelState.IsValid && isAuthenticated())
             {
-                var isValid = await _scheduleService.AddNewSchedule(schedules);
+                var isValid = await _scheduleService.AddAsync(schedules);
                 if (isValid)
                 {
-                    return Ok("Schedules registered!"); 
+                    return Created("Schedules registered!",schedules); 
                 }
                 return new BadRequestObjectResult("This schedule is not available to add");
             }
@@ -103,10 +103,10 @@ namespace Barber.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var scheduleUpdate = await _scheduleService.UpdateSchedule(schedulesDTO);
+                var scheduleUpdate = await _scheduleService.UpdateAsync(schedulesDTO);
                 if (scheduleUpdate)
                 {
-                    return Ok("Schedule updated!");
+                    return Ok("Updated!");
                 }
                 return BadRequest("Error in update");
             }
@@ -118,10 +118,10 @@ namespace Barber.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var scheduleUpdate = await _scheduleService.UpdateValueForSchedule(idSchedule, valueForService);
+                var scheduleUpdate = await _scheduleService.UpdateValueForAsync(idSchedule, valueForService);
                 if (scheduleUpdate)
                 {
-                    return Ok("Value for Schedule updated!");
+                    return Ok("Updated!");
                 }
                 return BadRequest("Error in update");
             }

@@ -17,56 +17,56 @@ namespace Barber.Application.Services
             _mapper = mapper;
         }
     
-        public async Task<bool> AddNewSchedule(SchedulesDTO scheduleDTO)
+        public async Task<bool> AddAsync(SchedulesDTO scheduleDTO)
         {
             var addScheduleCommand = _mapper.Map<AddScheduleCommand>(scheduleDTO);
             var entity = await _mediator.Send(addScheduleCommand);
             return entity is not null ? true : false;
         }
 
-        public async Task<IEnumerable<SchedulesDTO>> GetScheduleByClientId(int? clientId)
+        public async Task<IEnumerable<SchedulesDTO>> GetByClientIdAsync(int? clientId)
         {
             var getScheduleByClientId = new GetScheduleByClientIdQuery(clientId.Value);
             var schedules = await _mediator.Send(getScheduleByClientId);
             return _mapper.Map<IEnumerable<SchedulesDTO>>(schedules);
         }
 
-        public async Task<SchedulesDTO> GetScheduleById(int? id)
+        public async Task<SchedulesDTO> GetByIdAsync(int? id)
         {
             var getScheduleById = new GetScheduleByIdQuery(id.Value);
             var schedules = await _mediator.Send(getScheduleById);
             return _mapper.Map<SchedulesDTO>(schedules);
         }
 
-        public async Task<IEnumerable<SchedulesDTO>> GetSchedules()
+        public async Task<IEnumerable<SchedulesDTO>> GetAllAsync()
         {
             var getSchedules = new GetSchedulesQuery();
             var schedules = await _mediator.Send(getSchedules);
             return _mapper.Map<IEnumerable<SchedulesDTO>>(schedules);
         }
 
-        public async Task<IEnumerable<SchedulesDTO>> GetSchedulesByBarberId(int? barberId)
+        public async Task<IEnumerable<SchedulesDTO>> GetByBarberIdAsync(int? barberId)
         {
             var getScheduleByBarberId = new GetSchedulesByBarberIdQuery(barberId.Value);
             var schedules = await _mediator.Send(getScheduleByBarberId);
             return _mapper.Map<IEnumerable<SchedulesDTO>>(schedules);
         }
 
-        public async Task<bool> RemoveSchedule(SchedulesDTO scheduleDTO)
+        public async Task<bool> RemoveAsync(SchedulesDTO scheduleDTO)
         {
             var removeScheduleCommand = new RemoveScheduleCommand(scheduleDTO.Id);
             var entity = await _mediator.Send(removeScheduleCommand);
             return entity is not null ? true : false;
         }
 
-        public async Task<bool> UpdateSchedule(SchedulesDTO scheduleDTO)
+        public async Task<bool> UpdateAsync(SchedulesDTO scheduleDTO)
         {
             var updateScheduleCommand = _mapper.Map<UpdateScheduleCommand>(scheduleDTO);
             var entity = await _mediator.Send(updateScheduleCommand);
             return entity is not null ? true : false;
         }
 
-        public async Task<bool> UpdateValueForSchedule(int id, decimal amount)
+        public async Task<bool> UpdateValueForAsync(int id, decimal amount)
         {
             UpdateValueForScheduleCommand updateValueForScheduleCommand = new UpdateValueForScheduleCommand(id, amount);
             var entity = await _mediator.Send(updateValueForScheduleCommand);

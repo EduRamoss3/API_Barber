@@ -18,7 +18,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Error args is null");
             }
-            return await _schedulesRepository.GetSchedules() ?? Enumerable.Empty<Schedules>();
+            return await _schedulesRepository.GetAllAsync() ?? Enumerable.Empty<Schedules>();
         }
     }
 }

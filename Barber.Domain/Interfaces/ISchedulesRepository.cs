@@ -11,7 +11,7 @@ namespace Barber.Domain.Interfaces
     {
         Task<bool> AddNewSchedule(Schedules schedule);
         Task<bool> RemoveSchedule(Schedules schedule);
-        Task<IEnumerable<Schedules>> GetSchedules();
+        Task<IEnumerable<Schedules>> GetAllAsync();
         Task<bool> UpdateSchedule(Schedules schedule);  
         Task UpdateValueForSchedule(Schedules schedule);
         Task<Schedules> GetScheduleById(int id);

@@ -9,10 +9,10 @@ namespace Barber.Domain.Interfaces
 {
     public interface IClientRepository
     {
-        Task AddNewClient(Client client);
-        Task RemoveClient(Client client);
-        Task<Client> GetClientById(int id);
-        Task<IEnumerable<Client>> GetClients();  
+        Task AddAsync(Client client);
+        Task RemoveAsync(Client client);
+        Task<Client> GetByIdAsync(int id);
+        Task<IEnumerable<Client>> GetAllAsync();  
         Task<bool> Update(Client client);
     }
 }

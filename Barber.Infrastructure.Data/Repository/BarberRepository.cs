@@ -18,7 +18,7 @@ namespace Barber.Infrastructure.Data.Repository
             _context = context;
         }
 
-        public async Task<BarberMain> AddNewBarberAsync(Domain.Entities.BarberMain barber)
+        public async Task<BarberMain> AddAsync(Domain.Entities.BarberMain barber)
         {
             if (barber is Barber.Domain.Entities.BarberMain)
             {
@@ -28,12 +28,12 @@ namespace Barber.Infrastructure.Data.Repository
             return barber;
         }
 
-        public async Task<IEnumerable<Domain.Entities.BarberMain>> GetBarbersAsync()
+        public async Task<IEnumerable<Domain.Entities.BarberMain>> GetAllAsync()
         {
             return await _context.Barbers.ToListAsync();
         }
 
-        public async Task<bool> RemoveBarberAsync(Domain.Entities.BarberMain barber)
+        public async Task<bool> RemoveAsync(Domain.Entities.BarberMain barber)
         {
             if(barber is null)
             {

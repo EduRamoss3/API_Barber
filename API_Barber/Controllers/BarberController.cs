@@ -2,7 +2,6 @@
 using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Barber.API.Controllers
@@ -27,14 +26,14 @@ namespace Barber.API.Controllers
             {
                 return Unauthorized("Get permission to do this!");
             }
-            var barbers = await _barberService.GetBarbersAsync();
+            var barbers = await _barberService.GetAllAsync();
             return Ok(barbers);
         }
         [HttpGet]
         [Route("get/barber-id/{id}")]
         public async Task<ActionResult<BarberDTO>> GetBarberById(int id)
         {
-            var barber = await _barberService.GetBarberByIdAsync(id);
+            var barber = await _barberService.GetByIdAsync(id);
             if(barber is null)
             {
                 return NotFound("Barber not found!");
@@ -52,7 +51,7 @@ namespace Barber.API.Controllers
                 {
                     return BadRequest("barber cannot be null!");
                 }
-                await _barberService.AddNewBarberAsync(barberRegisterDTO);
+                await _barberService.AddAsync(barberRegisterDTO);
                 return Ok("successfully registered barber!");
             }
            
@@ -67,7 +66,7 @@ namespace Barber.API.Controllers
             {
                 if (IsAuthenticatedLikeAdmin())
                 {
-                    var result = await _barberService.RemoveBarberByIdAsync(id.Value);
+                    var result = await _barberService.RemoveByIdAsync(id.Value);
                     if (result)
                     {
                         return Ok("Barber removed!");
