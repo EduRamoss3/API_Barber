@@ -11,12 +11,12 @@ namespace Barber.Domain.Interfaces
     {
         Task<bool> AddNewSchedule(Schedules schedule);
         Task<bool> RemoveSchedule(Schedules schedule);
-        Task<IEnumerable<Schedules>> GetAllAsync();
+        Task<List<Schedules>> GetAllAsync();
         Task<bool> UpdateSchedule(Schedules schedule);  
         Task UpdateValueForSchedule(Schedules schedule);
         Task<Schedules> GetScheduleById(int id);
-        Task<IEnumerable<Schedules>> GetSchedulesByBarberId(int barberId);
-        Task<IEnumerable<Schedules>> GetScheduleByClientId(int clientId);
+        Task<List<Schedules>> GetSchedulesByBarberId(int barberId);
+        Task<List<Schedules>> GetScheduleByClientId(int clientId);
  
     }
 }

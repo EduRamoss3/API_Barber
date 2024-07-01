@@ -24,7 +24,7 @@ namespace Barber.Infrastructure.Data.Repository
             return Task.CompletedTask.IsCompleted;
         }
 
-        public async Task<IEnumerable<Schedules>> GetScheduleByClientId(int clientId)
+        public async Task<List<Schedules>> GetScheduleByClientId(int clientId)
         {
             return await _context.Schedules.Where(p => p.IdClient == clientId).ToListAsync();
         }
@@ -34,12 +34,12 @@ namespace Barber.Infrastructure.Data.Repository
             return await _context.Schedules.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<IEnumerable<Schedules>> GetAllAsync()
+        public async Task<List<Schedules>> GetAllAsync()
         {
             return await _context.Schedules.ToListAsync();
         }
 
-        public async Task<IEnumerable<Schedules>> GetSchedulesByBarberId(int barberId)
+        public async Task<List<Schedules>> GetSchedulesByBarberId(int barberId)
         {
             return await _context.Schedules.Where(p => p.IdBarber == barberId).ToListAsync();
         }

@@ -12,15 +12,16 @@ namespace Barber.Application.CQRS.Barber.Handlers
         public GetBarbersQueryHandler(IBarberRepository barberRepository)
         {
             _barberRepository = barberRepository;
-        }
 
+        }
         public async Task<IEnumerable<BarberMain>> Handle(GetBarbersQuery request, CancellationToken cancellationToken)
         {
             if(request is null)
             {
                 throw new ApplicationException("Request is null");
             }
-            return await _barberRepository.GetAllAsync();
+            var barbers = await _barberRepository.GetAllAsync();
+            return barbers;
         }
     }
 }

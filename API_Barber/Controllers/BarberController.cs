@@ -4,6 +4,7 @@ using Barber.Application.Interfaces;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
 
 namespace Barber.API.Controllers
 {
@@ -13,10 +14,12 @@ namespace Barber.API.Controllers
     public class BarberController : ControllerBase
     {
         private readonly IBarberService _barberService;
+        private readonly IScheduleService _scheduleService;
 
-        public BarberController(IBarberService barberService)
+        public BarberController(IBarberService barberService, IScheduleService scheduleService)
         {
             _barberService = barberService;
+            _scheduleService = scheduleService;
         }
 
         [HttpGet("all")]
@@ -24,17 +27,24 @@ namespace Barber.API.Controllers
         public async Task<ActionResult<IEnumerable<BarberDTO>>> GetAll()
         {
             var barbers = await _barberService.GetAllAsync();
+            foreach(BarberDTO barberDTO in barbers)
+            {
+                var schedulesBarber = await _scheduleService.GetByBarberIdAsync(barberDTO.Id);
+                barberDTO.Schedules = schedulesBarber;
+            }
             return Ok(barbers);
         }
 
         [HttpGet("{id:int:min(1)}")]
         public async Task<ActionResult<BarberDTO>> GetBarberById(int id)
         {
-            var barber = await _barberService.GetByIdAsync(id);
+            var barber = await _barberService.GetByIdAsync(id);            
             if (barber is null)
             {
                 return NotFound("Barber not found!");
             }
+            var schedulesBarber = await _scheduleService.GetByBarberIdAsync(barber.Id);
+            barber.Schedules = schedulesBarber;
             return Ok(barber);
         }
 

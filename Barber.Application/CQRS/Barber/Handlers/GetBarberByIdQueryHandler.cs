@@ -11,6 +11,7 @@ namespace Barber.Application.CQRS.Barber.Handlers
         public GetBarberByIdQueryHandler(IBarberRepository barberRepository)
         {
             _barberRepository = barberRepository;
+           
         }
         public async Task<BarberMain> Handle(GetBarberByIdQuery request, CancellationToken cancellationToken)
         {
@@ -18,7 +19,9 @@ namespace Barber.Application.CQRS.Barber.Handlers
             {
                 throw new ApplicationException("Request is null");
             }
-            return await _barberRepository.GetBarberByIdAsync(request.Id);
+            var barber = await _barberRepository.GetBarberByIdAsync(request.Id);
+         
+            return barber;
         }
     }
 }

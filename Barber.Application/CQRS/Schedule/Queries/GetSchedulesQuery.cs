@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Barber.Application.CQRS.Schedule.Queries
 {
-    public class GetSchedulesQuery : IRequest<IEnumerable<Schedules>>
+    public class GetSchedulesQuery : IRequest<List<Schedules>>
     {
     }
 }

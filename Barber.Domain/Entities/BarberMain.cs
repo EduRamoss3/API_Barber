@@ -1,12 +1,5 @@
 ﻿using Barber.Domain.Entities.Base;
 using Barber.Domain.Validation;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Barber.Domain.Entities
 {
@@ -31,6 +24,10 @@ namespace Barber.Domain.Entities
         public void AddSchedules(Schedules schedule)
         {
             Schedules.Add(schedule);
+        }
+        public void SetSchedules(IEnumerable<Schedules> schedules)
+        {
+            Schedules = (List<Schedules>)schedules;
         }
         public void SetDisponibility(bool disponibility)
         {

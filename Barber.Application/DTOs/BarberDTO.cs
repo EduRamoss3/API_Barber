@@ -15,6 +15,6 @@ namespace Barber.Application.DTOs
         [Required(ErrorMessage = "Set one disponibility!")]
         public bool Disponibility { get; set; }
 
-        public List<Schedules> Schedules { get;set; } = new List<Schedules>();
+        public List<SchedulesDTO> Schedules { get;set; } = new List<SchedulesDTO>();
     }
 }

@@ -24,11 +24,11 @@ namespace Barber.Application.Services
             return entity is not null ? true : false;
         }
 
-        public async Task<IEnumerable<SchedulesDTO>> GetByClientIdAsync(int? clientId)
+        public async Task<List<SchedulesDTO>> GetByClientIdAsync(int? clientId)
         {
             var getScheduleByClientId = new GetScheduleByClientIdQuery(clientId.Value);
             var schedules = await _mediator.Send(getScheduleByClientId);
-            return _mapper.Map<IEnumerable<SchedulesDTO>>(schedules);
+            return _mapper.Map<List<SchedulesDTO>>(schedules);
         }
 
         public async Task<SchedulesDTO> GetByIdAsync(int? id)
@@ -38,18 +38,18 @@ namespace Barber.Application.Services
             return _mapper.Map<SchedulesDTO>(schedules);
         }
 
-        public async Task<IEnumerable<SchedulesDTO>> GetAllAsync()
+        public async Task<List<SchedulesDTO>> GetAllAsync()
         {
             var getSchedules = new GetSchedulesQuery();
             var schedules = await _mediator.Send(getSchedules);
-            return _mapper.Map<IEnumerable<SchedulesDTO>>(schedules);
+            return _mapper.Map<List<SchedulesDTO>>(schedules);
         }
 
-        public async Task<IEnumerable<SchedulesDTO>> GetByBarberIdAsync(int? barberId)
+        public async Task<List<SchedulesDTO>> GetByBarberIdAsync(int? barberId)
         {
             var getScheduleByBarberId = new GetSchedulesByBarberIdQuery(barberId.Value);
             var schedules = await _mediator.Send(getScheduleByBarberId);
-            return _mapper.Map<IEnumerable<SchedulesDTO>>(schedules);
+            return _mapper.Map<List<SchedulesDTO>>(schedules);
         }
 
         public async Task<bool> RemoveAsync(int? id)
