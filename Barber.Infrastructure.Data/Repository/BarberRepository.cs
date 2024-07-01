@@ -2,11 +2,7 @@
 using Barber.Domain.Interfaces;
 using Barber.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Barber.Infrastructure.Data.Repository
 {
@@ -30,7 +26,7 @@ namespace Barber.Infrastructure.Data.Repository
 
         public async Task<IEnumerable<Domain.Entities.BarberMain>> GetAllAsync()
         {
-            return await _context.Barbers.ToListAsync();
+            return await _context.Barbers.Include(p => p.Schedules).ToListAsync(); 
         }
 
         public async Task<bool> RemoveAsync(Domain.Entities.BarberMain barber)
@@ -53,7 +49,7 @@ namespace Barber.Infrastructure.Data.Repository
 
         public async Task<BarberMain> GetBarberByIdAsync(int id)
         {
-            return await _context.Barbers.FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Barbers.Include(p => p.Schedules).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<bool> UpdateAsync(BarberMain barber)
@@ -62,5 +58,6 @@ namespace Barber.Infrastructure.Data.Repository
             await _context.SaveChangesAsync();
             return true;
         }
+
     }
 }

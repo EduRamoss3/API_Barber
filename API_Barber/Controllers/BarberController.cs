@@ -4,7 +4,6 @@ using Barber.Application.Interfaces;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading;
 
 namespace Barber.API.Controllers
 {
@@ -27,11 +26,6 @@ namespace Barber.API.Controllers
         public async Task<ActionResult<IEnumerable<BarberDTO>>> GetAll()
         {
             var barbers = await _barberService.GetAllAsync();
-            foreach(BarberDTO barberDTO in barbers)
-            {
-                var schedulesBarber = await _scheduleService.GetByBarberIdAsync(barberDTO.Id);
-                barberDTO.Schedules = schedulesBarber;
-            }
             return Ok(barbers);
         }
 
@@ -43,8 +37,6 @@ namespace Barber.API.Controllers
             {
                 return NotFound("Barber not found!");
             }
-            var schedulesBarber = await _scheduleService.GetByBarberIdAsync(barber.Id);
-            barber.Schedules = schedulesBarber;
             return Ok(barber);
         }
 
@@ -59,12 +51,8 @@ namespace Barber.API.Controllers
 
             try
             {
-                if (barberRegisterDTO is null)
-                {
-                    return BadRequest("Barber cannot be null!");
-                }
                 await _barberService.AddAsync(barberRegisterDTO);
-                return CreatedAtAction(nameof(GetBarberById), new { id = barberRegisterDTO.Id }, "Successfully registered barber!");
+                return CreatedAtAction(nameof(GetBarberById), new { id = barberRegisterDTO.Name }, "Successfully registered barber!");
             }
             catch (DomainExceptionValidation d)
             {

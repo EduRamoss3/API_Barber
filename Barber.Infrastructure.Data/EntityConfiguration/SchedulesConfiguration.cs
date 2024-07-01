@@ -1,11 +1,7 @@
 ﻿using Barber.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Barber.Infrastructure.Data.EntityConfiguration
 {
@@ -18,6 +14,7 @@ namespace Barber.Infrastructure.Data.EntityConfiguration
             builder.Property(p => p.TypeOfService).IsRequired();
             builder.Property(p => p.DateSchedule).IsRequired();
             builder.Property(p => p.ValueForService).HasPrecision(10, 2).IsRequired();
+            builder.Property(p => p.IsFinalized).IsRequired();
 
             builder.HasOne(p => p._Barber)
                 .WithMany(p => p.Schedules)
@@ -26,10 +23,12 @@ namespace Barber.Infrastructure.Data.EntityConfiguration
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(p => p._Client)
-                .WithOne(c => c.Schedule)
-                .HasForeignKey<Schedules>(s => s.IdClient)
-                .HasConstraintName("Schedule with one client. Client with one schedule")
+                .WithMany(p => p.Schedules)
+                .HasForeignKey(p => p.IdClient)
+                .HasConstraintName("Schedule with one client. Client with many schedule")
                 .OnDelete(DeleteBehavior.Restrict);
+
+            
         }
     }
 }

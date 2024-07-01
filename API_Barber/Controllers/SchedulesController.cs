@@ -3,6 +3,7 @@ using Barber.Application.Interfaces;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 namespace Barber.API.Controllers
@@ -120,7 +121,7 @@ namespace Barber.API.Controllers
                 var isValid = await _scheduleService.AddAsync(schedules);
                 if (isValid)
                 {
-                    return CreatedAtAction(nameof(GetSchedulesById), new { idSchedule = schedules.Id }, schedules);
+                    return Created("created",schedules);
                 }
                 return BadRequest("Failed to add the schedule.");
             }
@@ -132,6 +133,22 @@ namespace Barber.API.Controllers
             {
                 return BadRequest(d.Message);
             }
+            
+        }
+        [HttpPatch]
+        [Route("management-service")]
+        public async Task<IActionResult> ManagementService(int id, bool endOrOpen)
+        {
+            if (ModelState.IsValid)
+            {
+               var isValid = await _scheduleService.EndOpenAsync(id, endOrOpen);
+               if (isValid)
+               {
+                    return Ok("Updated");
+               }
+                return NotFound();
+            }
+            return BadRequest(ModelState);
         }
 
         [HttpPut("{id:int:min(1)}")]

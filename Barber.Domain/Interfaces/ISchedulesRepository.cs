@@ -17,6 +17,8 @@ namespace Barber.Domain.Interfaces
         Task<Schedules> GetScheduleById(int id);
         Task<List<Schedules>> GetSchedulesByBarberId(int barberId);
         Task<List<Schedules>> GetScheduleByClientId(int clientId);
- 
+        Task<bool> EndOrOpenServiceByIdAsync(int id, bool endOrOpen);
+
+
     }
 }

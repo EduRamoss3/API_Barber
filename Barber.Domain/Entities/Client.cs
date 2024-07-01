@@ -1,11 +1,6 @@
 ﻿using Barber.Domain.Entities.Base;
 using Barber.Domain.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+
 
 namespace Barber.Domain.Entities
 {
@@ -13,9 +8,9 @@ namespace Barber.Domain.Entities
     {
         public int Points { get; private set; }
         public bool Scheduled { get; private set; } 
-        public DateTime LastTimeHere { get; private set; }  
+        public DateTime LastTimeHere { get; private set; }
 
-        public Schedules Schedule { get; private set; }
+        public List<Schedules> Schedules { get; private set; } = new List<Schedules>();
 
         public Client(string name, int points, bool scheduled, DateTime lastTimeHere) : base(name)
         {
@@ -32,9 +27,9 @@ namespace Barber.Domain.Entities
             Scheduled = scheduled;
             LastTimeHere = lastTimeHere;
         }
-        public void SetSchedule(Schedules schedule)
+        public void SetSchedule(List<Schedules> schedule)
         {
-            Schedule = schedule;
+            Schedules = schedule;
         }
         public void Update(string name,int points, bool scheduled, DateTime lastTimeHere)
         {

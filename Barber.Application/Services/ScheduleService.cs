@@ -73,6 +73,12 @@ namespace Barber.Application.Services
             var entity = await _mediator.Send(updateValueForScheduleCommand);
             return entity is not null ? true : false;
         }
+        public async Task<bool> EndOpenAsync(int id, bool endOpen)
+        {
+            PatchEndOpenServiceScheduleCommand patchEndOpenServiceScheduleCommand = new PatchEndOpenServiceScheduleCommand(id, endOpen);
+            var entity = await _mediator.Send(patchEndOpenServiceScheduleCommand);
+            return entity;
+        }
 
     }
 }

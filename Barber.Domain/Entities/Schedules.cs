@@ -1,10 +1,5 @@
 ﻿using Barber.Domain.Entities.Enums;
 using Barber.Domain.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barber.Domain.Entities
 {
@@ -16,11 +11,12 @@ namespace Barber.Domain.Entities
         public TypeOfService TypeOfService { get; private set; }    
         public DateTime DateSchedule { get; private set; }
         public decimal ValueForService { get; private set; }
+        public bool IsFinalized { get; private set; }
 
         public Client _Client { get; private set; }  
         public BarberMain _Barber { get; private set; }
         
-        private void ValidateDomain(int idBarber, int idClient, TypeOfService typeOfService, DateTime dateSchedule, decimal valueOfService)
+        private void ValidateDomain(int idBarber, int idClient, TypeOfService typeOfService, DateTime dateSchedule, decimal valueOfService, bool isFinalized)
         {
             DomainExceptionValidation.When(idBarber == 0, "ID Barber is required!");
             DomainExceptionValidation.When(idClient == 0, "ID Client is required!");
@@ -33,15 +29,16 @@ namespace Barber.Domain.Entities
             TypeOfService = typeOfService;
             DateSchedule = dateSchedule;
             ValueForService = valueOfService;
+            IsFinalized = isFinalized;
         }
-        public Schedules(int id, int idBarber, int idClient, TypeOfService typeOfService, DateTime dateSchedule, decimal valueForService)
+        public Schedules(int id, int idBarber, int idClient, TypeOfService typeOfService, DateTime dateSchedule, decimal valueForService, bool isFinalized)
         {
-            ValidateDomain(idBarber, idClient, typeOfService, dateSchedule, valueForService);
+            ValidateDomain(idBarber, idClient, typeOfService, dateSchedule, valueForService, isFinalized);
             Id = id;
         }
-        public Schedules(int idBarber, int idClient, TypeOfService typeOfService, DateTime dateSchedule, decimal valueForService)
+        public Schedules(int idBarber, int idClient, TypeOfService typeOfService, DateTime dateSchedule, decimal valueForService, bool isFinalized)
         {
-            ValidateDomain(idBarber, idClient, typeOfService, dateSchedule, valueForService);
+            ValidateDomain(idBarber, idClient, typeOfService, dateSchedule, valueForService, isFinalized);
         }
 
         public void SetBarber(BarberMain barber)
@@ -56,9 +53,13 @@ namespace Barber.Domain.Entities
         {
             ValueForService = amount;
         }
-        public void Update(int idBarber, int idClient, TypeOfService typeOfService, DateTime dateSchedule, decimal valueForService)
+        public void Update(int idBarber, int idClient, TypeOfService typeOfService, DateTime dateSchedule, decimal valueForService, bool isFinalized)
         {
-            ValidateDomain(idBarber, idClient, typeOfService, dateSchedule, valueForService);
+            ValidateDomain(idBarber, idClient, typeOfService, dateSchedule, valueForService, isFinalized);
+        }
+        public void SetIsClose(bool close)
+        {
+            IsFinalized = close;
         }
     }
 }

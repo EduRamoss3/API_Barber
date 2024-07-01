@@ -1,11 +1,6 @@
 ﻿using Barber.Domain.Entities;
 using Barber.Domain.Entities.Enums;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barber.Application.CQRS.Schedule.Commands
 {
@@ -17,5 +12,6 @@ namespace Barber.Application.CQRS.Schedule.Commands
         public TypeOfService TypeOfService { get; private set; }
         public DateTime DateSchedule { get; private set; }
         public decimal ValueForService { get; set; }
+        public bool IsFinalized { get; set; }
     }
 }

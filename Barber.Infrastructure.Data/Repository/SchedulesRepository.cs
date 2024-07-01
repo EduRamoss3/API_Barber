@@ -2,11 +2,7 @@
 using Barber.Domain.Interfaces;
 using Barber.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Barber.Infrastructure.Data.Repository
 {
@@ -62,6 +58,19 @@ namespace Barber.Infrastructure.Data.Repository
         {
             _context.Entry(schedule).Property(p => p.ValueForService).IsModified = true;
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> EndOrOpenServiceByIdAsync(int id, bool endOrOpen)
+        {
+            var schedule = await GetScheduleById(id);
+            if(schedule is Schedules)
+            {
+                schedule.SetIsClose(endOrOpen);
+                _context.Entry(schedule).Property(p => p.IsFinalized).IsModified = true;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -79,6 +79,9 @@ namespace Barber.Infrastructure.Data.Migrations
                     b.Property<int>("IdClient")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsFinalized")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("TypeOfService")
                         .HasColumnType("int");
 
@@ -90,8 +93,7 @@ namespace Barber.Infrastructure.Data.Migrations
 
                     b.HasIndex("IdBarber");
 
-                    b.HasIndex("IdClient")
-                        .IsUnique();
+                    b.HasIndex("IdClient");
 
                     b.ToTable("Schedules");
                 });
@@ -298,11 +300,11 @@ namespace Barber.Infrastructure.Data.Migrations
                         .HasConstraintName("Scheduled with one barber, barber with many schedules");
 
                     b.HasOne("Barber.Domain.Entities.Client", "_Client")
-                        .WithOne("Schedule")
-                        .HasForeignKey("Barber.Domain.Entities.Schedules", "IdClient")
+                        .WithMany("Schedules")
+                        .HasForeignKey("IdClient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("Schedule with one client. Client with one schedule");
+                        .HasConstraintName("Schedule with one client. Client with many schedule");
 
                     b.Navigation("_Barber");
 
@@ -367,7 +369,7 @@ namespace Barber.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Barber.Domain.Entities.Client", b =>
                 {
-                    b.Navigation("Schedule");
+                    b.Navigation("Schedules");
                 });
 #pragma warning restore 612, 618
         }

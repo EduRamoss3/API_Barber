@@ -20,7 +20,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Error, verify all data before register!");
             }
-            Schedules schedules = new Schedules(request.IdBarber, request.IdClient, request.TypeOfService, request.DateSchedule, request.ValueForService);
+            Schedules schedules = new Schedules(request.IdBarber, request.IdClient, request.TypeOfService, request.DateSchedule, request.ValueForService,request.IsFinalized);
             await _schedulesRepository.AddNewSchedule(schedules);
             return schedules;
         }
