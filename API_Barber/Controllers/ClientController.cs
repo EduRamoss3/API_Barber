@@ -17,7 +17,6 @@ namespace Barber.API.Controllers
             _clientService = clientService;
         }
         [HttpPost]
-        [Route("create")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create([FromBody] ClientRegisterDTO clientRegisterDTO)
         {
@@ -32,14 +31,13 @@ namespace Barber.API.Controllers
             }
             return BadRequest(ModelState);
         }
-        [HttpPut]
-        [Route("update")]
+        [HttpPut("{id:int:min(1)}")]
         [Authorize(Roles = "Member")]
-        public async Task<ActionResult> Update([FromBody] ClientDTO clientDTO)
+        public async Task<ActionResult> Update([FromBody] ClientDTO clientDTO, int? id)
         {
             if (ModelState.IsValid)
             {
-                var isSucceded = await _clientService.UpdateAsync(clientDTO);
+                var isSucceded = await _clientService.UpdateAsync(clientDTO, id.Value);
                 if (isSucceded)
                 {
                     return NoContent();
@@ -49,28 +47,26 @@ namespace Barber.API.Controllers
             return BadRequest(ModelState);
 
         }
-        [HttpDelete]
-        [Route("delete")]
+        [HttpDelete("{id:int:min(1)}",Name ="Delete")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Delete(ClientDTO clientDTO)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (ModelState.IsValid)
             {
-                var isDeleted = await _clientService.RemoveAsync(clientDTO);
+                var isDeleted = await _clientService.RemoveAsync(id.Value);
                 return isDeleted ? NoContent() : BadRequest("Something is wrong, try again and verify all fields.");
             }
             return BadRequest(ModelState);
         }
         [Authorize(Roles = "Admin")]
-        [Route("get/all")]
+        [Route("all")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients()
         {
             return Ok(await _clientService.GetAllAsync());
         }
         [Authorize(Roles = "Admin")]
-        [Route("get/{id}")]
-        [HttpGet]
+        [HttpGet("{id:int:min(1)}")]
         public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClientById(int? id)
         {
             var client = await _clientService.GetByIdAsync(id.Value);

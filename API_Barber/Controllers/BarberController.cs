@@ -18,7 +18,7 @@ namespace Barber.API.Controllers
         }
 
         [HttpGet]
-        [Route("get/all")]
+        [Route("all")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<BarberDTO>>> GetAllBarbers()
         {
@@ -30,7 +30,7 @@ namespace Barber.API.Controllers
             return Ok(barbers);
         }
         [HttpGet]
-        [Route("get/barber-id/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<BarberDTO>> GetBarberById(int id)
         {
             var barber = await _barberService.GetByIdAsync(id);
@@ -58,8 +58,7 @@ namespace Barber.API.Controllers
             return BadRequest("check all fields and try again");
         }
         [Authorize(Roles = "Admin")]
-        [HttpDelete]
-        [Route("delete/{id}")]
+        [HttpDelete("{id:int:min(1)}")]
         public async Task<ActionResult> DeleteBarberById(int? id)
         {
             try

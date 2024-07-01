@@ -19,7 +19,7 @@ namespace Barber.API.Controllers
             _scheduleService = scheduleService;
         }
         [HttpDelete]
-        [Route("delete/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (ModelState.IsValid)
@@ -53,7 +53,7 @@ namespace Barber.API.Controllers
             return Ok();
         }
         [HttpGet]
-        [Route("get/schedules")]
+        [Route("all")]
         [Authorize(Roles ="Admin")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedules()
         {
@@ -66,7 +66,7 @@ namespace Barber.API.Controllers
             
         }
         [HttpGet]
-        [Route("get/schedules/barber/{idBarber}")]
+        [Route("barber/{idBarber}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByBarberId(int? idBarber)
         {
@@ -74,7 +74,7 @@ namespace Barber.API.Controllers
             return Ok(schedules);
         }
         [HttpGet]
-        [Route("get/schedules/client/{idClient}")]
+        [Route("client/{idClient}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByClientId(int? idClient)
         {
@@ -82,7 +82,7 @@ namespace Barber.API.Controllers
             return Ok(schedules);
         }
         [HttpGet]
-        [Route("get/schedules/id/{idSchedule}")]
+        [Route("id/{idSchedule}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesById(int? idSchedule)
         {
@@ -105,7 +105,7 @@ namespace Barber.API.Controllers
             return new BadRequestObjectResult(ModelState);
         }
         [HttpPut]
-        [Route("update")]
+        [Route("{id}")]
         public async Task<IActionResult> UpdateSchedule(SchedulesDTO schedulesDTO, int? id)
         {
             if (ModelState.IsValid)
@@ -120,7 +120,7 @@ namespace Barber.API.Controllers
             return BadRequest(ModelState);  
         }
         [HttpPatch]
-        [Route("update/{idSchedule}/valueService/{valueForService}")]
+        [Route("{idSchedule}/value-service/{valueForService}")]
         public async Task<IActionResult> UpdateValueForSchedule(int idSchedule, decimal valueForService)
         {
             if (ModelState.IsValid)
