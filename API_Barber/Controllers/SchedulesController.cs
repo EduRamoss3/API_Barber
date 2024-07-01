@@ -1,8 +1,7 @@
 ﻿using Barber.Application.DTOs;
 using Barber.Application.Interfaces;
-using Barber.Domain.Entities;
+using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
@@ -14,141 +13,179 @@ namespace Barber.API.Controllers
     public class SchedulesController : ControllerBase
     {
         private readonly IScheduleService _scheduleService;
+
         public SchedulesController(IScheduleService scheduleService)
         {
             _scheduleService = scheduleService;
         }
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> Delete(int? id)
+
+        [HttpDelete("{id:int:min(1)}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var isRemoved  = await _scheduleService.RemoveAsync(id.Value);
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var isRemoved = await _scheduleService.RemoveAsync(id);
                 if (isRemoved)
                 {
-                    return Ok();
+                    return NoContent();
                 }
-                return BadRequest();
+                return BadRequest("Failed to delete the schedule.");
             }
-            return BadRequest(ModelState);
-            
+            catch (ApplicationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (DomainExceptionValidation d)
+            {
+                return BadRequest(d.Message);
+            }
         }
-        [HttpHead]
-        [Route("last-modified/{id}")]
+
+        [HttpHead("last-modified/{id:int:min(1)}")]
         public IActionResult LastModified(int id)
-        {          
+        {
             DateTime lastModified = DateTime.ParseExact("30/06/2024", "dd/MM/yyyy", CultureInfo.InvariantCulture);
             Response.Headers.Add("Last-Modified", lastModified.ToString("R"));
 
-            return Ok(); 
+            return Ok();
         }
 
-        [HttpOptions]
-        [Route("available/responses")]
+        [HttpOptions("available/responses")]
         public IActionResult Options()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
 
             return Ok();
         }
-        [HttpGet]
-        [Route("all")]
-        [Authorize(Roles ="Admin")]
+
+        [HttpGet("all")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedules()
         {
-            if (isAuthenticatedLikeAdmin())
+            var schedules = await _scheduleService.GetAllAsync();
+            return Ok(schedules);
+        }
+
+        [HttpGet("barber/{idBarber:int:min(1)}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByBarberId(int idBarber)
+        {
+            var schedules = await _scheduleService.GetByBarberIdAsync(idBarber);
+            if (schedules == null)
             {
-                var schedules = await _scheduleService.GetAllAsync();
-                return Ok(schedules);
+                return NotFound("No schedules found for this barber.");
             }
-            return Unauthorized("Get Permission to do this");
-            
-        }
-        [HttpGet]
-        [Route("barber/{idBarber}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByBarberId(int? idBarber)
-        {
-            var schedules = await _scheduleService.GetByBarberIdAsync(idBarber.Value);
             return Ok(schedules);
         }
-        [HttpGet]
-        [Route("client/{idClient}")]
+
+        [HttpGet("client/{idClient:int:min(1)}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByClientId(int? idClient)
+        public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByClientId(int idClient)
         {
-            var schedules = await _scheduleService.GetByClientIdAsync(idClient.Value);
+            var schedules = await _scheduleService.GetByClientIdAsync(idClient);
+            if (schedules == null)
+            {
+                return NotFound("No schedules found for this client.");
+            }
             return Ok(schedules);
         }
-        [HttpGet]
-        [Route("id/{idSchedule}")]
+
+        [HttpGet("id/{idSchedule:int:min(1)}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesById(int? idSchedule)
+        public async Task<ActionResult<SchedulesDTO>> GetSchedulesById(int idSchedule)
         {
-            var schedules = await _scheduleService.GetByIdAsync(idSchedule.Value);
+            var schedules = await _scheduleService.GetByIdAsync(idSchedule);
+            if (schedules == null)
+            {
+                return NotFound("Schedule not found.");
+            }
             return Ok(schedules);
         }
-        [HttpPost]
-        [Route("add")]
-        public async Task<IActionResult> Add([FromBody]SchedulesDTO schedules)
+
+        [HttpPost("add")]
+        public async Task<IActionResult> Add([FromBody] SchedulesDTO schedules)
         {
-            if (ModelState.IsValid && isAuthenticated())
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
             {
                 var isValid = await _scheduleService.AddAsync(schedules);
                 if (isValid)
                 {
-                    return Created("Schedules registered!",schedules); 
+                    return CreatedAtAction(nameof(GetSchedulesById), new { idSchedule = schedules.Id }, schedules);
                 }
-                return new BadRequestObjectResult("This schedule is not available to add");
+                return BadRequest("Failed to add the schedule.");
             }
-            return new BadRequestObjectResult(ModelState);
-        }
-        [HttpPut]
-        [Route("{id}")]
-        public async Task<IActionResult> UpdateSchedule(SchedulesDTO schedulesDTO, int? id)
-        {
-            if (ModelState.IsValid)
+            catch (ApplicationException e)
             {
-                var scheduleUpdate = await _scheduleService.UpdateAsync(schedulesDTO, id.Value);
-                if (scheduleUpdate)
-                {
-                    return Ok("Updated!");
-                }
-                return BadRequest("Error in update");
+                return BadRequest(e.Message);
             }
-            return BadRequest(ModelState);  
+            catch (DomainExceptionValidation d)
+            {
+                return BadRequest(d.Message);
+            }
         }
-        [HttpPatch]
-        [Route("{idSchedule}/value-service/{valueForService}")]
+
+        [HttpPut("{id:int:min(1)}")]
+        public async Task<IActionResult> UpdateSchedule([FromBody] SchedulesDTO schedulesDTO, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var isUpdated = await _scheduleService.UpdateAsync(schedulesDTO, id);
+                if (isUpdated)
+                {
+                    return Ok("Successfully updated!");
+                }
+                return BadRequest("Failed to update the schedule.");
+            }
+            catch (ApplicationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (DomainExceptionValidation d)
+            {
+                return BadRequest(d.Message);
+            }
+        }
+
+        [HttpPatch("{idSchedule:int:min(1)}/value-service/{valueForService:decimal}")]
         public async Task<IActionResult> UpdateValueForSchedule(int idSchedule, decimal valueForService)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var scheduleUpdate = await _scheduleService.UpdateValueForAsync(idSchedule, valueForService);
-                if (scheduleUpdate)
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var isUpdated = await _scheduleService.UpdateValueForAsync(idSchedule, valueForService);
+                if (isUpdated)
                 {
-                    return Ok("Updated!");
+                    return Ok("Value updated successfully.");
                 }
-                return BadRequest("Error in update");
+                return BadRequest("Failed to update the value.");
             }
-            return BadRequest(ModelState);
-        }
-        private bool isAuthenticated()
-        {
-            if (!User.Identity.IsAuthenticated)
+            catch (ApplicationException e)
             {
-                return false;
+                return BadRequest(e.Message);
             }
-            return true;
-        }
-        private bool isAuthenticatedLikeAdmin()
-        {
-            if (!User.IsInRole("Admin"))
+            catch (DomainExceptionValidation d)
             {
-                return false;
+                return BadRequest(d.Message);
             }
-            return true;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
+using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,104 +13,99 @@ namespace Barber.API.Controllers
     public class BarberController : ControllerBase
     {
         private readonly IBarberService _barberService;
+
         public BarberController(IBarberService barberService)
         {
             _barberService = barberService;
         }
 
-        [HttpGet]
-        [Route("all")]
+        [HttpGet("all")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<BarberDTO>>> GetAllBarbers()
+        public async Task<ActionResult<IEnumerable<BarberDTO>>> GetAll()
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return Unauthorized("Get permission to do this!");
-            }
             var barbers = await _barberService.GetAllAsync();
             return Ok(barbers);
         }
-        [HttpGet]
-        [Route("{id}")]
+
+        [HttpGet("{id:int:min(1)}")]
         public async Task<ActionResult<BarberDTO>> GetBarberById(int id)
         {
             var barber = await _barberService.GetByIdAsync(id);
-            if(barber is null)
+            if (barber is null)
             {
                 return NotFound("Barber not found!");
             }
-            return barber;
+            return Ok(barber);
         }
+
         [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [Route("add")]
-        public async Task<ActionResult<BarberDTO>> AddNewBarber([FromBody]BarberRegisterDTO barberRegisterDTO)
+        [HttpPost("add")]
+        public async Task<ActionResult> Add([FromBody] BarberRegisterDTO barberRegisterDTO)
         {
-            if (ModelState.IsValid && IsAuthenticatedLikeAdmin())
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Check all fields and try again");
+            }
+
+            try
             {
                 if (barberRegisterDTO is null)
                 {
-                    return BadRequest("barber cannot be null!");
+                    return BadRequest("Barber cannot be null!");
                 }
                 await _barberService.AddAsync(barberRegisterDTO);
-                return Ok("successfully registered barber!");
+                return CreatedAtAction(nameof(GetBarberById), new { id = barberRegisterDTO.Id }, "Successfully registered barber!");
             }
-           
-            return BadRequest("check all fields and try again");
-        }
-        [Authorize(Roles = "Admin")]
-        [HttpDelete("{id:int:min(1)}")]
-        public async Task<ActionResult> DeleteBarberById(int? id)
-        {
-            try
+            catch (DomainExceptionValidation d)
             {
-                if (IsAuthenticatedLikeAdmin())
-                {
-                    var result = await _barberService.RemoveByIdAsync(id.Value);
-                    if (result)
-                    {
-                        return Ok("Barber removed!");
-                    }
-                    return BadRequest("Barber no exist in the system");
-                }
-                return Unauthorized("Get permission to do this!");  
+                return BadRequest(d.Message);
             }
-            catch(ApplicationException e)
+            catch (ApplicationException e)
             {
                 return BadRequest(e.Message);
             }
-            
         }
+
         [Authorize(Roles = "Admin")]
-        [HttpPatch]
-        [Route("{barberId}/set-disponibility/{disponibility}")]
-        public async Task<ActionResult> SetDisponibility(int? barberId, bool disponibility)
+        [HttpDelete("{id:int:min(1)}")]
+        public async Task<ActionResult> DeleteBarberById(int id)
         {
             try
             {
-                if (IsAuthenticatedLikeAdmin())
+                var result = await _barberService.RemoveByIdAsync(id);
+                if (result)
                 {
-                    await _barberService.SetDisponibilityAsync(barberId.Value, disponibility);
-                    return Ok("Disponibility updated!");
+                    return NoContent();
                 }
-                return Unauthorized("Get permission to do this!");
-                
+                return BadRequest("Barber does not exist in the system");
             }
-            catch(ApplicationException e)
+            catch (ApplicationException e)
             {
-                return BadRequest(e.InnerException.Message);
+                return BadRequest(e.Message);
             }
-           
+            catch (DomainExceptionValidation d)
+            {
+                return BadRequest(d.Message);
+            }
         }
-        private bool IsAuthenticatedLikeAdmin()
+
+        [Authorize(Roles = "Admin")]
+        [HttpPatch("{barberId:int:min(1)}/set-disponibility/{disponibility}")]
+        public async Task<ActionResult> SetDisponibility(int barberId, bool disponibility)
         {
-            if (!User.IsInRole("Admin"))
+            try
             {
-                return true;
+                await _barberService.SetDisponibilityAsync(barberId, disponibility);
+                return Ok("Disponibility updated!");
             }
-            return false;
-           
+            catch (ApplicationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (DomainExceptionValidation d)
+            {
+                return BadRequest(d.Message);
+            }
         }
-        
     }
 }

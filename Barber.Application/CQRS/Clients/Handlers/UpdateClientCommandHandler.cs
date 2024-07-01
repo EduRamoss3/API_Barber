@@ -19,6 +19,10 @@ namespace Barber.Application.CQRS.Clients.Handlers
                 return false;
             }
             var client = await _clientRepository.GetByIdAsync(request.Id);
+            if(client is null)
+            {
+                return false;
+            }
             client.Update(request.Name, request.Points, request.Scheduled, request.LastTimeHere);
             await _clientRepository.Update(client);
             return true;

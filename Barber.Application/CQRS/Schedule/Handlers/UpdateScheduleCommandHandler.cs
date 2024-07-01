@@ -23,6 +23,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             var schedule = await _schedulesRepository.GetScheduleById(request.Id) 
                 ?? throw new ApplicationException("Schedule no exist!");
             schedule.Update(request.IdBarber,request.IdClient,request.TypeOfService, request.DateSchedule, request.ValueForService);
+            await _schedulesRepository.UpdateSchedule(schedule);
             return schedule;
         }
     }
