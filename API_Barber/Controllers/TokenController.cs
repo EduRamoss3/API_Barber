@@ -44,7 +44,6 @@ namespace Barber.API.Controllers
             {
                 ModelState.AddModelError($"{str.GetHashCode()}", str);
             }
-            
             return BadRequest(ModelState);
         }
         [HttpPost("login")]

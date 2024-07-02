@@ -17,6 +17,7 @@ namespace Barber.Application.DTOs
         public bool Scheduled { get; init; }
 
         [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime LastTimeHere { get; init; }
 
         [JsonIgnore]

@@ -52,7 +52,7 @@ namespace Barber.API.Controllers
             try
             {
                 await _barberService.AddAsync(barberRegisterDTO);
-                return CreatedAtAction(nameof(GetBarberById), new { id = barberRegisterDTO.Name }, "Successfully registered barber!");
+                return Created("Successfully registered barber!",barberRegisterDTO);
             }
             catch (DomainExceptionValidation d)
             {

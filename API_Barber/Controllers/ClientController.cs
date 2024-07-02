@@ -33,7 +33,7 @@ namespace Barber.API.Controllers
                 var isValid = await _clientService.AddAsync(clientRegisterDTO);
                 if (isValid)
                 {
-                    return CreatedAtAction(nameof(GetClientById), new { id = clientRegisterDTO.Name }, clientRegisterDTO);
+                    return Created("Client created!", clientRegisterDTO);
                 }
                 return BadRequest("Client registration failed.");
             }

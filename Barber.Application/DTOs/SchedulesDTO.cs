@@ -21,6 +21,7 @@ namespace Barber.Application.DTOs
 
         [Required(ErrorMessage ="Date to schedule is required!")]
         [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime DateSchedule { get; init; }
 
         [Required(ErrorMessage ="The value for service is required!")]

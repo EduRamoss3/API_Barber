@@ -21,6 +21,7 @@ namespace Barber.API.Controllers
         }
 
         [HttpDelete("{id:int:min(1)}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             if (!ModelState.IsValid)
@@ -47,8 +48,9 @@ namespace Barber.API.Controllers
             }
         }
 
-        [HttpHead("last-modified/{id:int:min(1)}")]
-        public IActionResult LastModified(int id)
+        [HttpHead("last-modified")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult LastModified()
         {
             DateTime lastModified = DateTime.ParseExact("30/06/2024", "dd/MM/yyyy", CultureInfo.InvariantCulture);
             Response.Headers.Add("Last-Modified", lastModified.ToString("R"));
@@ -109,6 +111,7 @@ namespace Barber.API.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize]
         public async Task<IActionResult> Add([FromBody] SchedulesDTO schedules)
         {
             if (!ModelState.IsValid)
@@ -136,6 +139,7 @@ namespace Barber.API.Controllers
             
         }
         [HttpPatch]
+        [Authorize(Roles = "Admin")]
         [Route("management-service")]
         public async Task<IActionResult> ManagementService(int id, bool endOrOpen)
         {
@@ -152,6 +156,7 @@ namespace Barber.API.Controllers
         }
 
         [HttpPut("{id:int:min(1)}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateSchedule([FromBody] SchedulesDTO schedulesDTO, int id)
         {
             if (!ModelState.IsValid)
@@ -179,6 +184,7 @@ namespace Barber.API.Controllers
         }
 
         [HttpPatch("{idSchedule:int:min(1)}/value-service/{valueForService:decimal}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateValueForSchedule(int idSchedule, decimal valueForService)
         {
             if (!ModelState.IsValid)
