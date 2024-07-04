@@ -25,7 +25,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
 
             foreach (Schedules schedule in listSchedules)
             {
-                if (request.DateSchedule == request.DateSchedule && !request.IsFinalized)
+                if (request.DateSchedule == schedule.DateSchedule && !request.IsFinalized)
                 {
                     throw new DomainExceptionValidation("This time is already scheduled");
                 }
