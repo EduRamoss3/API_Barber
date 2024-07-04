@@ -1,6 +1,7 @@
 ﻿using Barber.Application.CQRS.Schedule.Commands;
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
+using Barber.Domain.Validation;
 using MediatR;
 
 
@@ -20,16 +21,23 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Error, verify all data before register!");
             }
-            Schedules schedules = new Schedules(request.IdBarber, request.IdClient, request.TypeOfService, request.DateSchedule, request.ValueForService,request.IsFinalized);
-            var listSchedules = await _schedulesRepository.GetSchedulesByBarberId(request.IdBarber);    
+            var listSchedules = await _schedulesRepository.GetSchedulesByBarberId(request.IdBarber);
 
-            foreach(Schedules schedule in listSchedules)
+            foreach (Schedules schedule in listSchedules)
             {
-                if(schedule.DateSchedule == request.DateSchedule && !schedule.IsFinalized)
+                if (request.DateSchedule == request.DateSchedule && !request.IsFinalized)
                 {
-                    throw new ApplicationException("This time is already scheduled");
+                    throw new DomainExceptionValidation("This time is already scheduled");
+                }
+                if (!(request.DateSchedule.Minute.Equals(30) || request.DateSchedule.Minute.Equals(00)))
+                {
+                    throw new DomainExceptionValidation("Only every 30 minutes");
                 }
             }
+            Schedules schedules = new Schedules(request.IdBarber, request.IdClient, 
+                request.TypeOfService, request.DateSchedule, request.ValueForService,request.IsFinalized);
+
+           
             await _schedulesRepository.AddNewSchedule(schedules);
             return schedules;
         }
