@@ -35,5 +35,9 @@ namespace Barber.Domain.Entities
         {
             ValidateDomain(name, points, scheduled, lastTimeHere);
         }
+        public void UpdatePoints()
+        {
+            Points++;
+        }
     }
 }

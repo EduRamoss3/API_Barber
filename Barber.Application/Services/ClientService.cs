@@ -51,5 +51,11 @@ namespace Barber.Application.Services
             updateClientCommand.Id = id.Value;
             return  await _mediator.Send(updateClientCommand);
         }
+        public async Task UpdatePointsAsync(int id)
+        {
+            UpdatePointsClientCommand cmd = new UpdatePointsClientCommand(id);
+            await _mediator.Send(cmd);
+        }
+
     }
 }

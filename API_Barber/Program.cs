@@ -1,3 +1,4 @@
+using Barber.API.Filters;
 using Barber.API.Helper;
 using Barber.Domain.Interfaces;
 using Barber.Infrastructure.IoC.DependencyInjection;
@@ -18,6 +19,7 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddScoped<ApiLoggingFilter>();
 builder.Services.AddAntiforgery(options =>
 {
     options.SuppressXFrameOptionsHeader = true;

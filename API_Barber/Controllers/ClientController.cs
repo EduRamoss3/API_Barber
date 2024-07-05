@@ -122,5 +122,6 @@ namespace Barber.API.Controllers
             }
             return NotFound("Client not found.");
         }
+      
     }
 }

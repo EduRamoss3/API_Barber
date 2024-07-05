@@ -1,9 +1,9 @@
-﻿using Barber.Application.DTOs;
+﻿using Barber.API.Filters;
+using Barber.Application.DTOs;
 using Barber.Application.Interfaces;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 namespace Barber.API.Controllers
@@ -14,10 +14,11 @@ namespace Barber.API.Controllers
     public class SchedulesController : ControllerBase
     {
         private readonly IScheduleService _scheduleService;
-
-        public SchedulesController(IScheduleService scheduleService)
+        private readonly IClientService _clientService;
+        public SchedulesController(IScheduleService scheduleService, IClientService clientService)
         {
             _scheduleService = scheduleService;
+            _clientService = clientService;
         }
 
         [HttpDelete("{id:int:min(1)}")]
@@ -112,6 +113,7 @@ namespace Barber.API.Controllers
 
         [HttpPost("add")]
         [Authorize]
+        [ServiceFilter(typeof(ApiLoggingFilter))]
         public async Task<IActionResult> Add([FromBody] SchedulesDTO schedules)
         {
             if (!ModelState.IsValid)
@@ -124,6 +126,7 @@ namespace Barber.API.Controllers
                 var isValid = await _scheduleService.AddAsync(schedules);
                 if (isValid)
                 {
+                    UpdatePoints(schedules.IdClient);
                     return Created("created",schedules);
                 }
                 return BadRequest("Failed to add the schedule.");
@@ -208,6 +211,13 @@ namespace Barber.API.Controllers
             catch (DomainExceptionValidation d)
             {
                 return BadRequest(d.Message);
+            }
+        }
+        private void UpdatePoints(int? idClient)
+        {
+            if (idClient.HasValue)
+            {
+                _clientService.UpdatePointsAsync(idClient.Value);
             }
         }
     }

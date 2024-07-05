@@ -14,5 +14,6 @@ namespace Barber.Domain.Interfaces
         Task<Client> GetByIdAsync(int id);
         Task<IEnumerable<Client>> GetAllAsync();  
         Task<bool> Update(Client client);
+        Task UpdatePointsAsync(int id);
     }
 }

@@ -105,5 +105,6 @@ namespace Barber.API.Controllers
                 return BadRequest(d.Message);
             }
         }
+       
     }
 }

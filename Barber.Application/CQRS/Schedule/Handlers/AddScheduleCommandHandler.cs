@@ -22,6 +22,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
                 throw new ApplicationException("Error, verify all data before register!");
             }
             var listSchedules = await _schedulesRepository.GetSchedulesByBarberId(request.IdBarber);
+            var dateNow = DateTime.Now;
 
             foreach (Schedules schedule in listSchedules)
             {
@@ -32,6 +33,10 @@ namespace Barber.Application.CQRS.Schedule.Handlers
                 if (!(request.DateSchedule.Minute.Equals(30) || request.DateSchedule.Minute.Equals(00)))
                 {
                     throw new DomainExceptionValidation("Only every 30 minutes");
+                }
+                if(dateNow > request.DateSchedule)
+                {
+                    throw new DomainExceptionValidation("Cannot schedule date pass");
                 }
             }
             Schedules schedules = new Schedules(request.IdBarber, request.IdClient, 

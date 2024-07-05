@@ -79,6 +79,7 @@ namespace Barber.Application.Services
             var entity = await _mediator.Send(patchEndOpenServiceScheduleCommand);
             return entity;
         }
+        
 
     }
 }

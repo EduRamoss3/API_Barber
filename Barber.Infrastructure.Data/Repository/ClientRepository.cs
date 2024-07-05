@@ -2,11 +2,7 @@
 using Barber.Domain.Interfaces;
 using Barber.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Barber.Infrastructure.Data.Repository
 {
@@ -50,6 +46,17 @@ namespace Barber.Infrastructure.Data.Repository
             _context.Clients.Update(client);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task UpdatePointsAsync(int id)
+        {
+            var client = await _context.Clients.FindAsync(id);
+            if(client is not null)
+            {
+                client.UpdatePoints();
+                _context.Entry(client).Property(p => p.Points).IsModified = true;
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

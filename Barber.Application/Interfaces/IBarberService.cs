@@ -10,5 +10,6 @@ namespace Barber.Application.Interfaces
         Task<IEnumerable<BarberDTO>> GetAllAsync();
         Task<bool> SetDisponibilityAsync(int id, bool disponibility);
         Task<BarberDTO> GetByIdAsync(int id);
+        Task<List<DateTime>> GetDisponibleDateAsync(int idBarber);
     }
 }
