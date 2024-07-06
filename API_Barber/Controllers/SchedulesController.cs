@@ -214,6 +214,7 @@ namespace Barber.API.Controllers
                 return BadRequest(d.Message);
             }
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("service-time/{everyIntMinutes}")]
         public IActionResult ServiceTime(int everyIntMinutes)
