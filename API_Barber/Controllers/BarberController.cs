@@ -105,6 +105,18 @@ namespace Barber.API.Controllers
                 return BadRequest(d.Message);
             }
         }
-       
+        [HttpGet]
+        [Route("{barberId}/indisponibleDates")]
+        public async Task<ActionResult> GetIndisponibleDates(int barberId)
+        {
+            var listDateTime = await _barberService.GetIndisponibleDateAsync(barberId);
+            var formattedDates = listDateTime.Select(p => p.ToString("dd/MM/yyyy HH:mm")).ToList();
+            if(formattedDates.Count == 0)
+            {
+                return NoContent();
+            }
+            return Ok("Choose dates except: " + string.Join(", ", formattedDates));
+        }
+
     }
 }

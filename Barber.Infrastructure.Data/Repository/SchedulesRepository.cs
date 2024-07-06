@@ -3,7 +3,6 @@ using Barber.Domain.Interfaces;
 using Barber.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Barber.Infrastructure.Data.Repository
 {
     public class SchedulesRepository : ISchedulesRepository
@@ -71,6 +70,16 @@ namespace Barber.Infrastructure.Data.Repository
                 return true;
             }
             return false;
+        }
+
+        public async Task<List<DateTime>> GetIndisponibleDatesByBarberId(int barberId)
+        {
+            var listSchedules = await _context.Schedules
+                .Where(p => p.IdBarber == barberId
+                && !(p.IsFinalized))
+                .Select(d => d.DateSchedule)
+                .OrderBy(p => p.Month).ToListAsync();
+            return listSchedules;
         }
     }
 }

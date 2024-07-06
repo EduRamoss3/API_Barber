@@ -51,9 +51,10 @@ namespace Barber.Application.Services
             return _mapper.Map<BarberDTO>(barbersEntity);
         }
 
-        public Task<List<DateTime>> GetDisponibleDateAsync(int idBarber)
+        public async Task<List<DateTime>> GetIndisponibleDateAsync(int idBarber)
         {
-            throw new NotImplementedException();
+            GetIndisponibleDatesQuery getDisponibleDatesQuery = new GetIndisponibleDatesQuery(idBarber);
+            return await _mediator.Send(getDisponibleDatesQuery);
         }
     }
 }
