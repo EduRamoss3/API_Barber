@@ -1,4 +1,5 @@
 ﻿using Barber.API.Filters;
+using Barber.Application.DefaultValues;
 using Barber.Application.DTOs;
 using Barber.Application.Interfaces;
 using Barber.Domain.Validation;
@@ -212,6 +213,17 @@ namespace Barber.API.Controllers
             {
                 return BadRequest(d.Message);
             }
+        }
+        [HttpPost]
+        [Route("service-time/{everyIntMinutes}")]
+        public IActionResult ServiceTime(int everyIntMinutes)
+        {
+            if (ModelState.IsValid)
+            {
+                HourServiceTimeDefault.SetDefaultMinutes(everyIntMinutes);
+                return Ok($"Service time for every {everyIntMinutes} minutes updated!");
+            }
+            return BadRequest(ModelState);
         }
         private void UpdatePoints(int? idClient)
         {

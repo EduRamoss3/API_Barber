@@ -1,4 +1,5 @@
 ﻿using Barber.Application.CQRS.Schedule.Commands;
+using Barber.Application.DefaultValues;
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
 using Barber.Domain.Validation;
@@ -13,6 +14,10 @@ namespace Barber.Application.CQRS.Schedule.Handlers
         public AddScheduleCommandHandler(ISchedulesRepository schedulesRepository)
         {
             _schedulesRepository = schedulesRepository;
+        }
+        private bool IsValidScheduleTime(DateTime dateSchedule)
+        {
+            return dateSchedule.Minute % HourServiceTimeDefault.DefaultMinutes == 0;
         }
 
         public async Task<Schedules> Handle(AddScheduleCommand request, CancellationToken cancellationToken)
@@ -30,11 +35,11 @@ namespace Barber.Application.CQRS.Schedule.Handlers
                 {
                     throw new DomainExceptionValidation("This time is already scheduled");
                 }
-                if (!(request.DateSchedule.Minute.Equals(30) || request.DateSchedule.Minute.Equals(00)))
+                if (!IsValidScheduleTime(request.DateSchedule))
                 {
-                    throw new DomainExceptionValidation("Only every 30 minutes");
+                    throw new DomainExceptionValidation($"Only every {HourServiceTimeDefault.DefaultMinutes} minutes");
                 }
-                if(dateNow > request.DateSchedule)
+                if (dateNow > request.DateSchedule)
                 {
                     throw new DomainExceptionValidation("Cannot schedule date pass");
                 }
