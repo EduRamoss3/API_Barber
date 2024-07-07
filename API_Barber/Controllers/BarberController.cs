@@ -13,12 +13,10 @@ namespace Barber.API.Controllers
     public class BarberController : ControllerBase
     {
         private readonly IBarberService _barberService;
-        private readonly IScheduleService _scheduleService;
 
-        public BarberController(IBarberService barberService, IScheduleService scheduleService)
+        public BarberController(IBarberService barberService)
         {
             _barberService = barberService;
-            _scheduleService = scheduleService;
         }
 
         [HttpGet("all")]

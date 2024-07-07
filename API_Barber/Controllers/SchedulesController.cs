@@ -38,7 +38,7 @@ namespace Barber.API.Controllers
                 var isRemoved = await _scheduleService.RemoveAsync(id);
                 if (isRemoved)
                 {
-                    return NoContent();
+                    return Ok("Removed");
                 }
                 return BadRequest("Failed to delete the schedule.");
             }

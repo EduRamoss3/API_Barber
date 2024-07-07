@@ -1,12 +1,9 @@
 ﻿using Barber.API.Models;
-using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
 using Barber.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

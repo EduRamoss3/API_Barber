@@ -1,11 +1,8 @@
 ﻿using Barber.Domain.Interfaces;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+
 
 namespace Barber.Infrastructure.Data.Identitys
 {
@@ -13,30 +10,48 @@ namespace Barber.Infrastructure.Data.Identitys
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ILogger<AuthenticateService> _logger;
 
-        public AuthenticateService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AuthenticateService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ILogger<AuthenticateService> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
-    
+
         public async Task<Validator> Authenticate(string email, string password)
         {
+            _logger.LogInformation($"Attempting to authenticate user with email '{email}'.");
+
             var result = await _signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure: false);
+
             Validator validate = new Validator()
             {
                 IsSucceded = result.Succeeded,
             };
-            return validate;       
+
+            if (result.Succeeded)
+            {
+                _logger.LogInformation($"User '{email}' authenticated successfully.");
+            }
+            else
+            {
+                _logger.LogWarning($"Failed authentication attempt for user '{email}'.");
+            }
+
+            return validate;
         }
 
         public async Task Logout()
         {
             await _signInManager.SignOutAsync();
+            _logger.LogInformation($"User logged out.");
         }
 
         public async Task<Validator> RegisterUser(string email, string password)
         {
+            _logger.LogInformation($"Attempting to register user with email '{email}'.");
+
             var identityUser = new IdentityUser()
             {
                 UserName = email,
@@ -44,25 +59,28 @@ namespace Barber.Infrastructure.Data.Identitys
             };
 
             var result = await _userManager.CreateAsync(identityUser, password);
-           
-            
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(identityUser, "Member");
-                await _signInManager.SignInAsync(identityUser, isPersistent: false);
-            }
+
             Validator validate = new Validator()
             {
                 IsSucceded = result.Succeeded,
-
             };
-            foreach (var errors in result.Errors)
+
+            if (result.Succeeded)
             {
-                validate.Message.Add(errors.Description.ToString());
+                _logger.LogInformation($"User '{email}' registered successfully.");
+                await _userManager.AddToRoleAsync(identityUser, "Member");
+                await _signInManager.SignInAsync(identityUser, isPersistent: false);
             }
-            
+            else
+            {
+                _logger.LogWarning($"Failed registration attempt for user '{email}'.");
+                foreach (var error in result.Errors)
+                {
+                    validate.Message.Add(error.Description);
+                }
+            }
+
             return validate;
         }
-      
     }
 }

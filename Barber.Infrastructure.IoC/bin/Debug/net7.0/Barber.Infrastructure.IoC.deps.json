@@ -623,7 +623,8 @@
         "dependencies": {
           "AutoMapper": "13.0.1",
           "Barber.Domain": "1.0.0",
-          "MediatR": "10.0.0"
+          "MediatR": "10.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.0"
         },
         "runtime": {
           "Barber.Application.dll": {}
