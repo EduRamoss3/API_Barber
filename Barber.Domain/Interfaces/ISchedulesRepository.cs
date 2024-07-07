@@ -1,9 +1,4 @@
 ﻿using Barber.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barber.Domain.Interfaces
 {
@@ -19,6 +14,7 @@ namespace Barber.Domain.Interfaces
         Task<List<Schedules>> GetScheduleByClientId(int clientId);
         Task<bool> EndOrOpenServiceByIdAsync(int id, bool endOrOpen);
         Task<List<DateTime>> GetIndisponibleDatesByBarberId(int barberId);
+        Task<bool> IsDisponibleInThisDate(int barberId, DateTime dateTime);
 
 
     }

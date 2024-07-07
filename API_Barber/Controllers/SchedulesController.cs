@@ -5,6 +5,8 @@ using Barber.Application.Interfaces;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
 namespace Barber.API.Controllers
@@ -215,7 +217,7 @@ namespace Barber.API.Controllers
             }
         }
         [Authorize(Roles = "Admin")]
-        [HttpPost]
+        [HttpPut]
         [Route("service-time/{everyIntMinutes}")]
         public IActionResult ServiceTime(int everyIntMinutes)
         {
@@ -231,6 +233,24 @@ namespace Barber.API.Controllers
             if (idClient.HasValue)
             {
                 _clientService.UpdatePointsAsync(idClient.Value);
+            }
+        }
+        [Authorize]
+        [HttpGet("barbers/{barberId}/availability/{dateSearch}")]
+        public async Task<ActionResult> IsDisponibleDate(int barberId, DateTime dateSearch)
+        {
+            try
+            {
+                var isDisponible = await _scheduleService.GetByDateDisponible(barberId, dateSearch);
+                if (isDisponible)
+                {
+                    return Ok(new { IsDisponible = true, Message = "Date disponible!" });
+                }
+                return Ok(new { IsDisponible = false, Message = "Date indisponible" });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while processing your request.");
             }
         }
     }

@@ -13,6 +13,7 @@ namespace Barber.Application.Interfaces
         Task<List<SchedulesDTO>> GetByBarberIdAsync(int? barberId);
         Task<List<SchedulesDTO>> GetByClientIdAsync(int? clientId);
         Task<bool> EndOpenAsync(int id, bool endOpen);
+        Task<bool> GetByDateDisponible(int idBarber, DateTime dateTimeSearch);
 
     }
 }

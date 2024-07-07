@@ -81,5 +81,18 @@ namespace Barber.Infrastructure.Data.Repository
                 .OrderBy(p => p.Month).ToListAsync();
             return listSchedules;
         }
+
+        public async Task<bool> IsDisponibleInThisDate(int barberId, DateTime dateTime)
+        {
+            List<DateTime> dateTimes = await _context.Schedules.Where(p => p.IdBarber == barberId).Select(p => p.DateSchedule).ToListAsync();
+            string targetTime = dateTime.ToString("dd/MM/yyyy HH:mm");
+            var exist = dateTimes.Any(p => p.ToString("dd/MM/yyyy HH:mm").Equals(targetTime));
+
+            if (exist)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

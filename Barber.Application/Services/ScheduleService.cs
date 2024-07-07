@@ -79,7 +79,12 @@ namespace Barber.Application.Services
             var entity = await _mediator.Send(patchEndOpenServiceScheduleCommand);
             return entity;
         }
-        
 
+        public async Task<bool> GetByDateDisponible(int idBarber, DateTime dateTimeSearch)
+        {
+            GetDisponibleScheduleByDateQuery getDisponibleScheduleByDateQuery = new GetDisponibleScheduleByDateQuery(idBarber, dateTimeSearch);
+            var entity = await _mediator.Send(getDisponibleScheduleByDateQuery);
+            return entity;
+        }
     }
 }

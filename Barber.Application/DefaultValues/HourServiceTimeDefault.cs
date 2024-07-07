@@ -12,11 +12,6 @@ namespace Barber.Application.DefaultValues
 
         public static void SetDefaultMinutes(int defaultMinutes)
         {
-            if(defaultMinutes < 0 || defaultMinutes > 60)
-            {
-                defaultMinutes = 00;
-            }
-            
             DefaultMinutes = defaultMinutes;
         }
        
