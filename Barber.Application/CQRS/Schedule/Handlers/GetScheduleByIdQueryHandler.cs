@@ -19,10 +19,10 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Error args is null");
             }
-            var schedule = await _schedulesRepository.GetScheduleById(request.Id);
-            if(schedule is not Schedules)
+            var schedule = await _schedulesRepository.GetByIdAsync(request.Id);
+            if(schedule is null)
             {
-                throw new ApplicationException("Empty schedules here");
+                throw new ApplicationException("Schedule not found");
             }
             return schedule;
            

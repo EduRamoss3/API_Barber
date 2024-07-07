@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Barber.Application.CQRS.Schedule.Handlers
 {
-    public class UpdateScheduleCommandHandler : IRequestHandler<UpdateScheduleCommand, Schedules>
+    public class UpdateScheduleCommandHandler : IRequestHandler<UpdateScheduleCommand, bool>
     {
         private readonly ISchedulesRepository _schedulesRepository;
         public UpdateScheduleCommandHandler(ISchedulesRepository schedulesRepository)
@@ -14,17 +14,20 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             _schedulesRepository = schedulesRepository;
         }
 
-        public async Task<Schedules> Handle(UpdateScheduleCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateScheduleCommand request, CancellationToken cancellationToken)
         {
             if(request is null)
             {
                 throw new ApplicationException("Cant update this schedule!");
             }
-            var schedule = await _schedulesRepository.GetScheduleById(request.Id) 
-                ?? throw new ApplicationException("Schedule no exist!");
+            var schedule = await _schedulesRepository.GetByIdAsync(request.Id);
+            if(schedule is null)
+            {
+                return false;
+            }
             schedule.Update(request.IdBarber,request.IdClient,request.TypeOfService, request.DateSchedule, request.ValueForService, request.IsFinalized);
-            await _schedulesRepository.UpdateSchedule(schedule);
-            return schedule;
+            await _schedulesRepository.UpdateAsync(schedule);
+            return true;
         }
     }
 }

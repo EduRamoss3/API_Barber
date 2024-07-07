@@ -18,9 +18,9 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Request is null");
             }
-            var schedule = await _schedulesRepository.GetScheduleById(request.Id) ?? throw new ApplicationException("Schedule no exist");
+            var schedule = await _schedulesRepository.GetByIdAsync(request.Id) ?? throw new ApplicationException("Schedule no exist");
             schedule.UpdateValueForService(request.ValueForService);
-            await _schedulesRepository.UpdateValueForSchedule(schedule);
+            await _schedulesRepository.UpdateValueForAsync(schedule);
             return schedule;
         }
     }

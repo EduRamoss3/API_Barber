@@ -12,19 +12,19 @@ namespace Barber.Infrastructure.Data.Repository
         {
             _context = context;
         }
-        public async Task<bool> AddNewSchedule(Schedules schedule)
+        public async Task<bool> AddAsync(Schedules schedule)
         {
             await _context.Schedules.AddAsync(schedule);
             await _context.SaveChangesAsync();
             return Task.CompletedTask.IsCompleted;
         }
 
-        public async Task<List<Schedules>> GetScheduleByClientId(int clientId)
+        public async Task<List<Schedules>> GetByClientIdAsync(int clientId)
         {
             return await _context.Schedules.Where(p => p.IdClient == clientId).ToListAsync();
         }
 
-        public async Task<Schedules> GetScheduleById(int id)
+        public async Task<Schedules> GetByIdAsync(int id)
         {
             return await _context.Schedules.FirstOrDefaultAsync(p => p.Id == id);
         }
@@ -34,26 +34,26 @@ namespace Barber.Infrastructure.Data.Repository
             return await _context.Schedules.ToListAsync();
         }
 
-        public async Task<List<Schedules>> GetSchedulesByBarberId(int barberId)
+        public async Task<List<Schedules>> GetByBarberIdAsync(int barberId)
         {
             return await _context.Schedules.Where(p => p.IdBarber == barberId).ToListAsync();
         }
 
-        public async Task<bool> RemoveSchedule(Schedules schedule)
+        public async Task<bool> RemoveAsync(Schedules schedule)
         {
             _context.Schedules.Remove(schedule);
             await _context.SaveChangesAsync();
             return Task.CompletedTask.IsCompleted;
         }
 
-        public async Task<bool> UpdateSchedule(Schedules schedule)
+        public async Task<bool> UpdateAsync(Schedules schedule)
         {
             _context.Schedules.Update(schedule);
             await _context.SaveChangesAsync();
             return Task.CompletedTask.IsCompleted;
         }
 
-        public async Task UpdateValueForSchedule(Schedules schedule)
+        public async Task UpdateValueForAsync(Schedules schedule)
         {
             _context.Entry(schedule).Property(p => p.ValueForService).IsModified = true;
             await _context.SaveChangesAsync();
@@ -61,7 +61,7 @@ namespace Barber.Infrastructure.Data.Repository
 
         public async Task<bool> EndOrOpenServiceByIdAsync(int id, bool endOrOpen)
         {
-            var schedule = await GetScheduleById(id);
+            var schedule = await GetByIdAsync(id);
             if(schedule is Schedules)
             {
                 schedule.SetIsClose(endOrOpen);

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Barber.Application.CQRS.Schedule.Handlers
 {
-    public class RemoveScheduleHandler : IRequestHandler<RemoveScheduleCommand, Schedules>
+    public class RemoveScheduleHandler : IRequestHandler<RemoveScheduleCommand, bool>
     {
         private readonly ISchedulesRepository _scheduleRepository;
         public RemoveScheduleHandler(ISchedulesRepository scheduleRepository)
@@ -14,15 +14,19 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             _scheduleRepository = scheduleRepository;
         }
 
-        public async Task<Schedules> Handle(RemoveScheduleCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(RemoveScheduleCommand request, CancellationToken cancellationToken)
         {
             if (request is null)
             {
                 throw new ApplicationException("Error args is null");
             }
-            var schedule = await _scheduleRepository.GetScheduleById(request.Id) ?? throw new ApplicationException("Schedule no exist");
-            await _scheduleRepository.RemoveSchedule(schedule);
-            return schedule;
+            var schedule = await _scheduleRepository.GetByIdAsync(request.Id);
+            if(schedule is null)
+            {
+                return false;
+            }
+            await _scheduleRepository.RemoveAsync(schedule);
+            return true;
         }
     }
 }

@@ -102,7 +102,7 @@ namespace Barber.Application.Services
             var removeScheduleCommand = new RemoveScheduleCommand(id.Value);
             var entity = await _mediator.Send(removeScheduleCommand);
 
-            if (entity != null)
+            if (entity)
             {
                 _logger.LogInformation($"Schedule with ID '{id}' removed successfully.");
                 return true;
@@ -122,7 +122,7 @@ namespace Barber.Application.Services
             updateScheduleCommand.Id = id.Value;
             var entity = await _mediator.Send(updateScheduleCommand);
 
-            if (entity != null)
+            if (entity)
             {
                 _logger.LogInformation($"Schedule with ID '{id}' updated successfully.");
                 return true;

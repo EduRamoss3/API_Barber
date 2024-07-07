@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using MediatR;
 
 namespace Barber.Application.CQRS.Schedule.Commands
 {
-    public class RemoveScheduleCommand : ScheduleCommand
+    public class RemoveScheduleCommand : IRequest<bool>
     {
+        public int Id { get; set; }
         public RemoveScheduleCommand(int id)
         {
             Id = id;

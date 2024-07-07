@@ -41,7 +41,7 @@ builder.Services.AddLogging(builder =>
 {
     builder.AddConsole();
     builder.AddDebug();
-    builder.AddEventLog();
+   
 });
 var cultureInfo = new CultureInfo("pt-BR");
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;

@@ -16,8 +16,8 @@ namespace Barber.Application.CQRS.Schedule.Handlers
         
         public async Task<List<Schedules>> Handle(GetScheduleByClientIdQuery request, CancellationToken cancellationToken)
         {
-            var schedules = await _schedulesRepository.GetScheduleByClientId(request.IdClient);
-            if(request is null)
+            var schedules = await _schedulesRepository.GetByClientIdAsync(request.IdClient);
+            if(schedules is null)
             {
                 throw new ApplicationException("Client dont exist");
             }

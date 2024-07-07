@@ -26,7 +26,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Error, verify all data before register!");
             }
-            var listSchedules = await _schedulesRepository.GetSchedulesByBarberId(request.IdBarber);
+            var listSchedules = await _schedulesRepository.GetByBarberIdAsync(request.IdBarber);
             var dateNow = DateTime.Now;
 
             foreach (Schedules schedule in listSchedules)
@@ -48,7 +48,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
                 request.TypeOfService, request.DateSchedule, request.ValueForService,request.IsFinalized);
 
            
-            await _schedulesRepository.AddNewSchedule(schedules);
+            await _schedulesRepository.AddAsync(schedules);
             return schedules;
         }
     }

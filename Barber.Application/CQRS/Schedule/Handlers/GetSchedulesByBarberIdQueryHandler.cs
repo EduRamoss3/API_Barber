@@ -19,7 +19,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Error args is null");
             }
-            var schedules = await _shedulesRepository.GetSchedulesByBarberId(request.IdBarber) ?? new List<Schedules>();
+            var schedules = await _shedulesRepository.GetByBarberIdAsync(request.IdBarber) ?? throw new ApplicationException("Barber no exist");
             return schedules;
         }
     }

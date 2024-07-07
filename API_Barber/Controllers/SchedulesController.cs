@@ -5,8 +5,6 @@ using Barber.Application.Interfaces;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
 namespace Barber.API.Controllers
@@ -40,7 +38,7 @@ namespace Barber.API.Controllers
                 {
                     return Ok("Removed");
                 }
-                return BadRequest("Failed to delete the schedule.");
+                return NotFound("Failed to delete the schedule.");
             }
             catch (ApplicationException e)
             {
@@ -82,36 +80,48 @@ namespace Barber.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByBarberId(int idBarber)
         {
-            var schedules = await _scheduleService.GetByBarberIdAsync(idBarber);
-            if (schedules == null)
+            try
             {
-                return NotFound("No schedules found for this barber.");
+                var schedules = await _scheduleService.GetByBarberIdAsync(idBarber);
+                return Ok(schedules);
             }
-            return Ok(schedules);
+            catch(ApplicationException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("client/{idClient:int:min(1)}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByClientId(int idClient)
         {
-            var schedules = await _scheduleService.GetByClientIdAsync(idClient);
-            if (schedules == null)
+            try
             {
-                return NotFound("No schedules found for this client.");
+                var schedules = await _scheduleService.GetByClientIdAsync(idClient);
+                return Ok(schedules);
+
             }
-            return Ok(schedules);
+            catch(ApplicationException e)
+            {
+                return NotFound(e.Message);
+            }
+            
         }
 
         [HttpGet("id/{idSchedule:int:min(1)}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<SchedulesDTO>> GetSchedulesById(int idSchedule)
         {
-            var schedules = await _scheduleService.GetByIdAsync(idSchedule);
-            if (schedules == null)
+            try
             {
-                return NotFound("Schedule not found.");
+                var schedules = await _scheduleService.GetByIdAsync(idSchedule);
+                return Ok(schedules);
             }
-            return Ok(schedules);
+            catch(ApplicationException e)
+            {
+                return NotFound(e.Message);
+            }
+            
         }
 
         [HttpPost("add")]
