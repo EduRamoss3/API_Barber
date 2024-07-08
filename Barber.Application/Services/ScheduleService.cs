@@ -78,7 +78,7 @@ namespace Barber.Application.Services
             var getSchedules = new GetSchedulesQuery();
             var schedules = await _mediator.Send(getSchedules);
 
-            _logger.LogInformation($"Retrieved {schedules.Count} schedules.");
+            _logger.LogInformation($"Retrieved {schedules.Count()} schedules.");
 
             return _mapper.Map<List<SchedulesDTO>>(schedules);
         }

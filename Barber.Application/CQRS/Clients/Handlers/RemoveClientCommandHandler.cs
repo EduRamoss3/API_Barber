@@ -20,7 +20,7 @@ namespace Barber.Application.CQRS.Clients.Handlers
             {
                 throw new ApplicationException("Request dont exist");
             }
-            var client = await _clientRepository.GetByIdAsync(request.Id);
+            var client = await _clientRepository.GetByIdAsync(p => p.Id == request.Id);
             if(client is null)
             {
                 throw new ApplicationException("Client dont exist!");

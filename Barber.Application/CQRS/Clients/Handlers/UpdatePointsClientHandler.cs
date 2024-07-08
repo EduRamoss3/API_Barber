@@ -16,7 +16,7 @@ namespace Barber.Application.CQRS.Clients.Handlers
         }
         public async Task<bool> Handle(UpdatePointsClientCommand request, CancellationToken cancellationToken)
         {
-            var client = await _clientRepository.GetByIdAsync(request.Id);
+            var client = await _clientRepository.GetByIdAsync(p => p.Id == request.Id);
             if(client is not null)
             {
                 await _clientRepository.UpdatePointsAsync(client.Id);

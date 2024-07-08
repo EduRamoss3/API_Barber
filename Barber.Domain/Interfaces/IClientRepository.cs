@@ -1,19 +1,11 @@
-﻿using Barber.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using Barber.Domain.Entities;
 
 namespace Barber.Domain.Interfaces
 {
-    public interface IClientRepository
+    public interface IClientRepository : IRepository<Client>
     {
-        Task AddAsync(Client client);
-        Task RemoveAsync(Client client);
-        Task<Client> GetByIdAsync(int id);
-        Task<IEnumerable<Client>> GetAllAsync();  
-        Task<bool> Update(Client client);
         Task UpdatePointsAsync(int id);
     }
 }

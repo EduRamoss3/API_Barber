@@ -14,7 +14,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
         }
         public async Task<bool> Handle(PatchEndOpenServiceScheduleCommand request, CancellationToken cancellationToken)
         {
-            var schedule = await _schedulesRepository.GetByIdAsync(request.Id);
+            var schedule = await _schedulesRepository.GetByIdAsync(p => p.Id == request.Id);
             if(schedule is not null)
             {
                 await _schedulesRepository.EndOrOpenServiceByIdAsync(request.Id, request.IsFinalized);

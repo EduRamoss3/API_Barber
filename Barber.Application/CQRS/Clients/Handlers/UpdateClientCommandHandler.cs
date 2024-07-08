@@ -18,13 +18,13 @@ namespace Barber.Application.CQRS.Clients.Handlers
             {
                 return false;
             }
-            var client = await _clientRepository.GetByIdAsync(request.Id);
+            var client = await _clientRepository.GetByIdAsync(p => p.Id == request.Id);
             if(client is null)
             {
                 return false;
             }
             client.Update(request.Name, request.Points, request.Scheduled, request.LastTimeHere);
-            await _clientRepository.Update(client);
+            await _clientRepository.UpdateAsync(client);
             return true;
             
         }

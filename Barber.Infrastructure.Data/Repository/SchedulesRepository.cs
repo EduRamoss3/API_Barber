@@ -5,52 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Barber.Infrastructure.Data.Repository
 {
-    public class SchedulesRepository : ISchedulesRepository
+    public class SchedulesRepository : Repository<Schedules>, ISchedulesRepository
     {
-        private readonly AppDbContext _context;
-        public SchedulesRepository(AppDbContext context)
-        {
-            _context = context;
-        }
-        public async Task<bool> AddAsync(Schedules schedule)
-        {
-            await _context.Schedules.AddAsync(schedule);
-            await _context.SaveChangesAsync();
-            return Task.CompletedTask.IsCompleted;
-        }
+        public SchedulesRepository(AppDbContext context) : base(context) { }
 
+     
         public async Task<List<Schedules>> GetByClientIdAsync(int clientId)
         {
             return await _context.Schedules.Where(p => p.IdClient == clientId).ToListAsync();
         }
 
-        public async Task<Schedules> GetByIdAsync(int id)
-        {
-            return await _context.Schedules.FirstOrDefaultAsync(p => p.Id == id);
-        }
-
-        public async Task<List<Schedules>> GetAllAsync()
-        {
-            return await _context.Schedules.ToListAsync();
-        }
-
         public async Task<List<Schedules>> GetByBarberIdAsync(int barberId)
         {
             return await _context.Schedules.Where(p => p.IdBarber == barberId).ToListAsync();
-        }
-
-        public async Task<bool> RemoveAsync(Schedules schedule)
-        {
-            _context.Schedules.Remove(schedule);
-            await _context.SaveChangesAsync();
-            return Task.CompletedTask.IsCompleted;
-        }
-
-        public async Task<bool> UpdateAsync(Schedules schedule)
-        {
-            _context.Schedules.Update(schedule);
-            await _context.SaveChangesAsync();
-            return Task.CompletedTask.IsCompleted;
         }
 
         public async Task UpdateValueForAsync(Schedules schedule)
@@ -61,7 +28,7 @@ namespace Barber.Infrastructure.Data.Repository
 
         public async Task<bool> EndOrOpenServiceByIdAsync(int id, bool endOrOpen)
         {
-            var schedule = await GetByIdAsync(id);
+            var schedule = await _context.Schedules.FindAsync(id);
             if(schedule is Schedules)
             {
                 schedule.SetIsClose(endOrOpen);
@@ -94,5 +61,7 @@ namespace Barber.Infrastructure.Data.Repository
             }
             return true;
         }
+
+       
     }
 }

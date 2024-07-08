@@ -20,7 +20,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Error args is null");
             }
-            var schedule = await _scheduleRepository.GetByIdAsync(request.Id);
+            var schedule = await _scheduleRepository.GetByIdAsync(p => p.Id == request.Id);
             if(schedule is null)
             {
                 return false;

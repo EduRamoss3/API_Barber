@@ -19,7 +19,7 @@ namespace Barber.Application.CQRS.Barber.Handlers
             {
                 throw new ApplicationException("Error, barber cannot be null");
             }
-            var barber = await _barberRepository.GetBarberByIdAsync(request.Id);
+            var barber = await _barberRepository.GetByIdAsync(p => p.Id == request.Id);
             if (barber is null)
             {
                 throw new ApplicationException("Error, barber no exist");

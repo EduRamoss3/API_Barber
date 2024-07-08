@@ -115,13 +115,17 @@ namespace Barber.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ClientDTO>> GetClientById(int id)
         {
-            var client = await _clientService.GetByIdAsync(id);
-            if (client is not null)
+            try
             {
+                var client = await _clientService.GetByIdAsync(id);
                 return Ok(client);
             }
-            return NotFound("Client not found.");
+            catch (ApplicationException)
+            {
+                return NotFound();
+            }
+
         }
-      
+
     }
 }

@@ -20,7 +20,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Cant update this schedule!");
             }
-            var schedule = await _schedulesRepository.GetByIdAsync(request.Id);
+            var schedule = await _schedulesRepository.GetByIdAsync(p => p.Id == request.Id);
             if(schedule is null)
             {
                 return false;

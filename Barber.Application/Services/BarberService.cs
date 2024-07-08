@@ -29,7 +29,7 @@ namespace Barber.Application.Services
             var registerBarberCommand = _mapper.Map<RegisterBarberCommand>(barberRegisterDTO);
             var entity = await _mediator.Send(registerBarberCommand);
 
-            if (entity != null)
+            if (entity)
             {
                 _logger.LogInformation($"Barber '{barberRegisterDTO.Name}' added successfully.");
                 return true;

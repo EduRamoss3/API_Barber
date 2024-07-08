@@ -5,14 +5,14 @@ using MediatR;
 
 namespace Barber.Application.CQRS.Schedule.Handlers
 {
-    public class GetSchedulesHandler : IRequestHandler<GetSchedulesQuery, List<Schedules>>
+    public class GetSchedulesHandler : IRequestHandler<GetSchedulesQuery,IEnumerable<Schedules>>
     {
         private readonly ISchedulesRepository _schedulesRepository;
         public GetSchedulesHandler(ISchedulesRepository schedulesRepository)
         {
             _schedulesRepository = schedulesRepository;
         }
-        public async Task<List<Schedules>> Handle(GetSchedulesQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Schedules>> Handle(GetSchedulesQuery request, CancellationToken cancellationToken)
         {
             if (request is null)
             {

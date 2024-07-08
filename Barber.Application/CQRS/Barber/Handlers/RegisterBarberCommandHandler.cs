@@ -5,14 +5,14 @@ using MediatR;
 
 namespace Barber.Application.CQRS.Barber.Handlers
 {
-    public class RegisterBarberCommandHandler : IRequestHandler<RegisterBarberCommand, BarberMain>
+    public class RegisterBarberCommandHandler : IRequestHandler<RegisterBarberCommand, bool>
     {
         private readonly IBarberRepository _barberRepository;
         public RegisterBarberCommandHandler(IBarberRepository barberRepository)
         {
             _barberRepository = barberRepository;
         }
-        public async Task<BarberMain> Handle(RegisterBarberCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(RegisterBarberCommand request, CancellationToken cancellationToken)
         {
             if (request is null)
             {

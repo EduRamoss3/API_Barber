@@ -47,6 +47,7 @@ namespace Barber.Infrastructure.IoC.DependencyInjection
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IAuthenticate, AuthenticateService>();
             services.AddScoped<ISeedRolesInitial, SeedRolesInitial>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddMediatR(myhandlers);
 
