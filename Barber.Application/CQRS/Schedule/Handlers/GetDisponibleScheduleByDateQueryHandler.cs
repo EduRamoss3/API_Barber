@@ -7,10 +7,10 @@ namespace Barber.Application.CQRS.Schedule.Handlers
 {
     public class GetDisponibleScheduleByDateQueryHandler : IRequestHandler<GetDisponibleScheduleByDateQuery, bool>
     {
-        private readonly ISchedulesRepository _scheduleRepository;
-        public GetDisponibleScheduleByDateQueryHandler(ISchedulesRepository scheduleRepository)
+        private readonly IUnityOfWork _uof; 
+        public GetDisponibleScheduleByDateQueryHandler(IUnityOfWork uof)
         {
-            _scheduleRepository = scheduleRepository;
+            _uof = uof;
         }
 
         public async Task<bool> Handle(GetDisponibleScheduleByDateQuery request, CancellationToken cancellationToken)
@@ -19,7 +19,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
              {
                 throw new ApplicationException("Error on API request");
              }
-            return await _scheduleRepository.IsDisponibleInThisDate(request.IdBarber, request.DateTimeSearch);
+            return await _uof.SchedulesRepository.IsDisponibleInThisDate(request.IdBarber, request.DateTimeSearch);
         }
     }
 }

@@ -8,24 +8,27 @@ namespace Barber.Application.CQRS.Clients.Handlers
 {
     public class RemoveClientCommandHandler : IRequestHandler<RemoveClientCommand, Client>
     {
-        private readonly IClientRepository _clientRepository;
-        public RemoveClientCommandHandler(IClientRepository clientRepository)
+        private readonly IUnityOfWork _uof; 
+        public RemoveClientCommandHandler(IUnityOfWork uof)
         {
-            _clientRepository = clientRepository;
+            _uof = uof;
         }
 
         public async Task<Client> Handle(RemoveClientCommand request, CancellationToken cancellationToken)
         {
             if (request is null)
             {
+                await _uof.Dispose();
                 throw new ApplicationException("Request dont exist");
             }
-            var client = await _clientRepository.GetByIdAsync(p => p.Id == request.Id);
+            var client = await _uof.ClientRepository.GetByIdAsync(p => p.Id == request.Id);
             if(client is null)
             {
+                await _uof.Dispose();
                 throw new ApplicationException("Client dont exist!");
             }
-            await _clientRepository.RemoveAsync(client);
+            await _uof.ClientRepository.RemoveAsync(client);
+            await _uof.Commit();
             return client;
         }
     }

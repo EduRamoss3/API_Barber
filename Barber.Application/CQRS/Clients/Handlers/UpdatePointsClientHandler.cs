@@ -9,17 +9,17 @@ namespace Barber.Application.CQRS.Clients.Handlers
 {
     public class UpdatePointsClientHandler : IRequestHandler<UpdatePointsClientCommand, bool>
     {
-        private readonly IClientRepository _clientRepository;
-        public UpdatePointsClientHandler(IClientRepository clientRepository)
+        private readonly IUnityOfWork _uof; 
+        public UpdatePointsClientHandler(IUnityOfWork uof)
         {
-            _clientRepository = clientRepository;
+            _uof = uof;
         }
         public async Task<bool> Handle(UpdatePointsClientCommand request, CancellationToken cancellationToken)
         {
-            var client = await _clientRepository.GetByIdAsync(p => p.Id == request.Id);
+            var client = await _uof.ClientRepository.GetByIdAsync(p => p.Id == request.Id);
             if(client is not null)
             {
-                await _clientRepository.UpdatePointsAsync(client.Id);
+                await _uof.ClientRepository.UpdatePointsAsync(client.Id);
                 return true;
             }
             return false;

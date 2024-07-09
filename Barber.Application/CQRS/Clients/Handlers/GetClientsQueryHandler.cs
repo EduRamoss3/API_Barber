@@ -7,11 +7,12 @@ namespace Barber.Application.CQRS.Clients.Handlers
 {
     public class GetClientsQueryHandler : IRequestHandler<GetClientsQuery, IEnumerable<Client>>
     {
-        private readonly IClientRepository _clientRepository;
-        public GetClientsQueryHandler(IClientRepository clientRepository)
+        private readonly IUnityOfWork _uof;
+
+        public GetClientsQueryHandler(IUnityOfWork uof)
         {
-            _clientRepository = clientRepository;
-        }   
+            _uof = uof;
+        }
 
         public async Task<IEnumerable<Client>> Handle(GetClientsQuery request, CancellationToken cancellationToken)
         {
@@ -19,7 +20,7 @@ namespace Barber.Application.CQRS.Clients.Handlers
             {
                 throw new ApplicationException("Request is null");
             }
-            return await _clientRepository.GetAllAsync();
+            return await _uof.ClientRepository.GetAllAsync();
         }
     }
 }

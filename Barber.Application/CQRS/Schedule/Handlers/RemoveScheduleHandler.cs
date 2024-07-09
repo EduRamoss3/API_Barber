@@ -8,10 +8,10 @@ namespace Barber.Application.CQRS.Schedule.Handlers
 {
     public class RemoveScheduleHandler : IRequestHandler<RemoveScheduleCommand, bool>
     {
-        private readonly ISchedulesRepository _scheduleRepository;
-        public RemoveScheduleHandler(ISchedulesRepository scheduleRepository)
+        private readonly IUnityOfWork _uof; 
+        public RemoveScheduleHandler(IUnityOfWork uof)
         {
-            _scheduleRepository = scheduleRepository;
+            _uof = uof;
         }
 
         public async Task<bool> Handle(RemoveScheduleCommand request, CancellationToken cancellationToken)
@@ -20,12 +20,13 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Error args is null");
             }
-            var schedule = await _scheduleRepository.GetByIdAsync(p => p.Id == request.Id);
+            var schedule = await _uof.SchedulesRepository.GetByIdAsync(p => p.Id == request.Id);
             if(schedule is null)
             {
                 return false;
             }
-            await _scheduleRepository.RemoveAsync(schedule);
+            await _uof.SchedulesRepository.RemoveAsync(schedule);
+            await _uof.Commit();
             return true;
         }
     }

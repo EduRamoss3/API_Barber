@@ -7,10 +7,10 @@ namespace Barber.Application.CQRS.Clients.Handlers
 {
     public class RegisterClientCommandHandler : IRequestHandler<RegisterClientCommand, Client>
     {
-        private readonly IClientRepository _clientRepository;
-        public RegisterClientCommandHandler(IClientRepository clientRepository)
+        private readonly IUnityOfWork _uof; 
+        public RegisterClientCommandHandler(IUnityOfWork uof)
         {
-            _clientRepository = clientRepository;   
+            _uof = uof; 
         }
         public async Task<Client> Handle(RegisterClientCommand request, CancellationToken cancellationToken)
         {
@@ -19,7 +19,8 @@ namespace Barber.Application.CQRS.Clients.Handlers
                 throw new ApplicationException("Request is null");
             }
             Client client = new Client(request.Name,request.Points, request.Scheduled, request.LastTimeHere);
-            await _clientRepository.AddAsync(client);
+            await _uof.ClientRepository.AddAsync(client);
+            await _uof.Commit();
             return client;
             
         }

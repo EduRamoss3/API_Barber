@@ -7,10 +7,10 @@ namespace Barber.Application.CQRS.Schedule.Handlers
 {
     public class GetSchedulesHandler : IRequestHandler<GetSchedulesQuery,IEnumerable<Schedules>>
     {
-        private readonly ISchedulesRepository _schedulesRepository;
-        public GetSchedulesHandler(ISchedulesRepository schedulesRepository)
+        private readonly IUnityOfWork _uof; 
+        public GetSchedulesHandler(IUnityOfWork uof)
         {
-            _schedulesRepository = schedulesRepository;
+            _uof = uof;
         }
         public async Task<IEnumerable<Schedules>> Handle(GetSchedulesQuery request, CancellationToken cancellationToken)
         {
@@ -18,7 +18,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Error args is null");
             }
-            return await _schedulesRepository.GetAllAsync() ?? new List<Schedules>();
+            return await _uof.SchedulesRepository.GetAllAsync() ?? new List<Schedules>();
         }
     }
 }

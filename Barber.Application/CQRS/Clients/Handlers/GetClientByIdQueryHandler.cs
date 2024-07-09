@@ -8,10 +8,11 @@ namespace Barber.Application.CQRS.Clients.Handlers
 {
     public class GetClientByIdQueryHandler : IRequestHandler<GetClientByIdQuery, Client>
     {
-        private readonly IClientRepository _clientRepository;
-        public GetClientByIdQueryHandler(IClientRepository clientRepository)
+        private readonly IUnityOfWork _uof;
+
+        public GetClientByIdQueryHandler(IUnityOfWork uof)
         {
-            _clientRepository = clientRepository;
+            _uof = uof;
         }
 
         public async Task<Client> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
@@ -20,7 +21,7 @@ namespace Barber.Application.CQRS.Clients.Handlers
             {
                 throw new ApplicationException("Request is null");
             }
-            var client = await _clientRepository.GetByIdAsync(p => p.Id == request.Id);
+            var client = await _uof.ClientRepository.GetByIdAsync(p => p.Id == request.Id);
             if(client is not Client)
             {
                 throw new ApplicationException("Data format error");

@@ -2,10 +2,12 @@
 using Barber.Application.Interfaces;
 using Barber.Application.Mappings;
 using Barber.Application.Services;
+using Barber.Domain;
 using Barber.Domain.Interfaces;
 using Barber.Infrastructure.Data.Context;
 using Barber.Infrastructure.Data.Identitys;
 using Barber.Infrastructure.Data.Repository;
+using Barber.Infrastructure.Data.Repository.UnityOfWork;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +50,7 @@ namespace Barber.Infrastructure.IoC.DependencyInjection
             services.AddScoped<IAuthenticate, AuthenticateService>();
             services.AddScoped<ISeedRolesInitial, SeedRolesInitial>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUnityOfWork, UnityOfWork>();
 
             services.AddMediatR(myhandlers);
 

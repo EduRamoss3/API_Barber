@@ -2,6 +2,7 @@ using Barber.API.Filters;
 using Barber.API.Helper;
 using Barber.Application.Services;
 using Barber.Domain.Interfaces;
+using Barber.Infrastructure.Data.Repository.UnityOfWork;
 using Barber.Infrastructure.IoC.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
@@ -43,6 +44,7 @@ builder.Services.AddLogging(builder =>
     builder.AddDebug();
    
 });
+
 var cultureInfo = new CultureInfo("pt-BR");
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
 CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;

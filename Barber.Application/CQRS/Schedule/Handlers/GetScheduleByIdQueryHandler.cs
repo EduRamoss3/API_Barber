@@ -8,10 +8,10 @@ namespace Barber.Application.CQRS.Schedule.Handlers
 {
     public class GetScheduleByIdQueryHandler : IRequestHandler<GetScheduleByIdQuery, Schedules>
     {
-        private readonly ISchedulesRepository _schedulesRepository;
-        public GetScheduleByIdQueryHandler(ISchedulesRepository schedulesRepository)
+        private readonly IUnityOfWork _uof;
+        public GetScheduleByIdQueryHandler(IUnityOfWork uof)
         {
-            _schedulesRepository = schedulesRepository; 
+            _uof = uof; 
         }
         public async Task<Schedules> Handle(GetScheduleByIdQuery request, CancellationToken cancellationToken)
         {
@@ -19,7 +19,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Error args is null");
             }
-            var schedule = await _schedulesRepository.GetByIdAsync(p => p.Id == request.Id);
+            var schedule = await _uof.SchedulesRepository.GetByIdAsync(p => p.Id == request.Id);
             if(schedule is null)
             {
                 throw new ApplicationException("Schedule not found");

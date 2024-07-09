@@ -7,10 +7,11 @@ namespace Barber.Application.CQRS.Barber.Handlers
 {
     public class RemoveBarberCommandHandler : IRequestHandler<RemoveBarberCommand, bool>
     {
-        private readonly IBarberRepository _barberRepository;
-        public RemoveBarberCommandHandler(IBarberRepository barberRepository)
+        private readonly IUnityOfWork _uof;
+
+        public RemoveBarberCommandHandler(IUnityOfWork uof)
         {
-            _barberRepository = barberRepository;
+            _uof = uof;
         }
 
         public async Task<bool> Handle(RemoveBarberCommand request, CancellationToken cancellationToken)
@@ -19,8 +20,15 @@ namespace Barber.Application.CQRS.Barber.Handlers
             {
                 throw new ApplicationException("Error, cannot remove barber because data is null");
             }
-            var barber = await _barberRepository.GetByIdAsync(p => p.Id == request.Id);
-            return await _barberRepository.RemoveAsync(barber);
+            var barber = await _uof.BarberRepository.GetByIdAsync(p => p.Id == request.Id);
+            var result = await _uof.BarberRepository.RemoveAsync(barber);
+            if (result)
+            {
+                await _uof.Commit();
+                return result;
+            }
+            await  _uof.Dispose();
+            return false;   
         }
     }
 }

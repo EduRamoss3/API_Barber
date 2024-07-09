@@ -7,10 +7,10 @@ namespace Barber.Application.CQRS.Barber.Handlers
 {
     public class GetBarberByIdQueryHandler : IRequestHandler<GetBarberByIdQuery, BarberMain>
     {
-        private readonly IBarberRepository _barberRepository;
-        public GetBarberByIdQueryHandler(IBarberRepository barberRepository)
+        private readonly IUnityOfWork _uof;
+        public GetBarberByIdQueryHandler(IUnityOfWork uof)
         {
-            _barberRepository = barberRepository;
+            _uof = uof;
            
         }
         public async Task<BarberMain> Handle(GetBarberByIdQuery request, CancellationToken cancellationToken)
@@ -19,7 +19,7 @@ namespace Barber.Application.CQRS.Barber.Handlers
             {
                 throw new ApplicationException("Request is null");
             }
-            var barber = await _barberRepository.GetByIdAsync(p => p.Id == request.Id);
+            var barber = await _uof.BarberRepository.GetByIdAsync(p => p.Id == request.Id);
          
             return barber;
         }

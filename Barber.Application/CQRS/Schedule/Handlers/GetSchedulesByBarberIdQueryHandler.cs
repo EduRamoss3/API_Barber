@@ -8,10 +8,10 @@ namespace Barber.Application.CQRS.Schedule.Handlers
 {
     public class GetSchedulesByBarberIdQueryHandler : IRequestHandler<GetSchedulesByBarberIdQuery, List<Schedules>>
     {
-        private readonly ISchedulesRepository _shedulesRepository;
-        public GetSchedulesByBarberIdQueryHandler(ISchedulesRepository shedulesRepository)
+        private readonly IUnityOfWork _uof;
+        public GetSchedulesByBarberIdQueryHandler(IUnityOfWork uof)
         {
-            _shedulesRepository = shedulesRepository;
+            _uof = uof;
         }
         public async Task<List<Schedules>> Handle(GetSchedulesByBarberIdQuery request, CancellationToken cancellationToken)
         {
@@ -19,7 +19,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Error args is null");
             }
-            var schedules = await _shedulesRepository.GetByBarberIdAsync(request.IdBarber) ?? throw new ApplicationException("Barber no exist");
+            var schedules = await _uof.SchedulesRepository.GetByBarberIdAsync(request.IdBarber) ?? throw new ApplicationException("Barber no exist");
             return schedules;
         }
     }

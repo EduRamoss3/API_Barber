@@ -7,10 +7,10 @@ namespace Barber.Application.CQRS.Schedule.Handlers
 {
     public class UpdateValueForScheduleCommandHandler : IRequestHandler<UpdateValueForScheduleCommand, Schedules>
     {
-        private readonly ISchedulesRepository _schedulesRepository;
-        public UpdateValueForScheduleCommandHandler(ISchedulesRepository schedulesRepository)
+        private readonly IUnityOfWork _uof; 
+        public UpdateValueForScheduleCommandHandler(IUnityOfWork uof)
         {
-            _schedulesRepository = schedulesRepository;
+            _uof = uof;
         }
         public async Task<Schedules> Handle(UpdateValueForScheduleCommand request, CancellationToken cancellationToken)
         {
@@ -18,9 +18,10 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Request is null");
             }
-            var schedule = await _schedulesRepository.GetByIdAsync(p => p.Id == request.Id) ?? throw new ApplicationException("Schedule no exist");
+            var schedule = await _uof.SchedulesRepository.GetByIdAsync(p => p.Id == request.Id) ?? throw new ApplicationException("Schedule no exist");
             schedule.UpdateValueForService(request.ValueForService);
-            await _schedulesRepository.UpdateValueForAsync(schedule);
+            await _uof.SchedulesRepository.UpdateValueForAsync(schedule);
+            await _uof.Commit();
             return schedule;
         }
     }

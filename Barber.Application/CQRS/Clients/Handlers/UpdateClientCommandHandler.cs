@@ -6,10 +6,10 @@ namespace Barber.Application.CQRS.Clients.Handlers
 {
     public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand, bool>
     {
-        private readonly IClientRepository _clientRepository;
-        public UpdateClientCommandHandler(IClientRepository clientRepository)
+        private readonly IUnityOfWork _uof; 
+        public UpdateClientCommandHandler(IUnityOfWork uof)
         {
-            _clientRepository = clientRepository;
+            _uof = uof;
         }
 
         public async Task<bool> Handle(UpdateClientCommand request, CancellationToken cancellationToken)
@@ -18,13 +18,14 @@ namespace Barber.Application.CQRS.Clients.Handlers
             {
                 return false;
             }
-            var client = await _clientRepository.GetByIdAsync(p => p.Id == request.Id);
+            var client = await _uof.ClientRepository.GetByIdAsync(p => p.Id == request.Id);
             if(client is null)
             {
                 return false;
             }
             client.Update(request.Name, request.Points, request.Scheduled, request.LastTimeHere);
-            await _clientRepository.UpdateAsync(client);
+            await _uof.ClientRepository.UpdateAsync(client);
+            await _uof.Commit();
             return true;
             
         }

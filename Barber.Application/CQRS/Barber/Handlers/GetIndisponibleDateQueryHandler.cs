@@ -7,10 +7,10 @@ namespace Barber.Application.CQRS.Barber.Handlers
 {
     public class GetIndisponibleDateQueryHandler : IRequestHandler<GetIndisponibleDatesQuery, List<DateTime>>
     {
-        private readonly ISchedulesRepository _scheduleRepository;
-        public GetIndisponibleDateQueryHandler(ISchedulesRepository scheduleRepository)
+        private readonly IUnityOfWork _uof;
+        public GetIndisponibleDateQueryHandler(IUnityOfWork uof)
         {
-            _scheduleRepository = scheduleRepository;
+            _uof = uof;
         }
 
         public async Task<List<DateTime>> Handle(GetIndisponibleDatesQuery request, CancellationToken cancellationToken)
@@ -19,7 +19,7 @@ namespace Barber.Application.CQRS.Barber.Handlers
             {
                 throw new ApplicationException("Error in request");
             }
-            var listSchedulesIndisponible = await _scheduleRepository.GetIndisponibleDatesByBarberId(request.IdBarber);
+            var listSchedulesIndisponible = await _uof.SchedulesRepository.GetIndisponibleDatesByBarberId(request.IdBarber);
             return listSchedulesIndisponible;
         }
     }

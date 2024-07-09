@@ -8,15 +8,15 @@ namespace Barber.Application.CQRS.Schedule.Handlers
 {
     public class GetScheduleByClientIdQueryHandler : IRequestHandler<GetScheduleByClientIdQuery, List<Schedules>>
     {
-        private readonly ISchedulesRepository _schedulesRepository;
-        public GetScheduleByClientIdQueryHandler(ISchedulesRepository schedulesRepository)
+        private readonly IUnityOfWork _uof;
+        public GetScheduleByClientIdQueryHandler(IUnityOfWork uof)
         {
-            _schedulesRepository = schedulesRepository;
+            _uof = uof; 
         }
         
         public async Task<List<Schedules>> Handle(GetScheduleByClientIdQuery request, CancellationToken cancellationToken)
         {
-            var schedules = await _schedulesRepository.GetByClientIdAsync(request.IdClient);
+            var schedules = await _uof.SchedulesRepository.GetByClientIdAsync(request.IdClient);
             if(schedules is null)
             {
                 throw new ApplicationException("Client dont exist");
