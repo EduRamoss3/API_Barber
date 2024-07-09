@@ -18,18 +18,16 @@ namespace Barber.Application.CQRS.Barber.Handlers
         {
             if (request is null)
             {
-                await _uof.Dispose();
-                throw new ApplicationException("Error, barber cannot be null");
+                throw new ApplicationException("Error in request");
             }
             var barber = await _uof.BarberRepository.GetByIdAsync(p => p.Id == request.Id);
             if (barber is null)
             {
-                await _uof.Dispose();
-                throw new ApplicationException("Error, barber no exist");
+                return false;
                 
             }
             barber.SetDisponibility(request.Disponibility);
-            var result = await _uof.BarberRepository.SetDisponibilityAsync(barber, request.Disponibility);
+            var result =  _uof.BarberRepository.SetDisponibility(barber, request.Disponibility);
             await _uof.Commit();
             return result;
         }

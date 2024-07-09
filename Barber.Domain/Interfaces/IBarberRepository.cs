@@ -4,6 +4,6 @@ namespace Barber.Domain.Interfaces
 {
     public interface IBarberRepository : IRepository<BarberMain>
     {
-        Task<bool> SetDisponibilityAsync(Barber.Domain.Entities.BarberMain barber, bool disponibility);
+       bool SetDisponibility(Barber.Domain.Entities.BarberMain barber, bool disponibility);
     }
 }

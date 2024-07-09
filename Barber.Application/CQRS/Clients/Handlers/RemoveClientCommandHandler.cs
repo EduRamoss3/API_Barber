@@ -27,7 +27,7 @@ namespace Barber.Application.CQRS.Clients.Handlers
                 await _uof.Dispose();
                 throw new ApplicationException("Client dont exist!");
             }
-            await _uof.ClientRepository.RemoveAsync(client);
+            _uof.ClientRepository.Remove(client);
             await _uof.Commit();
             return client;
         }

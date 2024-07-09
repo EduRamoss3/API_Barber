@@ -25,7 +25,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 return false;
             }
-            await _uof.SchedulesRepository.RemoveAsync(schedule);
+            _uof.SchedulesRepository.Remove(schedule);
             await _uof.Commit();
             return true;
         }

@@ -10,10 +10,9 @@ namespace Barber.Infrastructure.Data.Repository
     {
         public BarberRepository(AppDbContext context): base(context) { }
 
-        public async Task<bool> SetDisponibilityAsync(Domain.Entities.BarberMain barber, bool disponibility)
+        public bool SetDisponibility(Domain.Entities.BarberMain barber, bool disponibility)
         {
             _context.Entry(barber).Property(p => p.Disponibility).IsModified = true;
-            await _context.SaveChangesAsync();
             return true;
         }
 

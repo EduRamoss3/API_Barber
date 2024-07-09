@@ -4,6 +4,7 @@ using Barber.Application.Interfaces;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Barber.API.Controllers
 {
@@ -71,9 +72,9 @@ namespace Barber.API.Controllers
                 var result = await _barberService.RemoveByIdAsync(id);
                 if (result)
                 {
-                    return NoContent();
+                    return Ok($"Barber with ID {id} deleted");
                 }
-                return BadRequest("Barber does not exist in the system");
+                return NotFound("Barber not found");
             }
             catch (ApplicationException e)
             {
@@ -83,6 +84,10 @@ namespace Barber.API.Controllers
             {
                 return BadRequest(d.Message);
             }
+            catch (DbUpdateException)
+            {
+                return BadRequest("Cant remove barber with schedules!");  
+            }
         }
 
         [Authorize(Roles = "Admin")]
@@ -91,8 +96,13 @@ namespace Barber.API.Controllers
         {
             try
             {
-                await _barberService.SetDisponibilityAsync(barberId, disponibility);
-                return Ok("Disponibility updated!");
+                var result = await _barberService.SetDisponibilityAsync(barberId, disponibility);
+                if (result)
+                {
+                    return Ok("Disponibility updated!");
+                }
+                return BadRequest();
+                
             }
             catch (ApplicationException e)
             {
@@ -115,6 +125,6 @@ namespace Barber.API.Controllers
             }
             return Ok("Choose dates except: " + string.Join(", ", formattedDates));
         }
-
+       
     }
 }

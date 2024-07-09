@@ -16,7 +16,6 @@ namespace Barber.Infrastructure.Data.Repository
             {
                 client.UpdatePoints();
                 _context.Entry(client).Property(p => p.Points).IsModified = true;
-                await _context.SaveChangesAsync();
             }
         }
     }

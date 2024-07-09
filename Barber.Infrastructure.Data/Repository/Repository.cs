@@ -29,13 +29,13 @@ namespace Barber.Infrastructure.Data.Repository
             return await _context.Set<T>().FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<bool> RemoveAsync(T entity)
+        public  bool Remove(T entity)
         {
             _context.Set<T>().Remove(entity);
             return true;
         }
 
-        public async Task<bool> UpdateAsync(T entity)
+        public bool Update(T entity)
         {
             _context.Set<T>().Update(entity);
             return true;

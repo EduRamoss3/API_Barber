@@ -4,7 +4,7 @@ namespace Barber.Domain.Interfaces
 {
     public interface ISchedulesRepository : IRepository<Schedules>
     {
-        Task UpdateValueForAsync(Schedules schedule);
+        void UpdateValueFor(Schedules schedule);
 
         Task<List<Schedules>> GetByBarberIdAsync(int barberId);
 

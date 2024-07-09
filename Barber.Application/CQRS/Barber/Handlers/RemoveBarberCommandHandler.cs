@@ -21,7 +21,11 @@ namespace Barber.Application.CQRS.Barber.Handlers
                 throw new ApplicationException("Error, cannot remove barber because data is null");
             }
             var barber = await _uof.BarberRepository.GetByIdAsync(p => p.Id == request.Id);
-            var result = await _uof.BarberRepository.RemoveAsync(barber);
+            if(barber is null)
+            {
+                return false;
+            }
+            var result = _uof.BarberRepository.Remove(barber);
             if (result)
             {
                 await _uof.Commit();

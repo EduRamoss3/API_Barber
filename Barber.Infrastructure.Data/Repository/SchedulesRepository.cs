@@ -20,10 +20,9 @@ namespace Barber.Infrastructure.Data.Repository
             return await _context.Schedules.Where(p => p.IdBarber == barberId).ToListAsync();
         }
 
-        public async Task UpdateValueForAsync(Schedules schedule)
+        public void UpdateValueFor(Schedules schedule)
         {
             _context.Entry(schedule).Property(p => p.ValueForService).IsModified = true;
-            await _context.SaveChangesAsync();
         }
 
         public async Task<bool> EndOrOpenServiceByIdAsync(int id, bool endOrOpen)
@@ -33,7 +32,6 @@ namespace Barber.Infrastructure.Data.Repository
             {
                 schedule.SetIsClose(endOrOpen);
                 _context.Entry(schedule).Property(p => p.IsFinalized).IsModified = true;
-                await _context.SaveChangesAsync();
                 return true;
             }
             return false;

@@ -20,7 +20,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             }
             var schedule = await _uof.SchedulesRepository.GetByIdAsync(p => p.Id == request.Id) ?? throw new ApplicationException("Schedule no exist");
             schedule.UpdateValueForService(request.ValueForService);
-            await _uof.SchedulesRepository.UpdateValueForAsync(schedule);
+            _uof.SchedulesRepository.UpdateValueFor(schedule);
             await _uof.Commit();
             return schedule;
         }

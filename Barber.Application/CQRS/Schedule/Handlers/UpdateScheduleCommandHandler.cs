@@ -26,7 +26,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
                 return false;
             }
             schedule.Update(request.IdBarber,request.IdClient,request.TypeOfService, request.DateSchedule, request.ValueForService, request.IsFinalized);
-            await _uof.SchedulesRepository.UpdateAsync(schedule);
+            _uof.SchedulesRepository.Update(schedule);
             await _uof.Commit();
             return true;
         }
