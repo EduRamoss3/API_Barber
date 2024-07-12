@@ -1,6 +1,4 @@
-﻿
-using Barber.Domain;
-using Barber.Domain.Interfaces;
+﻿using Barber.Domain.Interfaces;
 using Barber.Infrastructure.Data.Context;
 
 namespace Barber.Infrastructure.Data.Repository.UnityOfWork

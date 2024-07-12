@@ -59,6 +59,17 @@ namespace Barber.API.Controllers
             }
 
         }
+        [HttpPost("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return BadRequest("Authenticate first");
+            }
+            await _authenticate.Logout();
+            return Ok();
+        } 
        
         private UserToken GenerateToken(LoginModel userInfo)
         {
