@@ -1,6 +1,7 @@
 ﻿using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
+using Barber.Domain.Parameters;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -105,9 +106,9 @@ namespace Barber.API.Controllers
 
         [HttpGet("all")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients()
+        public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients([FromQuery] GetParametersPagination parameters)
         {
-            var clients = await _clientService.GetAllAsync();
+            var clients = await _clientService.GetAllAsync(parameters);
             return Ok(clients);
         }
 

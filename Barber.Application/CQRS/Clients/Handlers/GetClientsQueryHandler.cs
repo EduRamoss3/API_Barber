@@ -20,7 +20,7 @@ namespace Barber.Application.CQRS.Clients.Handlers
             {
                 throw new ApplicationException("Request is null");
             }
-            return await _uof.ClientRepository.GetAllAsync();
+            return await _uof.ClientRepository.GetAllAsync(request.ParametersPagination);
         }
     }
 }

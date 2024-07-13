@@ -1,6 +1,7 @@
 ﻿using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
+using Barber.Domain.Parameters;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,9 @@ namespace Barber.API.Controllers
 
         [HttpGet("all")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<BarberDTO>>> GetAll()
+        public async Task<ActionResult<IEnumerable<BarberDTO>>> GetAll([FromQuery]GetParametersPagination parameters)
         {
-            var barbers = await _barberService.GetAllAsync();
+            var barbers = await _barberService.GetAllAsync(parameters);
             return Ok(barbers);
         }
 

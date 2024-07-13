@@ -3,6 +3,7 @@ using Barber.Application.CQRS.Schedule.Commands;
 using Barber.Application.CQRS.Schedule.Queries;
 using Barber.Application.DTOs;
 using Barber.Application.Interfaces;
+using Barber.Domain.Parameters;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -71,11 +72,11 @@ namespace Barber.Application.Services
             }
         }
 
-        public async Task<List<SchedulesDTO>> GetAllAsync()
+        public async Task<List<SchedulesDTO>> GetAllAsync(GetParametersPagination ParametersPagination)
         {
             _logger.LogInformation($"Attempting to retrieve all schedules.");
 
-            var getSchedules = new GetSchedulesQuery();
+            var getSchedules = new GetSchedulesQuery(ParametersPagination);
             var schedules = await _mediator.Send(getSchedules);
 
             _logger.LogInformation($"Retrieved {schedules.Count()} schedules.");

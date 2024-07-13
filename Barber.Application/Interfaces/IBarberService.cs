@@ -1,5 +1,6 @@
 ﻿using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
+using Barber.Domain.Parameters;
 
 namespace Barber.Application.Interfaces
 {
@@ -7,7 +8,7 @@ namespace Barber.Application.Interfaces
     {
         Task<bool> AddAsync(BarberRegisterDTO barberDTO);
         Task<bool> RemoveByIdAsync(int id);
-        Task<IEnumerable<BarberDTO>> GetAllAsync();
+        Task<IEnumerable<BarberDTO>> GetAllAsync(GetParametersPagination parameters);
         Task<bool> SetDisponibilityAsync(int id, bool disponibility);
         Task<BarberDTO> GetByIdAsync(int id);
         Task<List<DateTime>> GetIndisponibleDateAsync(int idBarber);

@@ -4,6 +4,7 @@ using Barber.Application.CQRS.Barber.Queries;
 using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
+using Barber.Domain.Parameters;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -41,11 +42,11 @@ namespace Barber.Application.Services
             }
         }
 
-        public async Task<IEnumerable<BarberDTO>> GetAllAsync()
+        public async Task<IEnumerable<BarberDTO>> GetAllAsync(GetParametersPagination parameters)
         {
             _logger.LogInformation($"Attempting to retrieve all barbers.");
 
-            GetBarbersQuery getBarbersQuery = new GetBarbersQuery();
+            GetBarbersQuery getBarbersQuery = new GetBarbersQuery(parameters);
             var barbersEntity = await _mediator.Send(getBarbersQuery);
 
             _logger.LogInformation($"Retrieved {barbersEntity.Count()} barbers.");

@@ -2,6 +2,7 @@
 using Barber.Application.DefaultValues;
 using Barber.Application.DTOs;
 using Barber.Application.Interfaces;
+using Barber.Domain.Parameters;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -71,9 +72,9 @@ namespace Barber.API.Controllers
 
         [HttpGet("all")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedules()
+        public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedules([FromQuery] GetParametersPagination parameters)
         {
-            var schedules = await _scheduleService.GetAllAsync();
+            var schedules = await _scheduleService.GetAllAsync(parameters);
             return Ok(schedules);
         }
 
