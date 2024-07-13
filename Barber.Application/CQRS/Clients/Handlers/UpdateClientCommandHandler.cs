@@ -1,5 +1,6 @@
 ﻿using Barber.Application.CQRS.Clients.Commands;
 using Barber.Domain.Interfaces;
+using Barber.Domain.Validation;
 using MediatR;
 
 namespace Barber.Application.CQRS.Clients.Handlers
@@ -19,10 +20,11 @@ namespace Barber.Application.CQRS.Clients.Handlers
                 return false;
             }
             var client = await _uof.ClientRepository.GetByIdAsync(p => p.Id == request.Id);
-            if(client is null)
+            if (client is null)
             {
                 return false;
             }
+
             client.Update(request.Name, request.Points, request.Scheduled, request.LastTimeHere);
             _uof.ClientRepository.Update(client);
             await _uof.Commit();

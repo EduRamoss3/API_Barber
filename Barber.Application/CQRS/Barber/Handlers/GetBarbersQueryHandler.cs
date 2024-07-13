@@ -21,6 +21,10 @@ namespace Barber.Application.CQRS.Barber.Handlers
                 throw new ApplicationException("Request is null");
             }
             var barbers = await _uof.BarberRepository.GetAllAsync();
+            if(barbers is null)
+            {
+                return Enumerable.Empty<BarberMain>();  
+            }
             return barbers;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Barber.Application.CQRS.Schedule.Queries;
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
+using Barber.Domain.Validation;
 using MediatR;
 
 
@@ -20,10 +21,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
                 throw new ApplicationException("Error args is null");
             }
             var schedule = await _uof.SchedulesRepository.GetByIdAsync(p => p.Id == request.Id);
-            if(schedule is null)
-            {
-                throw new ApplicationException("Schedule not found");
-            }
+
             return schedule;
            
         }

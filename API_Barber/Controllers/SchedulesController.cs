@@ -48,6 +48,7 @@ namespace Barber.API.Controllers
             {
                 return BadRequest(d.Message);
             }
+
         }
 
         [HttpHead("last-modified")]
@@ -83,11 +84,19 @@ namespace Barber.API.Controllers
             try
             {
                 var schedules = await _scheduleService.GetByBarberIdAsync(idBarber);
+                if(schedules is null)
+                {
+                    return NotFound(schedules);
+                }
                 return Ok(schedules);
             }
-            catch(ApplicationException e)
+            catch (ApplicationException e)
             {
                 return BadRequest(e.Message);
+            }
+            catch (SchedulesNotFoundException v)
+            {
+                return NotFound(v.Message);
             }
         }
 
@@ -98,14 +107,18 @@ namespace Barber.API.Controllers
             try
             {
                 var schedules = await _scheduleService.GetByClientIdAsync(idClient);
+                if(schedules is null)
+                {
+                    return NotFound(schedules);
+                }
                 return Ok(schedules);
 
             }
-            catch(ApplicationException e)
+            catch (ApplicationException e)
             {
                 return NotFound(e.Message);
             }
-            
+
         }
 
         [HttpGet("id/{idSchedule:int:min(1)}")]
@@ -117,11 +130,10 @@ namespace Barber.API.Controllers
                 var schedules = await _scheduleService.GetByIdAsync(idSchedule);
                 return Ok(schedules);
             }
-            catch(ApplicationException e)
+            catch (ApplicationException e)
             {
                 return NotFound(e.Message);
             }
-            
         }
 
         [HttpPost("add")]
@@ -140,7 +152,7 @@ namespace Barber.API.Controllers
                 if (isValid)
                 {
                     UpdatePoints(schedules.IdClient);
-                    return Created("created",schedules);
+                    return Created("created", schedules);
                 }
                 return BadRequest("Failed to add the schedule.");
             }
@@ -152,23 +164,26 @@ namespace Barber.API.Controllers
             {
                 return BadRequest(d.Message);
             }
-            
+
         }
         [HttpPatch]
         [Authorize(Roles = "Admin")]
         [Route("management-service")]
         public async Task<IActionResult> ManagementService(int id, bool endOrOpen)
         {
+
             if (ModelState.IsValid)
             {
-               var isValid = await _scheduleService.EndOpenAsync(id, endOrOpen);
-               if (isValid)
-               {
+                var isValid = await _scheduleService.EndOpenAsync(id, endOrOpen);
+                if (isValid)
+                {
                     return Ok("Updated");
-               }
+                }
                 return NotFound();
             }
             return BadRequest(ModelState);
+
+
         }
 
         [HttpPut("{id:int:min(1)}")]
@@ -197,6 +212,7 @@ namespace Barber.API.Controllers
             {
                 return BadRequest(d.Message);
             }
+
         }
 
         [HttpPatch("{idSchedule:int:min(1)}/value-service/{valueForService:decimal}")]
@@ -225,6 +241,7 @@ namespace Barber.API.Controllers
             {
                 return BadRequest(d.Message);
             }
+
         }
         [Authorize(Roles = "Admin")]
         [HttpPut]
@@ -249,19 +266,12 @@ namespace Barber.API.Controllers
         [HttpGet("barbers/{barberId}/availability/{dateSearch}")]
         public async Task<ActionResult> IsDisponibleDate(int barberId, DateTime dateSearch)
         {
-            try
+            var isDisponible = await _scheduleService.GetByDateDisponible(barberId, dateSearch);
+            if (isDisponible)
             {
-                var isDisponible = await _scheduleService.GetByDateDisponible(barberId, dateSearch);
-                if (isDisponible)
-                {
-                    return Ok(new { IsDisponible = true, Message = "Date disponible!" });
-                }
-                return Ok(new { IsDisponible = false, Message = "Date indisponible" });
+                return Ok(new { IsDisponible = true, Message = "Date disponible!" });
             }
-            catch (Exception)
-            {
-                return StatusCode(500, "An error occurred while processing your request.");
-            }
+            return Ok(new { IsDisponible = false, Message = "Date indisponible" });
         }
     }
 }

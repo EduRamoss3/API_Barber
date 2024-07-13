@@ -86,7 +86,7 @@ namespace Barber.Application.Services
             var removeClientCommand = new RemoveClientCommand(id.Value);
             var entity = await _mediator.Send(removeClientCommand);
 
-            if (entity != null)
+            if (entity)
             {
                 _logger.LogInformation($"Client with ID '{id.Value}' removed successfully.");
                 return true;

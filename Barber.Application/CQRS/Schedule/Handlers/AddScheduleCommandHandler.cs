@@ -46,7 +46,6 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             }
             Schedules schedules = new Schedules(request.IdBarber, request.IdClient, 
                 request.TypeOfService, request.DateSchedule, request.ValueForService,request.IsFinalized);
-
            
             await _uof.SchedulesRepository.AddAsync(schedules);
             await _uof.Commit();

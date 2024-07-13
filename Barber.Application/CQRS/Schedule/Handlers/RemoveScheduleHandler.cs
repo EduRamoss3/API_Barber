@@ -1,6 +1,7 @@
 ﻿using Barber.Application.CQRS.Schedule.Commands;
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
+using Barber.Domain.Validation;
 using MediatR;
 
 

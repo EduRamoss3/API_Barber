@@ -1,5 +1,6 @@
 ﻿using Barber.Application.CQRS.Barber.Commands;
 using Barber.Domain.Interfaces;
+using Barber.Domain.Validation;
 using MediatR;
 
 
@@ -20,12 +21,13 @@ namespace Barber.Application.CQRS.Barber.Handlers
             {
                 throw new ApplicationException("Error in request");
             }
-            var barber = await _uof.BarberRepository.GetByIdAsync(p => p.Id == request.Id);
-            if (barber is null)
+            var barber = await _uof.BarberRepository
+                .GetByIdAsync(p => p.Id == request.Id);
+            if(barber is null)
             {
                 return false;
-                
             }
+
             barber.SetDisponibility(request.Disponibility);
             var result =  _uof.BarberRepository.SetDisponibility(barber, request.Disponibility);
             await _uof.Commit();

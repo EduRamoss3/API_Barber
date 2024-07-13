@@ -1,6 +1,7 @@
 ﻿using Barber.Application.CQRS.Clients.Queries;
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
+using Barber.Domain.Validation;
 using MediatR;
 
 
@@ -22,10 +23,7 @@ namespace Barber.Application.CQRS.Clients.Handlers
                 throw new ApplicationException("Request is null");
             }
             var client = await _uof.ClientRepository.GetByIdAsync(p => p.Id == request.Id);
-            if(client is not Client)
-            {
-                throw new ApplicationException("Data format error");
-            }
+
             return client;
         }
     }

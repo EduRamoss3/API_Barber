@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace Barber.Application.CQRS.Clients.Commands
 {
-    public class RemoveClientCommand : ClientCommand
+    public class RemoveClientCommand : IRequest<bool>
     {
+        public int Id { get; set; } 
         public RemoveClientCommand(int id)
         {
             Id = id;

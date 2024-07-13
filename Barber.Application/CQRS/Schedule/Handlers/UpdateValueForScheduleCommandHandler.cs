@@ -18,7 +18,8 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 throw new ApplicationException("Request is null");
             }
-            var schedule = await _uof.SchedulesRepository.GetByIdAsync(p => p.Id == request.Id) ?? throw new ApplicationException("Schedule no exist");
+            var schedule = await _uof.SchedulesRepository.GetByIdAsync(p => p.Id == request.Id);
+         
             schedule.UpdateValueForService(request.ValueForService);
             _uof.SchedulesRepository.UpdateValueFor(schedule);
             await _uof.Commit();

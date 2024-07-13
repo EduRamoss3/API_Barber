@@ -21,7 +21,12 @@ namespace Barber.Infrastructure.Data.Repository
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _context.Set<T>().AsNoTracking().ToListAsync();
+            var list = await _context.Set<T>().AsNoTracking().ToListAsync();
+            if(list is null)
+            {
+                return Enumerable.Empty<T>();
+            }
+            return list;
         }
 
         public async Task<T> GetByIdAsync(Expression<Func<T, bool>> predicate)

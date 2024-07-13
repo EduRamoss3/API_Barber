@@ -1,6 +1,7 @@
 ﻿
 using Barber.Application.CQRS.Barber.Queries;
 using Barber.Domain.Interfaces;
+using Barber.Domain.Validation;
 using MediatR;
 
 namespace Barber.Application.CQRS.Barber.Handlers
@@ -19,7 +20,8 @@ namespace Barber.Application.CQRS.Barber.Handlers
             {
                 throw new ApplicationException("Error in request");
             }
-            var listSchedulesIndisponible = await _uof.SchedulesRepository.GetIndisponibleDatesByBarberId(request.IdBarber);
+            var listSchedulesIndisponible = await _uof.SchedulesRepository
+                .GetIndisponibleDatesByBarberId(request.IdBarber);
             return listSchedulesIndisponible;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Barber.Application.CQRS.Schedule.Queries;
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
+using Barber.Domain.Validation;
 using MediatR;
 
 
@@ -17,11 +18,6 @@ namespace Barber.Application.CQRS.Schedule.Handlers
         public async Task<List<Schedules>> Handle(GetScheduleByClientIdQuery request, CancellationToken cancellationToken)
         {
             var schedules = await _uof.SchedulesRepository.GetByClientIdAsync(request.IdClient);
-            if(schedules is null)
-            {
-                throw new ApplicationException("Client dont exist");
-            }
-           
             return schedules;
         }
     }

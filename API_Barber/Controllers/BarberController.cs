@@ -50,8 +50,13 @@ namespace Barber.API.Controllers
 
             try
             {
-                await _barberService.AddAsync(barberRegisterDTO);
-                return Created("Successfully registered barber!",barberRegisterDTO);
+                var result = await _barberService.AddAsync(barberRegisterDTO);
+                if (result)
+                {
+                    return Created("Successfully registered barber!", barberRegisterDTO);
+                }
+                return BadRequest();
+                
             }
             catch (DomainExceptionValidation d)
             {

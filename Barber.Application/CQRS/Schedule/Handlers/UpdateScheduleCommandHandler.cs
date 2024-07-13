@@ -1,6 +1,7 @@
 ﻿using Barber.Application.CQRS.Schedule.Commands;
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
+using Barber.Domain.Validation;
 using MediatR;
 
 
@@ -25,6 +26,7 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 return false;
             }
+           
             schedule.Update(request.IdBarber,request.IdClient,request.TypeOfService, request.DateSchedule, request.ValueForService, request.IsFinalized);
             _uof.SchedulesRepository.Update(schedule);
             await _uof.Commit();

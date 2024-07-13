@@ -63,7 +63,7 @@ namespace Barber.API.Controllers
                 {
                     return Ok("Updated!");
                 }
-                return BadRequest("Update failed. Client dont exist.");
+                return BadRequest("Update failed. Client not found");
             }
             catch (ApplicationException e)
             {
@@ -91,7 +91,7 @@ namespace Barber.API.Controllers
                 {
                     return Ok("Deleted successfully!");
                 }
-                return BadRequest("Deletion failed. Please verify all fields and try again.");
+                return BadRequest("Deletion failed. Client not found");
             }
             catch (ApplicationException e)
             {
@@ -118,12 +118,17 @@ namespace Barber.API.Controllers
             try
             {
                 var client = await _clientService.GetByIdAsync(id);
+                if(client is null)
+                {
+                    return NotFound("Client not found");
+                }
                 return Ok(client);
             }
-            catch (ApplicationException)
+            catch (ApplicationException v)
             {
-                return NotFound();
+                return BadRequest(v.Message);
             }
+
 
         }
 

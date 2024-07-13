@@ -1,6 +1,7 @@
 ﻿using Barber.Application.CQRS.Barber.Queries;
 using Barber.Domain.Entities;
 using Barber.Domain.Interfaces;
+using Barber.Domain.Validation;
 using MediatR;
 
 namespace Barber.Application.CQRS.Barber.Handlers
@@ -20,7 +21,6 @@ namespace Barber.Application.CQRS.Barber.Handlers
                 throw new ApplicationException("Request is null");
             }
             var barber = await _uof.BarberRepository.GetByIdAsync(p => p.Id == request.Id);
-         
             return barber;
         }
     }
