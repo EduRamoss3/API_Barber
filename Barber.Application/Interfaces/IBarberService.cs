@@ -8,7 +8,7 @@ namespace Barber.Application.Interfaces
     {
         Task<bool> AddAsync(BarberRegisterDTO barberDTO);
         Task<bool> RemoveByIdAsync(int id);
-        Task<IEnumerable<BarberDTO>> GetAllAsync(GetParametersPagination parameters);
+        Task<IEnumerable<BarberDTO>> GetAllAsync(ParametersToPagination parameters);
         Task<bool> SetDisponibilityAsync(int id, bool disponibility);
         Task<BarberDTO> GetByIdAsync(int id);
         Task<List<DateTime>> GetIndisponibleDateAsync(int idBarber);

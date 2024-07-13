@@ -42,7 +42,7 @@ namespace Barber.Application.Services
             }
         }
 
-        public async Task<IEnumerable<BarberDTO>> GetAllAsync(GetParametersPagination parameters)
+        public async Task<IEnumerable<BarberDTO>> GetAllAsync(ParametersToPagination parameters)
         {
             _logger.LogInformation($"Attempting to retrieve all barbers.");
 

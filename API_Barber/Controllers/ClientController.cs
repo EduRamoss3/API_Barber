@@ -106,7 +106,7 @@ namespace Barber.API.Controllers
 
         [HttpGet("all")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients([FromQuery] GetParametersPagination parameters)
+        public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients([FromQuery] ParametersToPagination parameters)
         {
             var clients = await _clientService.GetAllAsync(parameters);
             return Ok(clients);

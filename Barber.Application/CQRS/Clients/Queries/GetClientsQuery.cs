@@ -11,8 +11,8 @@ namespace Barber.Application.CQRS.Clients.Queries
 {
     public class GetClientsQuery : IRequest<IEnumerable<Client>>
     {
-        public GetParametersPagination ParametersPagination { get; set; }
-        public GetClientsQuery(GetParametersPagination parametersPagination)
+        public ParametersToPagination ParametersPagination { get; set; }
+        public GetClientsQuery(ParametersToPagination parametersPagination)
         {
             ParametersPagination = parametersPagination;
         }

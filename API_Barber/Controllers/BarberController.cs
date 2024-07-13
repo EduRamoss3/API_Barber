@@ -23,7 +23,7 @@ namespace Barber.API.Controllers
 
         [HttpGet("all")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<BarberDTO>>> GetAll([FromQuery]GetParametersPagination parameters)
+        public async Task<ActionResult<IEnumerable<BarberDTO>>> GetAll([FromQuery]ParametersToPagination parameters)
         {
             var barbers = await _barberService.GetAllAsync(parameters);
             return Ok(barbers);

@@ -72,7 +72,7 @@ namespace Barber.Application.Services
             }
         }
 
-        public async Task<List<SchedulesDTO>> GetAllAsync(GetParametersPagination ParametersPagination)
+        public async Task<List<SchedulesDTO>> GetAllAsync(ParametersToPagination ParametersPagination)
         {
             _logger.LogInformation($"Attempting to retrieve all schedules.");
 

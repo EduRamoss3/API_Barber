@@ -20,7 +20,7 @@ namespace Barber.Infrastructure.Data.Repository
             return true;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(GetParametersPagination parameters)
+        public async Task<IEnumerable<T>> GetAllAsync(ParametersToPagination parameters)
         {
             var list = await _context.Set<T>().AsNoTracking().Skip((parameters.PageNumber -1) * parameters.PageSize).Take(parameters.PageSize).ToListAsync();  
             if(list is null)

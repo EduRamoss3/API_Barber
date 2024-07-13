@@ -62,7 +62,7 @@ namespace Barber.Application.Services
             }
         }
 
-        public async Task<IEnumerable<ClientDTO>> GetAllAsync(GetParametersPagination ParametersPagination)
+        public async Task<IEnumerable<ClientDTO>> GetAllAsync(ParametersToPagination ParametersPagination)
         {
             _logger.LogInformation($"Attempting to retrieve all clients.");
 

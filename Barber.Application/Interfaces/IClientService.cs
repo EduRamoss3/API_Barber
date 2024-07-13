@@ -9,7 +9,7 @@ namespace Barber.Application.Interfaces
         Task<bool> AddAsync(ClientRegisterDTO clientDTO);
         Task<bool> RemoveAsync(int? id);
         Task<ClientDTO> GetByIdAsync(int id);
-        Task<IEnumerable<ClientDTO>> GetAllAsync(GetParametersPagination parameters);
+        Task<IEnumerable<ClientDTO>> GetAllAsync(ParametersToPagination parameters);
         Task<bool> UpdateAsync(ClientDTO clientDTO, int? id);
         Task UpdatePointsAsync(int id);
     }

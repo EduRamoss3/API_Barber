@@ -7,7 +7,7 @@ namespace Barber.Application.Interfaces
     {
         Task<bool> AddAsync(SchedulesDTO scheduleDTO);
         Task<bool> RemoveAsync(int? id);
-        Task<List<SchedulesDTO>> GetAllAsync(GetParametersPagination parameters);
+        Task<List<SchedulesDTO>> GetAllAsync(ParametersToPagination parameters);
         Task<bool> UpdateAsync(SchedulesDTO scheduleDTO, int? id);
         Task<bool> UpdateValueForAsync(int id, decimal amount);
         Task<SchedulesDTO> GetByIdAsync(int? id);

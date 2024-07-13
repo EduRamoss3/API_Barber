@@ -5,8 +5,8 @@ namespace Barber.Application.CQRS.Barber.Queries
 {
     public class GetBarbersQuery : IRequest<IEnumerable<BarberMain>>
     {
-        public GetParametersPagination ParametersPagination { get; set; }
-        public GetBarbersQuery(GetParametersPagination parameters)
+        public ParametersToPagination ParametersPagination { get; set; }
+        public GetBarbersQuery(ParametersToPagination parameters)
         {
             ParametersPagination = parameters;
         }

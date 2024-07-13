@@ -72,7 +72,7 @@ namespace Barber.API.Controllers
 
         [HttpGet("all")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedules([FromQuery] GetParametersPagination parameters)
+        public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedules([FromQuery] ParametersToPagination parameters)
         {
             var schedules = await _scheduleService.GetAllAsync(parameters);
             return Ok(schedules);
