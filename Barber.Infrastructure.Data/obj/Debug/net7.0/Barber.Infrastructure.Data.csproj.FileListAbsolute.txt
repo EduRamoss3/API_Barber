@@ -9,9 +9,10 @@ C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\B
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\Barber.Infrastructure.Data.AssemblyInfoInputs.cache
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\Barber.Infrastructure.Data.AssemblyInfo.cs
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\Barber.Infrastructure.Data.csproj.CoreCompileInputs.cache
-C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\Barber.Infrastructure.Data.csproj.CopyComplete
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\Barber.Infrastructure.Data.dll
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\refint\Barber.Infrastructure.Data.dll
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\Barber.Infrastructure.Data.pdb
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\Barber.Infrastructure.Data.genruntimeconfig.cache
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\ref\Barber.Infrastructure.Data.dll
+C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\Barber.Infrastructure.Data.sourcelink.json
+C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.Data\obj\Debug\net7.0\Barber.I.D8048A78.Up2Date

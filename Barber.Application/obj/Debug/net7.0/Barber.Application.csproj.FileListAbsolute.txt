@@ -8,8 +8,9 @@ C:\Users\Eduardo\source\API_Barber\Barber.Application\bin\Debug\net7.0\Barber.Ap
 C:\Users\Eduardo\source\API_Barber\Barber.Application\bin\Debug\net7.0\Barber.Application.pdb
 C:\Users\Eduardo\source\API_Barber\Barber.Application\bin\Debug\net7.0\Barber.Domain.dll
 C:\Users\Eduardo\source\API_Barber\Barber.Application\bin\Debug\net7.0\Barber.Domain.pdb
-C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.csproj.CopyComplete
 C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.dll
 C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\refint\Barber.Application.dll
 C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.pdb
 C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\ref\Barber.Application.dll
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.Application.sourcelink.json
+C:\Users\Eduardo\source\API_Barber\Barber.Application\obj\Debug\net7.0\Barber.A.49F9EABB.Up2Date

@@ -32,6 +32,7 @@ builder.Services.AddSwaggerGen(c =>
     c.OperationFilter<CustomDateTimeFormatOperationFilter>();
 
 });
+
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<ApiLoggingFilter>();
 builder.Services.AddAntiforgery(options =>

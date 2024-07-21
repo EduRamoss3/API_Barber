@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "R4LGi99LV6E4lqJgRTZTPeT543IjL8JAlR8CYDnlsRJ5yow25P8j2he1kiA91gJRTdbgw7ZH7bW6U8ZHcUaODQ==",
+  "dgSpecHash": "+xG2HRdJXFo=",
   "success": true,
   "projectFilePath": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\Barber.API.csproj",
   "expectedPackageFiles": [
@@ -79,5 +79,16 @@
     "C:\\Users\\Eduardo\\.nuget\\packages\\system.security.principal.windows\\4.5.0\\system.security.principal.windows.4.5.0.nupkg.sha512",
     "C:\\Users\\Eduardo\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.IdentityModel.Tokens.Jwt' 7.0.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-59j7-ghrg-fj52",
+      "libraryId": "System.IdentityModel.Tokens.Jwt",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }

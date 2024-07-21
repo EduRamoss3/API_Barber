@@ -13,9 +13,10 @@ C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\bin\Debug\net7.0\Ba
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\bin\Debug\net7.0\Barber.Application.pdb
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\bin\Debug\net7.0\Barber.Domain.pdb
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\bin\Debug\net7.0\Barber.Infrastructure.Data.pdb
-C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\obj\Debug\net7.0\Barber.Infrastructure.IoC.csproj.CopyComplete
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\obj\Debug\net7.0\Barber.Infrastructure.IoC.dll
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\obj\Debug\net7.0\refint\Barber.Infrastructure.IoC.dll
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\obj\Debug\net7.0\Barber.Infrastructure.IoC.pdb
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\obj\Debug\net7.0\Barber.Infrastructure.IoC.genruntimeconfig.cache
 C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\obj\Debug\net7.0\ref\Barber.Infrastructure.IoC.dll
+C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\obj\Debug\net7.0\Barber.Infrastructure.IoC.sourcelink.json
+C:\Users\Eduardo\source\API_Barber\Barber.Infrastructure.IoC\obj\Debug\net7.0\Barber.I.4545B95A.Up2Date

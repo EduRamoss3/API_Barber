@@ -53,10 +53,11 @@ C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\staticwebassets.p
 C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\staticwebassets.build.json
 C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\staticwebassets.development.json
 C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\scopedcss\bundle\Barber.API.styles.css
-C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\Barber.API.csproj.CopyComplete
 C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\Barber.API.dll
 C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\refint\Barber.API.dll
 C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\Barber.API.pdb
 C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\Barber.API.genruntimeconfig.cache
 C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\ref\Barber.API.dll
 C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\Barber.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\Barber.API.sourcelink.json
+C:\Users\Eduardo\source\API_Barber\API_Barber\obj\Debug\net7.0\Barber.API.csproj.Up2Date

@@ -17,7 +17,7 @@ namespace Barber.Infrastructure.Data.Repository
 
         public async Task<List<Schedules>> GetByBarberIdAsync(int barberId)
         {
-            return await _context.Schedules.Where(p => p.IdBarber == barberId).ToListAsync();
+           return await _context.Schedules.Where(p => p.IdBarber == barberId).ToListAsync();  
         }
 
         public void UpdateValueFor(Schedules schedule)

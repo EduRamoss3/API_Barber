@@ -37,7 +37,15 @@ namespace Barber.Domain.Entities
         }
         public void UpdatePoints()
         {
-            Points++;
+            if(Points == 0)
+            {
+                Points = 1;
+            }
+            if(Points > 0)
+            {
+                Points++;
+            }
+            
         }
     }
 }

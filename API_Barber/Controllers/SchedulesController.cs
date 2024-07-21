@@ -169,13 +169,32 @@ namespace Barber.API.Controllers
         }
         [HttpPatch]
         [Authorize(Roles = "Admin")]
-        [Route("management-service")]
-        public async Task<IActionResult> ManagementService(int id, bool endOrOpen)
+        [Route("end-service")]
+        public async Task<IActionResult> EndService(int id)
         {
 
             if (ModelState.IsValid)
             {
-                var isValid = await _scheduleService.EndOpenAsync(id, endOrOpen);
+                var isValid = await _scheduleService.EndServiceAsync(id);
+                if (isValid)
+                {
+                    return Ok("Updated");
+                }
+                return NotFound();
+            }
+            return BadRequest(ModelState);
+
+
+        }
+        [HttpPatch]
+        [Authorize(Roles = "Admin")]
+        [Route("open-service")]
+        public async Task<IActionResult> OpenService(int id)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var isValid = await _scheduleService.OpenServiceAsync(id);
                 if (isValid)
                 {
                     return Ok("Updated");

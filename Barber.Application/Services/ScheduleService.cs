@@ -154,23 +154,44 @@ namespace Barber.Application.Services
             }
         }
 
-        public async Task<bool> EndOpenAsync(int id, bool endOpen)
+        public async Task<bool> EndServiceAsync(int id)
         {
-            _logger.LogInformation($"Attempting to update end open for schedule with ID '{id}'.");
+            _logger.LogInformation($"Attempting to update end service for schedule with ID '{id}'.");
 
-            PatchEndOpenServiceScheduleCommand patchEndOpenServiceScheduleCommand = new PatchEndOpenServiceScheduleCommand(id, endOpen);
-            var entity = await _mediator.Send(patchEndOpenServiceScheduleCommand);
+            PatchEndServiceScheduleCommand patchEndServiceScheduleCommand = new PatchEndServiceScheduleCommand(id);
+            var entity = await _mediator.Send(patchEndServiceScheduleCommand);
 
-            if (entity)
+            if (entity is not null)
             {
-                _logger.LogInformation($"End open updated for schedule with ID '{id}' successfully.");
+                _logger.LogInformation($"End updated for schedule with ID '{id}' successfully.");
+                return true;
             }
             else
             {
                 _logger.LogWarning($"Failed to update end open for schedule with ID '{id}'.");
+                return false;
+
             }
 
-            return entity;
+        }
+
+        public async Task<bool> OpenServiceAsync(int id)
+        {
+            _logger.LogInformation($"Attempting to update open service for schedule with ID '{id}'.");
+
+            PatchOpenServiceScheduleCommand patchOpenServiceScheduleCommand = new PatchOpenServiceScheduleCommand(id);
+            var entity = await _mediator.Send(patchOpenServiceScheduleCommand);
+
+            if (entity is not null)
+            {
+                _logger.LogInformation($"End open updated for schedule with ID '{id}' successfully.");
+                return true;
+            }
+            else
+            {
+                _logger.LogWarning($"Failed to update open for schedule with ID '{id}'.");
+                return false;
+            }
         }
 
         public async Task<bool> GetByDateDisponible(int idBarber, DateTime dateTimeSearch)
