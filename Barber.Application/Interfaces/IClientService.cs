@@ -12,5 +12,6 @@ namespace Barber.Application.Interfaces
         Task<IEnumerable<ClientDTO>> GetAllAsync(ParametersToPagination parameters);
         Task<bool> UpdateAsync(ClientDTO clientDTO, int? id);
         Task UpdatePointsAsync(int id);
+        Task<int> GetIdByEmailAsync(string email);
     }
 }

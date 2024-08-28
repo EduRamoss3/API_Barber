@@ -12,6 +12,8 @@ namespace Barber.Domain.Entities
         public DateTime DateSchedule { get; private set; }
         public decimal ValueForService { get; private set; }
         public bool IsFinalized { get; private set; }
+        public string ClientName { get; private set; }
+        public string BarberName { get; private set; }
 
         public Client _Client { get; private set; }  
         public BarberMain _Barber { get; private set; }
@@ -31,6 +33,7 @@ namespace Barber.Domain.Entities
             ValueForService = valueOfService;
             IsFinalized = isFinalized;
         }
+        
         public Schedules(int id, int idBarber, int idClient, TypeOfService typeOfService, DateTime dateSchedule, decimal valueForService, bool isFinalized)
         {
             ValidateDomain(idBarber, idClient, typeOfService, dateSchedule, valueForService, isFinalized);
@@ -40,7 +43,13 @@ namespace Barber.Domain.Entities
         {
             ValidateDomain(idBarber, idClient, typeOfService, dateSchedule, valueForService, isFinalized);
         }
-
+        public void SetNames(string clientName, string barberName)
+        {
+            DomainExceptionValidation.When(string.IsNullOrEmpty(clientName) || string.IsNullOrEmpty(barberName), "O nome é requerido!");
+            ClientName = clientName;
+            BarberName = barberName;
+            
+        }
         public void SetBarber(BarberMain barber)
         {
             _Barber = barber;

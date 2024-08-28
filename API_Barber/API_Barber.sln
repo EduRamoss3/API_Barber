@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barber.API", "Barber.API.csproj", "{1F27D0E6-C470-4D6D-AAB5-912AFC304206}"
+	ProjectSection(ProjectDependencies) = postProject
+		{134803C1-409E-44D1-9A5E-20E6712B8D39} = {134803C1-409E-44D1-9A5E-20E6712B8D39}
+		{74FB9772-EF1D-4D7D-B625-B0843E32D586} = {74FB9772-EF1D-4D7D-B625-B0843E32D586}
+		{DF2F4ADB-D38A-48EB-B33C-EA418A12E97C} = {DF2F4ADB-D38A-48EB-B33C-EA418A12E97C}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barber.Domain", "..\Barber.Domain\Barber.Domain.csproj", "{134803C1-409E-44D1-9A5E-20E6712B8D39}"
 EndProject
@@ -14,8 +19,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barber.Infrastructure.Data", "..\Barber.Infrastructure.Data\Barber.Infrastructure.Data.csproj", "{DF2F4ADB-D38A-48EB-B33C-EA418A12E97C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barber.Tests", "..\Barber.Tests\Barber.Tests.csproj", "{74FB9772-EF1D-4D7D-B625-B0843E32D586}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BarberAPI", "BarberAPI", "{C46C829C-7ABD-4687-98C0-833046D7CB87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,14 +53,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{1F27D0E6-C470-4D6D-AAB5-912AFC304206} = {C46C829C-7ABD-4687-98C0-833046D7CB87}
-		{134803C1-409E-44D1-9A5E-20E6712B8D39} = {C46C829C-7ABD-4687-98C0-833046D7CB87}
-		{13C344CD-D2EB-45B6-B16E-8DCBBA621C5D} = {C46C829C-7ABD-4687-98C0-833046D7CB87}
-		{DAD306CA-C78E-4289-A525-49039E9AACE3} = {C46C829C-7ABD-4687-98C0-833046D7CB87}
-		{DF2F4ADB-D38A-48EB-B33C-EA418A12E97C} = {C46C829C-7ABD-4687-98C0-833046D7CB87}
-		{74FB9772-EF1D-4D7D-B625-B0843E32D586} = {C46C829C-7ABD-4687-98C0-833046D7CB87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8DA1F2DF-20FB-4DCA-8307-5D25333A064D}

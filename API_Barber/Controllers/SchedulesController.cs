@@ -6,13 +6,13 @@ using Barber.Domain.Parameters;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 
 namespace Barber.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class SchedulesController : ControllerBase
     {
         private readonly IScheduleService _scheduleService;
@@ -21,6 +21,7 @@ namespace Barber.API.Controllers
         {
             _scheduleService = scheduleService;
             _clientService = clientService;
+           
         }
 
         [HttpDelete("{id:int:min(1)}")]
@@ -77,6 +78,13 @@ namespace Barber.API.Controllers
             var schedules = await _scheduleService.GetAllAsync(parameters);
             return Ok(schedules);
         }
+        [HttpGet("data")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetWithData()
+        {
+            var schedules = await _scheduleService.GetWithData();
+            return Ok(schedules);
+        }
 
         [HttpGet("barber/{idBarber:int:min(1)}")]
         [Authorize(Roles = "Admin")]
@@ -105,8 +113,12 @@ namespace Barber.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByClientId(int idClient)
         {
-            try
+            if (!User.IsInRole("Admin") || !User.Identity.IsAuthenticated)
             {
+                return Unauthorized("Unauthorized!");
+            }
+            try
+            {   
                 var schedules = await _scheduleService.GetByClientIdAsync(idClient);
                 if(schedules is null)
                 {
@@ -117,7 +129,7 @@ namespace Barber.API.Controllers
             }
             catch (ApplicationException e)
             {
-                return NotFound(e.Message);
+                return Unauthorized(e.Message);
             }
 
         }
@@ -138,7 +150,7 @@ namespace Barber.API.Controllers
         }
 
         [HttpPost("add")]
-        [Authorize]
+        [AllowAnonymous]
         [ServiceFilter(typeof(ApiLoggingFilter))]
         public async Task<IActionResult> Add([FromBody] SchedulesDTO schedules)
         {
@@ -191,7 +203,6 @@ namespace Barber.API.Controllers
         [Route("open-service")]
         public async Task<IActionResult> OpenService(int id)
         {
-
             if (ModelState.IsValid)
             {
                 var isValid = await _scheduleService.OpenServiceAsync(id);
@@ -284,14 +295,15 @@ namespace Barber.API.Controllers
         }
         [Authorize]
         [HttpGet("barbers/{barberId}/availability/{dateSearch}")]
-        public async Task<ActionResult> IsDisponibleDate(int barberId, DateTime dateSearch)
+        public async Task<ActionResult> IsDisponibleDate(int barberId, string dateSearch)
         {
-            var isDisponible = await _scheduleService.GetByDateDisponible(barberId, dateSearch);
+            var date = DateTime.Parse(dateSearch);
+            var isDisponible = await _scheduleService.GetByDateDisponible(barberId, date);
             if (isDisponible)
             {
-                return Ok(new { IsDisponible = true, Message = "Date disponible!" });
+                return Ok(true);
             }
-            return Ok(new { IsDisponible = false, Message = "Date indisponible" });
+            return Problem();
         }
     }
 }

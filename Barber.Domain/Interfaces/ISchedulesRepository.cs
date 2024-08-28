@@ -16,6 +16,9 @@ namespace Barber.Domain.Interfaces
 
         Task<bool> IsDisponibleInThisDate(int barberId, DateTime dateTime);
 
+        Task<List<Schedules>> GetWithData();
+
+        Task<Schedules> GetByIdDataAsync(int id);
 
     }
 }

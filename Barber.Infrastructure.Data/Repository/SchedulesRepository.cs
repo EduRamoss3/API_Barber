@@ -17,7 +17,7 @@ namespace Barber.Infrastructure.Data.Repository
 
         public async Task<List<Schedules>> GetByBarberIdAsync(int barberId)
         {
-           return await _context.Schedules.Where(p => p.IdBarber == barberId).ToListAsync();  
+            return await _context.Schedules.Where(p => p.IdBarber == barberId).OrderBy( p=> p.IsFinalized ).ToListAsync();   
         }
 
         public void UpdateValueFor(Schedules schedule)
@@ -36,7 +36,27 @@ namespace Barber.Infrastructure.Data.Repository
             }
             return false;
         }
-
+        private async Task<Dictionary<int,string>> GetNameById(int idCliente, int idBarber)
+        {
+            Dictionary<int, string> keyValuePairs = new();
+            var Barber = await _context.Barbers.FindAsync(idBarber);
+            var ClientName = await _context.Clients.FindAsync(idCliente);
+            keyValuePairs.Add(1, Barber.Name);
+            keyValuePairs.Add(2, ClientName.Name);
+            return keyValuePairs;
+        }
+        public async Task<List<Schedules>> GetWithData()
+        {
+            var schedules = await _context.Schedules
+                .OrderBy(p => p.DateSchedule)
+                .ToListAsync();
+            foreach(var item in schedules)
+            {
+                var names = await GetNameById(item.IdClient, item.IdBarber);
+                item.SetNames(names[2], names[1]);
+            }
+            return schedules;
+        }
         public async Task<List<DateTime>> GetIndisponibleDatesByBarberId(int barberId)
         {
             var listSchedules = await _context.Schedules
@@ -60,6 +80,12 @@ namespace Barber.Infrastructure.Data.Repository
             return true;
         }
 
-       
+        public async Task<Schedules> GetByIdDataAsync(int id)
+        {
+            var schedule = await _context.Schedules.FindAsync(id);
+            var names = await GetNameById(schedule.IdClient, schedule.IdBarber);
+            schedule.SetNames(names[2], names[1]);
+            return schedule;
+        }
     }
 }

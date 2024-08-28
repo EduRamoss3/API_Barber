@@ -91,9 +91,10 @@ C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\Barber.Tests.Ge
 C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\Barber.Tests.AssemblyInfoInputs.cache
 C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\Barber.Tests.AssemblyInfo.cs
 C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\Barber.Tests.csproj.CoreCompileInputs.cache
-C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\Barber.Tests.csproj.CopyComplete
 C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\Barber.Tests.dll
 C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\refint\Barber.Tests.dll
 C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\Barber.Tests.pdb
 C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\Barber.Tests.genruntimeconfig.cache
 C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\ref\Barber.Tests.dll
+C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\Barber.Tests.sourcelink.json
+C:\Users\Eduardo\source\API_Barber\Barber.Tests\obj\Debug\net7.0\Barber.T.6507833F.Up2Date

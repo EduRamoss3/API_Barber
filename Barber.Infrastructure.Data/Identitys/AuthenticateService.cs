@@ -18,7 +18,7 @@ namespace Barber.Infrastructure.Data.Identitys
             _signInManager = signInManager;
             _logger = logger;
         }
-
+        
         public async Task<Validator> Authenticate(string email, string password)
         {
             _logger.LogInformation($"Attempting to authenticate user with email '{email}'.");

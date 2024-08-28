@@ -16,6 +16,7 @@ namespace Barber.Application.Interfaces
         Task<bool> EndServiceAsync(int id);
         Task<bool> OpenServiceAsync(int id);
         Task<bool> GetByDateDisponible(int idBarber, DateTime dateTimeSearch);
+        Task<List<SchedulesDTO>> GetWithData();
 
     }
 }

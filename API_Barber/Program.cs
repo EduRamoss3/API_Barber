@@ -7,6 +7,8 @@ using Barber.Infrastructure.IoC.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using System.Globalization;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,10 @@ builder.Services.AddControllers(options =>
 })
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.IgnoreReadOnlyProperties = true;
+        options.JsonSerializerOptions.IgnoreNullValues = true;
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.JsonSerializerOptions.MaxDepth = 64;
         options.JsonSerializerOptions.Converters.Add(new DateTimeConverterUsingDateTimeParse());
         
@@ -34,6 +39,20 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return Task.CompletedTask;
+    };
+    options.Events.OnRedirectToAccessDenied = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        return Task.CompletedTask;
+    };
+});
 builder.Services.AddScoped<ApiLoggingFilter>();
 builder.Services.AddAntiforgery(options =>
 {
@@ -66,6 +85,7 @@ app.UseHttpsRedirection();
 
 app.UseHsts();
 
+app.UseAuthentication(); // <-- Certifique-se de incluir isto
 app.UseAuthorization();
 
 app.MapControllers();

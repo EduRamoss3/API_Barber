@@ -18,6 +18,10 @@ namespace Barber.Application.CQRS.Schedule.Handlers
         public async Task<List<Schedules>> Handle(GetScheduleByClientIdQuery request, CancellationToken cancellationToken)
         {
             var schedules = await _uof.SchedulesRepository.GetByClientIdAsync(request.IdClient);
+            if(schedules.Count == 0)
+            {
+                return null;
+            }
             return schedules;
         }
     }

@@ -3,6 +3,7 @@ using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
 using Barber.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,11 +20,14 @@ namespace Barber.API.Controllers
         private readonly IAuthenticate _authenticate;
         private readonly IConfiguration _configuration;
         private readonly IClientService _clientService;
-        public TokenController(IAuthenticate authenticate, IConfiguration configuration, IClientService clientService)
+        private readonly UserManager<IdentityUser> _user;
+        public TokenController(IAuthenticate authenticate, IConfiguration configuration, IClientService clientService
+            , UserManager<IdentityUser> user)
         {
             _authenticate = authenticate;
             _configuration = configuration;
             _clientService = clientService;
+            _user = user;
         }
 
         [HttpPost]
@@ -45,12 +49,17 @@ namespace Barber.API.Controllers
         }
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<UserToken>> Login ([FromBody] LoginModel userInfo)
+        public async Task<ActionResult<TokenViewModel>> Login ([FromBody] LoginModel userInfo)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Ok("Already authenticated!");
+            }
             var result = await _authenticate.Authenticate(userInfo.Email, userInfo.Password);
             if (result.IsSucceded)
             {
-                return GenerateToken(userInfo);
+                var token = await GenerateToken(userInfo);
+                return Ok(token);
             }
             else
             {
@@ -67,22 +76,31 @@ namespace Barber.API.Controllers
             {
                 return BadRequest("Authenticate first");
             }
+           
             await _authenticate.Logout();
             return Ok();
         } 
        
-        private UserToken GenerateToken(LoginModel userInfo)
+        private async Task<TokenViewModel> GenerateToken(LoginModel userInfo)
         {
+            string role = "Member";
+            var user =  await _user.FindByEmailAsync(userInfo.Email);
+            if (await _user.IsInRoleAsync(user,"Admin"))
+            {
+                role = "Admin";
+            }
             var claims = new[]
             {
-                new Claim("email", userInfo.Email),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
+                new Claim(ClaimTypes.Role, role)
             };
             var privateKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
 
             var credentials = new SigningCredentials(privateKey, SecurityAlgorithms.HmacSha256);
 
-            var expiration = DateTime.UtcNow.AddMinutes(10);
+            var expiration = DateTime.UtcNow.AddDays(7); 
+
 
             JwtSecurityToken token = new JwtSecurityToken(
             issuer: _configuration["Jwt:Issuer"],
@@ -92,10 +110,13 @@ namespace Barber.API.Controllers
             signingCredentials: credentials
             );
 
-            return new UserToken()
+            return new TokenViewModel()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = expiration
+                Expiration = expiration,
+                Message = "Authenticated",
+                Authenticated = true,
+                Role = role
             };
         }
     }

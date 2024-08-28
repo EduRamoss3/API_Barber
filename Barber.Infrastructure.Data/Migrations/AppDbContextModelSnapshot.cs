@@ -44,6 +44,9 @@ namespace Barber.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("LastTimeHere")
                         .HasColumnType("datetime(6)");
 

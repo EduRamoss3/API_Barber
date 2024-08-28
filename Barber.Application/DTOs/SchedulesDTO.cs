@@ -29,10 +29,8 @@ namespace Barber.Application.DTOs
         [Required(ErrorMessage ="Finalized is required")]
         public bool IsFinalized { get; init; }
 
-        [JsonIgnore]
-        public Client _Client { get; init; }
+        public string ClientName { get; private set; }
 
-        [JsonIgnore]
-        public Barber.Domain.Entities.BarberMain _Barber { get; init; }
+        public string BarberName { get; private set; }
     }
 }

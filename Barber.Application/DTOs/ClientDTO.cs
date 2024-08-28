@@ -15,7 +15,9 @@ namespace Barber.Application.DTOs
 
         [Required(ErrorMessage = "Scheduled  is required!")]
         public bool Scheduled { get; init; }
-
+        [Required]
+        [EmailAddress]
+        public string Email { get; init; }  
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime LastTimeHere { get; init; }

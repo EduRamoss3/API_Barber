@@ -89,7 +89,10 @@
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
       "Barber.Domain/1.0.0": {
         "runtime": {
-          "Barber.Domain.dll": {}
+          "Barber.Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

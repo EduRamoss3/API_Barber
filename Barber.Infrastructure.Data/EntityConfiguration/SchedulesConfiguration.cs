@@ -15,6 +15,9 @@ namespace Barber.Infrastructure.Data.EntityConfiguration
             builder.Property(p => p.DateSchedule).IsRequired();
             builder.Property(p => p.ValueForService).HasPrecision(10, 2).IsRequired();
             builder.Property(p => p.IsFinalized);
+            builder.Ignore(p => p.BarberName);
+            builder.Ignore(p => p.ClientName);
+
 
             builder.HasOne(p => p._Barber)
                 .WithMany(p => p.Schedules)

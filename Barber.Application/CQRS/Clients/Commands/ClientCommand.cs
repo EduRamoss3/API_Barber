@@ -16,5 +16,6 @@ namespace Barber.Application.CQRS.Clients.Commands
         public DateTime LastTimeHere { get; set; }
         public Schedules Schedule { get; set; }
         public int Points { get; set; }
+        public string Email { get; set; }
     }
 }

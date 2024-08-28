@@ -25,7 +25,7 @@ namespace Barber.Application.CQRS.Clients.Handlers
                 return false;
             }
 
-            client.Update(request.Name, request.Points, request.Scheduled, request.LastTimeHere);
+            client.Update(request.Name, request.Points, request.Scheduled, request.LastTimeHere, request.Email);
             _uof.ClientRepository.Update(client);
             await _uof.Commit();
             return true;

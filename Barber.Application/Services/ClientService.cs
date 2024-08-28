@@ -134,5 +134,11 @@ namespace Barber.Application.Services
 
             _logger.LogInformation($"Points updated for client with ID '{id}' successfully.");
         }
+
+        public async Task<int> GetIdByEmailAsync(string email)
+        {
+            GetClienteIdByEmailQuery cmd = new(email);
+            return await _mediator.Send(cmd);
+        }
     }
 }

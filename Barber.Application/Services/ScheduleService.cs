@@ -3,6 +3,7 @@ using Barber.Application.CQRS.Schedule.Commands;
 using Barber.Application.CQRS.Schedule.Queries;
 using Barber.Application.DTOs;
 using Barber.Application.Interfaces;
+using Barber.Domain.Interfaces;
 using Barber.Domain.Parameters;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -14,14 +15,26 @@ namespace Barber.Application.Services
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         private readonly ILogger<ScheduleService> _logger;
+        private readonly ISchedulesRepository _schedulesRepository;
 
-        public ScheduleService(IMediator mediator, IMapper mapper, ILogger<ScheduleService> logger)
+        public ScheduleService(IMediator mediator, IMapper mapper, ILogger<ScheduleService> logger, ISchedulesRepository repository)
         {
             _mediator = mediator;
             _mapper = mapper;
             _logger = logger;
+            _schedulesRepository = repository;
         }
 
+        public async Task<List<SchedulesDTO>> GetWithData()
+        {
+            var query = new GetWithData();
+            var entity = await _mediator.Send(query);
+            if(entity is null)
+            {
+                return new List<SchedulesDTO>();
+            }
+            return _mapper.Map<List<SchedulesDTO>>(entity);
+        }
         public async Task<bool> AddAsync(SchedulesDTO scheduleDTO)
         {
             _logger.LogInformation($"Attempting to add schedule for client ID '{scheduleDTO.IdClient}'.");
@@ -48,6 +61,10 @@ namespace Barber.Application.Services
             var getScheduleByClientId = new GetScheduleByClientIdQuery(clientId.Value);
             var schedules = await _mediator.Send(getScheduleByClientId);
 
+            if(schedules is null)
+            {
+                return null;
+            }
             _logger.LogInformation($"Retrieved {schedules.Count} schedules for client ID '{clientId}'.");
 
             return _mapper.Map<List<SchedulesDTO>>(schedules);

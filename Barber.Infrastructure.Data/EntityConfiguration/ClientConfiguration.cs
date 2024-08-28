@@ -20,6 +20,7 @@ namespace Barber.Infrastructure.Data.EntityConfiguration
             builder.Property(p => p.LastTimeHere);
             builder.Property(p => p.Points).HasColumnOrder(3);
             builder.Property(p => p.Scheduled).IsRequired();
+            builder.Property(p => p.Email);
         }
     }
 }

@@ -129,8 +129,25 @@ namespace Barber.API.Controllers
             {
                 return BadRequest(v.Message);
             }
-
-
+        }
+        [HttpGet]
+        [Route("Email/{email}")]
+        [Authorize]
+        public async Task<ActionResult<ClientDTO>> GetClienteIdByEmail(string email)
+        {
+            try
+            {
+                var IdClient = await _clientService.GetIdByEmailAsync(email);
+                if (IdClient is 0)
+                {
+                    return NotFound("Client not found");
+                }
+                return Ok(IdClient);
+            }
+            catch (ApplicationException v)
+            {
+                return BadRequest(v.Message);
+            }
         }
 
     }

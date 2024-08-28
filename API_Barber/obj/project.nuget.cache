@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "+xG2HRdJXFo=",
+  "dgSpecHash": "hDDHYYnDfUc=",
   "success": true,
   "projectFilePath": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\Barber.API.csproj",
   "expectedPackageFiles": [
@@ -77,7 +77,13 @@
     "C:\\Users\\Eduardo\\.nuget\\packages\\system.security.cryptography.xml\\4.5.0\\system.security.cryptography.xml.4.5.0.nupkg.sha512",
     "C:\\Users\\Eduardo\\.nuget\\packages\\system.security.permissions\\4.5.0\\system.security.permissions.4.5.0.nupkg.sha512",
     "C:\\Users\\Eduardo\\.nuget\\packages\\system.security.principal.windows\\4.5.0\\system.security.principal.windows.4.5.0.nupkg.sha512",
-    "C:\\Users\\Eduardo\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512"
+    "C:\\Users\\Eduardo\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
+    "C:\\Users\\Eduardo\\.nuget\\packages\\microsoft.netcore.app.runtime.linux-x64\\7.0.20\\microsoft.netcore.app.runtime.linux-x64.7.0.20.nupkg.sha512",
+    "C:\\Users\\Eduardo\\.nuget\\packages\\microsoft.netcore.app.host.linux-x64\\7.0.20\\microsoft.netcore.app.host.linux-x64.7.0.20.nupkg.sha512",
+    "C:\\Users\\Eduardo\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\7.0.20\\microsoft.aspnetcore.app.runtime.win-x64.7.0.20.nupkg.sha512",
+    "C:\\Users\\Eduardo\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\7.0.20\\microsoft.windowsdesktop.app.runtime.win-x64.7.0.20.nupkg.sha512",
+    "C:\\Users\\Eduardo\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\7.0.20\\microsoft.netcore.app.runtime.win-x64.7.0.20.nupkg.sha512",
+    "C:\\Users\\Eduardo\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.linux-x64\\7.0.20\\microsoft.aspnetcore.app.runtime.linux-x64.7.0.20.nupkg.sha512"
   ],
   "logs": [
     {
@@ -87,7 +93,9 @@
       "message": "Package 'System.IdentityModel.Tokens.Jwt' 7.0.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-59j7-ghrg-fj52",
       "libraryId": "System.IdentityModel.Tokens.Jwt",
       "targetGraphs": [
-        "net7.0"
+        "net7.0",
+        "net7.0/linux-x64",
+        "net7.0/win-x64"
       ]
     }
   ]
