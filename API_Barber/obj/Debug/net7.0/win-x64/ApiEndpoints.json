@@ -561,6 +561,27 @@
   },
   {
     "ContainingType": "Barber.API.Controllers.BarberController",
+    "Method": "Update",
+    "RelativePath": "api/v1/Barber/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "barberDTO",
+        "Type": "Barber.Application.DTOs.BarberUpdateDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Barber.API.Controllers.BarberController",
     "Method": "Add",
     "RelativePath": "api/v1/Barber/add",
     "HttpMethod": "POST",

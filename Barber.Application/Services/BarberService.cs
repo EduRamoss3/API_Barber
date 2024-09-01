@@ -4,6 +4,7 @@ using Barber.Application.CQRS.Barber.Queries;
 using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
+using Barber.Domain.Entities;
 using Barber.Domain.Parameters;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -121,6 +122,21 @@ namespace Barber.Application.Services
             _logger.LogInformation($"Retrieved {dates.Count} indisponible dates for barber with ID '{idBarber}'.");
 
             return dates;
+        }
+
+        public async Task<bool> UpdateAsync(BarberUpdateDTO barberDTO, int id)
+        {
+            _logger.LogInformation($"Attempting to  update barber with id {barberDTO.Id}'.");
+            var updateBarberAsync = _mapper.Map<UpdateAsyncBarberCommand>(barberDTO);
+            updateBarberAsync.Id = id;
+            var result = await _mediator.Send(updateBarberAsync);
+            if (result)
+            {
+                _logger.LogInformation($"ID {barberDTO.Id} Barber was updated successfully!'.");
+                return true;
+            }
+            _logger.LogError($"ID {barberDTO.Id} Barber was not updated!'.");
+            return false;
         }
     }
 }

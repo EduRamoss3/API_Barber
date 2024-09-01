@@ -81,10 +81,6 @@ if (app.Environment.IsDevelopment())
 }
 
 CreateRoles(app);
-app.UseHttpsRedirection();
-
-app.UseHsts();
-
 app.UseAuthentication(); // <-- Certifique-se de incluir isto
 app.UseAuthorization();
 

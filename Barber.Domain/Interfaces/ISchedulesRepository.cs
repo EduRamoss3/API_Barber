@@ -20,5 +20,7 @@ namespace Barber.Domain.Interfaces
 
         Task<Schedules> GetByIdDataAsync(int id);
 
+        Task<Dictionary<int, string>> GetNameById(int idCliente, int idBarber);
+
     }
 }

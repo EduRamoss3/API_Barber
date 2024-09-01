@@ -29,8 +29,8 @@ namespace Barber.Application.DTOs
         [Required(ErrorMessage ="Finalized is required")]
         public bool IsFinalized { get; init; }
 
-        public string ClientName { get; private set; }
+        public string ClientName { get; init; }
 
-        public string BarberName { get; private set; }
+        public string BarberName { get; init; }
     }
 }

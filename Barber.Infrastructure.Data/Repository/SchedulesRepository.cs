@@ -36,7 +36,7 @@ namespace Barber.Infrastructure.Data.Repository
             }
             return false;
         }
-        private async Task<Dictionary<int,string>> GetNameById(int idCliente, int idBarber)
+        public async Task<Dictionary<int,string>> GetNameById(int idCliente, int idBarber)
         {
             Dictionary<int, string> keyValuePairs = new();
             var Barber = await _context.Barbers.FindAsync(idBarber);

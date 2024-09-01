@@ -13,6 +13,7 @@
           "Barber.Infrastructure.IoC": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.0",
           "Microsoft.AspNetCore.OpenApi": "7.0.9",
+          "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.21.0",
           "Swashbuckle.AspNetCore": "6.5.0",
           "System.IdentityModel.Tokens.Jwt": "7.0.0",
           "runtimepack.Microsoft.NETCore.App.Runtime.linux-x64": "7.0.20",
@@ -1689,6 +1690,7 @@
           }
         }
       },
+      "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.21.0": {},
       "Microsoft.Win32.Registry/4.5.0": {
         "dependencies": {
           "System.Security.AccessControl": "4.5.0",
@@ -1821,12 +1823,18 @@
           "Microsoft.Extensions.Logging.Abstractions": "6.0.0"
         },
         "runtime": {
-          "Barber.Application.dll": {}
+          "Barber.Application.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Barber.Domain/1.0.0": {
         "runtime": {
-          "Barber.Domain.dll": {}
+          "Barber.Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Barber.Infrastructure.Data/1.0.0": {
@@ -1840,7 +1848,10 @@
           "Pomelo.EntityFrameworkCore.MySql": "6.0.0"
         },
         "runtime": {
-          "Barber.Infrastructure.Data.dll": {}
+          "Barber.Infrastructure.Data.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Barber.Infrastructure.IoC/1.0.0": {
@@ -1848,10 +1859,14 @@
           "Barber.Application": "1.0.0",
           "Barber.Domain": "1.0.0",
           "Barber.Infrastructure.Data": "1.0.0",
-          "MediatR.Extensions.Microsoft.DependencyInjection": "9.0.0"
+          "MediatR.Extensions.Microsoft.DependencyInjection": "9.0.0",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.0"
         },
         "runtime": {
-          "Barber.Infrastructure.IoC.dll": {}
+          "Barber.Infrastructure.IoC.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
@@ -2256,6 +2271,13 @@
       "sha512": "sha512-rURwggB+QZYcSVbDr7HSdhw/FELvMlriW10OeOzjPT7pstefMo7IThhtNtDudxbXhW+lj0NfX72Ka5EDsG8x6w==",
       "path": "microsoft.openapi/1.4.3",
       "hashPath": "microsoft.openapi.1.4.3.nupkg.sha512"
+    },
+    "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.21.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8NudeHOE56YsY59HYY89akRMup8Ho+7Y3cADTGjajjWroXVU9RQai2nA6PfteB8AuzmRHZ5NZQB2BnWhQEul5g==",
+      "path": "microsoft.visualstudio.azure.containers.tools.targets/1.21.0",
+      "hashPath": "microsoft.visualstudio.azure.containers.tools.targets.1.21.0.nupkg.sha512"
     },
     "Microsoft.Win32.Registry/4.5.0": {
       "type": "package",

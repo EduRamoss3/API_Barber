@@ -12,5 +12,6 @@ namespace Barber.Application.Interfaces
         Task<bool> SetDisponibilityAsync(int id, bool disponibility);
         Task<BarberDTO> GetByIdAsync(int id);
         Task<List<DateTime>> GetIndisponibleDateAsync(int idBarber);
+        Task<bool> UpdateAsync(BarberUpdateDTO barberDTO, int id);
     }
 }

@@ -41,12 +41,19 @@ namespace Barber.Application.CQRS.Schedule.Handlers
                 }
                 if (dateNow > request.DateSchedule)
                 {
-                    throw new DomainExceptionValidation("Cannot schedule date pass");
+                    if(dateNow.Hour > request.DateSchedule.Hour)
+                    {
+                        throw new DomainExceptionValidation("Cannot schedule date pass");
+                    }
                 }
             }
             Schedules schedules = new Schedules(request.IdBarber, request.IdClient, 
                 request.TypeOfService, request.DateSchedule, request.ValueForService,request.IsFinalized);
-           
+
+            var client = await _uof.ClientRepository.GetByIdAsync(p => p.Id == request.IdClient);
+            client.UpdateDate(dateNow);
+            client.UpdatePoints();
+             _uof.ClientRepository.Update(client);
             await _uof.SchedulesRepository.AddAsync(schedules);
             await _uof.Commit();
             return schedules;

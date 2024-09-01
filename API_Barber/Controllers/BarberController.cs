@@ -1,6 +1,7 @@
 ﻿using Barber.Application.DTOs;
 using Barber.Application.DTOs.Register;
 using Barber.Application.Interfaces;
+using Barber.Application.Services;
 using Barber.Domain.Parameters;
 using Barber.Domain.Validation;
 using Microsoft.AspNetCore.Authorization;
@@ -121,6 +122,7 @@ namespace Barber.API.Controllers
         }
         [HttpGet]
         [Route("{barberId}/indisponibleDates")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetIndisponibleDates(int barberId)
         {
             var listDateTime = await _barberService.GetIndisponibleDateAsync(barberId);
@@ -129,8 +131,35 @@ namespace Barber.API.Controllers
             {
                 return NoContent();
             }
-            return Ok("Choose dates except: " + string.Join(", ", formattedDates));
+            return Ok(formattedDates);
         }
-       
+        [HttpPut("{id:int:min(1)}")]
+        [Authorize]
+        public async Task<ActionResult> Update([FromBody] BarberUpdateDTO barberDTO, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var isSucceeded = await _barberService.UpdateAsync(barberDTO, id);
+                if (isSucceeded)
+                {
+                    return Ok("Updated!");
+                }
+                return BadRequest("Update failed. Barber not found");
+            }
+            catch (ApplicationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (DomainExceptionValidation d)
+            {
+                return BadRequest(d.Message);
+            }
+        }
+
     }
 }

@@ -12,6 +12,7 @@ namespace Barber.Application.Mappings
             CreateMap<Barber.Domain.Entities.BarberMain, BarberRegisterDTO>().ReverseMap();
             CreateMap<Barber.Domain.Entities.BarberMain, BarberRegisterDTO>().ReverseMap();
             CreateMap<BarberMain, BarberDTO>().ReverseMap();
+            CreateMap<BarberMain, BarberUpdateDTO>().ReverseMap();
             CreateMap<Schedules, SchedulesDTO>().ReverseMap();  
             CreateMap<Client, ClientDTO>().ReverseMap();    
             CreateMap<Client,ClientRegisterDTO>().ReverseMap();

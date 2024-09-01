@@ -14,6 +14,7 @@ namespace Barber.Application.Mappings
             CreateMap<BarberRegisterDTO, RegisterBarberCommand>().ReverseMap();
             CreateMap<BarberDTO, UpdateBarberCommand>().ReverseMap();   
             CreateMap<BarberDTO, RemoveBarberCommand>().ReverseMap();
+            CreateMap<BarberUpdateDTO, UpdateAsyncBarberCommand>().ReverseMap(); 
 
             CreateMap<SchedulesDTO, UpdateScheduleCommand>().ReverseMap();
             CreateMap<SchedulesDTO, UpdateValueForScheduleCommand>().ReverseMap();

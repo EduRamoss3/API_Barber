@@ -22,6 +22,11 @@ namespace Barber.Application.CQRS.Schedule.Handlers
             {
                 return null;
             }
+            foreach(var s in schedules)
+            {
+                var names = await _uof.SchedulesRepository.GetNameById(s.IdClient, s.IdBarber);
+                s.SetNames(names[2], names[1]);
+            }
             return schedules;
         }
     }

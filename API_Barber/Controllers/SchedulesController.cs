@@ -110,13 +110,9 @@ namespace Barber.API.Controllers
         }
 
         [HttpGet("client/{idClient:int:min(1)}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles ="Member")]
         public async Task<ActionResult<IEnumerable<SchedulesDTO>>> GetSchedulesByClientId(int idClient)
         {
-            if (!User.IsInRole("Admin") || !User.Identity.IsAuthenticated)
-            {
-                return Unauthorized("Unauthorized!");
-            }
             try
             {   
                 var schedules = await _scheduleService.GetByClientIdAsync(idClient);

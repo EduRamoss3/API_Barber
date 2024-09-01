@@ -21,7 +21,12 @@ namespace Barber.Application.CQRS.Schedule.Handlers
                 throw new ApplicationException("Error args is null");
             }
             var schedule = await _uof.SchedulesRepository.GetByIdDataAsync(request.Id);
-
+            if(schedule is null)
+            {
+                return null;
+            }
+            var names = await _uof.SchedulesRepository.GetNameById(schedule.IdClient, schedule.IdBarber);
+            schedule.SetNames(names[2], names[1]);
             return schedule;
            
         }

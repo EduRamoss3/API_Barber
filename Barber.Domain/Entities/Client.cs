@@ -39,6 +39,7 @@ namespace Barber.Domain.Entities
         }
         public void UpdatePoints()
         {
+            Scheduled = true;
             if(Points == 0)
             {
                 Points = 1;
@@ -48,6 +49,10 @@ namespace Barber.Domain.Entities
                 Points++;
             }
             
+        }
+        public void UpdateDate(DateTime date)
+        {
+            LastTimeHere = date;
         }
     }
 }

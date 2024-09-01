@@ -582,7 +582,10 @@
       "System.Text.Encodings.Web/4.5.0": {},
       "Barber.Domain/1.0.0": {
         "runtime": {
-          "Barber.Domain.dll": {}
+          "Barber.Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

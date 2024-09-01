@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\API_Barber"
   ],
-  "SelectedNode": "\\API_Barber.sln",
+  "SelectedNode": "\\API_Barber\\API_Barber.sln",
   "PreviewInSolutionExplorer": false
 }
