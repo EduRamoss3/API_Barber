@@ -1,4 +1,5 @@
 ﻿using Barber.Domain.Interfaces;
+using Barber.Infrastructure.Data.Context;
 using Microsoft.AspNetCore.Identity;
 
 namespace Barber.Infrastructure.Data.Identitys
@@ -6,8 +7,8 @@ namespace Barber.Infrastructure.Data.Identitys
     public class SeedRolesInitial : ISeedRolesInitial
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        public SeedRolesInitial(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public SeedRolesInitial(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -35,7 +36,7 @@ namespace Barber.Infrastructure.Data.Identitys
         {
             if (_userManager.FindByEmailAsync("admin@localhost").Result == null)
             {
-                IdentityUser user = new IdentityUser();
+                ApplicationUser user = new ApplicationUser();
                 user.UserName = "admin@localhost";
                 user.Email = "admin@localhost";
                 user.NormalizedEmail = "ADMIN@LOCALHOST";

@@ -37,7 +37,7 @@ namespace Barber.Infrastructure.IoC.DependencyInjection
             b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
 
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
            .AddEntityFrameworkStores<AppDbContext>()
           .AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(options =>
@@ -62,28 +62,34 @@ namespace Barber.Infrastructure.IoC.DependencyInjection
             services.AddMediatR(myhandlers);
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
             services.AddAutoMapper(typeof(CQRSToDTOMappingProfile));
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
-    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.Events = new JwtBearerEvents
-        {
-            OnAuthenticationFailed = context =>
+            services.AddAuthentication(options =>
             {
-                var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Task>>();
-                logger.LogError("Authentication failed.", context.Exception);
-                return Task.CompletedTask;
-            },
-            OnChallenge = context =>
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
             {
-                context.HandleResponse();
-                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                context.Response.ContentType = "application/json";
-                var result = JsonSerializer.Serialize(new { error = "Unauthorized access" });
-                return context.Response.WriteAsync(result);
-            }
-        };
-    });
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero,
+                };
+                options.Events = new JwtBearerEvents
+                {
+                    OnChallenge = context =>
+                    {
+                        context.HandleResponse();
+                        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        context.Response.ContentType = "application/json";
+                        var result = JsonSerializer.Serialize(new { error = "Unauthorized access" });
+                        return context.Response.WriteAsync(result);
+                    }
+                };
+            });
             services.ConfigureApplicationCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Igual ao tempo de expiração do token JWT

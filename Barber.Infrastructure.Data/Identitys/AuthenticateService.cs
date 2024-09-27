@@ -1,24 +1,37 @@
 ﻿using Barber.Domain.Interfaces;
 using Barber.Domain.Validation;
+using Barber.Infrastructure.Data.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-
 
 namespace Barber.Infrastructure.Data.Identitys
 {
     public class AuthenticateService : IAuthenticate
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<AuthenticateService> _logger;
 
-        public AuthenticateService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ILogger<AuthenticateService> logger)
+        public AuthenticateService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AuthenticateService> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
-        
+
+        public async Task<bool> AddRefreshToken(string email, string token, DateTime expiration)
+        {
+            var user = await _userManager.FindByEmailAsync(email);  
+            if(user is null)
+            {
+                return false;
+            }
+            user.RefreshToken = token;
+            user.RefreshTokenExpiryTime = expiration;
+            await _userManager.UpdateAsync(user);
+            return true;
+        }
+
         public async Task<Validator> Authenticate(string email, string password)
         {
             _logger.LogInformation($"Attempting to authenticate user with email '{email}'.");
@@ -52,7 +65,7 @@ namespace Barber.Infrastructure.Data.Identitys
         {
             _logger.LogInformation($"Attempting to register user with email '{email}'.");
 
-            var identityUser = new IdentityUser()
+            var identityUser = new ApplicationUser()
             {
                 UserName = email,
                 Email = email,

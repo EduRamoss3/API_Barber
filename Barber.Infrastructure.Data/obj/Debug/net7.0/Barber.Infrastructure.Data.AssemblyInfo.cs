@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Barber.Infrastructure.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bea05c7bb26d689bf94f98680566e76e8f594e86")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2d6f117db48e442b32f02ecef9382d1aa5bc3ae")]
 [assembly: System.Reflection.AssemblyProductAttribute("Barber.Infrastructure.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Barber.Infrastructure.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

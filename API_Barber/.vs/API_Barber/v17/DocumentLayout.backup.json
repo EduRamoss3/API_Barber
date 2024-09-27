@@ -1,7 +1,38 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1F27D0E6-C470-4D6D-AAB5-912AFC304206}|Barber.API.csproj|c:\\users\\eduardo\\source\\api_barber\\api_barber\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F27D0E6-C470-4D6D-AAB5-912AFC304206}|Barber.API.csproj|solutionrelative:controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F27D0E6-C470-4D6D-AAB5-912AFC304206}|Barber.API.csproj|c:\\users\\eduardo\\source\\api_barber\\api_barber\\models\\tokenviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F27D0E6-C470-4D6D-AAB5-912AFC304206}|Barber.API.csproj|solutionrelative:models\\tokenviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F27D0E6-C470-4D6D-AAB5-912AFC304206}|Barber.API.csproj|c:\\users\\eduardo\\source\\api_barber\\api_barber\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F27D0E6-C470-4D6D-AAB5-912AFC304206}|Barber.API.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF2F4ADB-D38A-48EB-B33C-EA418A12E97C}|..\\Barber.Infrastructure.Data\\Barber.Infrastructure.Data.csproj|c:\\users\\eduardo\\source\\api_barber\\barber.infrastructure.data\\identitys\\authenticateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{134803C1-409E-44D1-9A5E-20E6712B8D39}|..\\Barber.Domain\\Barber.Domain.csproj|c:\\users\\eduardo\\source\\api_barber\\barber.domain\\interfaces\\iauthenticate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF2F4ADB-D38A-48EB-B33C-EA418A12E97C}|..\\Barber.Infrastructure.Data\\Barber.Infrastructure.Data.csproj|c:\\users\\eduardo\\source\\api_barber\\barber.infrastructure.data\\identitys\\seedrolesinitial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF2F4ADB-D38A-48EB-B33C-EA418A12E97C}|..\\Barber.Infrastructure.Data\\Barber.Infrastructure.Data.csproj|c:\\users\\eduardo\\source\\api_barber\\barber.infrastructure.data\\context\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DAD306CA-C78E-4289-A525-49039E9AACE3}|..\\Barber.Infrastructure.IoC\\Barber.Infrastructure.IoC.csproj|c:\\users\\eduardo\\source\\api_barber\\barber.infrastructure.ioc\\dependencyinjection\\di.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF2F4ADB-D38A-48EB-B33C-EA418A12E97C}|..\\Barber.Infrastructure.Data\\Barber.Infrastructure.Data.csproj|c:\\users\\eduardo\\source\\api_barber\\barber.infrastructure.data\\context\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
@@ -9,7 +40,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 172,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,6 +57,119 @@
             {
               "$type": "Bookmark",
               "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IAuthenticate.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Domain\\Interfaces\\IAuthenticate.cs",
+              "RelativeDocumentMoniker": "..\\Barber.Domain\\Interfaces\\IAuthenticate.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Domain\\Interfaces\\IAuthenticate.cs",
+              "RelativeToolTip": "..\\Barber.Domain\\Interfaces\\IAuthenticate.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T22:55:37.062Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthenticateService.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Infrastructure.Data\\Identitys\\AuthenticateService.cs",
+              "RelativeDocumentMoniker": "..\\Barber.Infrastructure.Data\\Identitys\\AuthenticateService.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Infrastructure.Data\\Identitys\\AuthenticateService.cs",
+              "RelativeToolTip": "..\\Barber.Infrastructure.Data\\Identitys\\AuthenticateService.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAnwB8AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T22:54:18.707Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SeedRolesInitial.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Infrastructure.Data\\Identitys\\SeedRolesInitial.cs",
+              "RelativeDocumentMoniker": "..\\Barber.Infrastructure.Data\\Identitys\\SeedRolesInitial.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Infrastructure.Data\\Identitys\\SeedRolesInitial.cs",
+              "RelativeToolTip": "..\\Barber.Infrastructure.Data\\Identitys\\SeedRolesInitial.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAC0AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T22:52:16.444Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TokenController.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\Controllers\\TokenController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TokenController.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\Controllers\\TokenController.cs",
+              "RelativeToolTip": "Controllers\\TokenController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAEMAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T22:21:34.629Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TokenViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\Models\\TokenViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\TokenViewModel.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\Models\\TokenViewModel.cs",
+              "RelativeToolTip": "Models\\TokenViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T22:21:20.398Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\source\\API_Barber\\API_Barber\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAApwF4AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T22:20:41.126Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Infrastructure.Data\\Context\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "..\\Barber.Infrastructure.Data\\Context\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Infrastructure.Data\\Context\\AppDbContext.cs",
+              "RelativeToolTip": "..\\Barber.Infrastructure.Data\\Context\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T16:17:38.68Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Infrastructure.Data\\Context\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "..\\Barber.Infrastructure.Data\\Context\\ApplicationUser.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Infrastructure.Data\\Context\\ApplicationUser.cs",
+              "RelativeToolTip": "..\\Barber.Infrastructure.Data\\Context\\ApplicationUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T16:18:13.419Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DI.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Infrastructure.IoC\\DependencyInjection\\DI.cs",
+              "RelativeDocumentMoniker": "..\\Barber.Infrastructure.IoC\\DependencyInjection\\DI.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\source\\API_Barber\\Barber.Infrastructure.IoC\\DependencyInjection\\DI.cs",
+              "RelativeToolTip": "..\\Barber.Infrastructure.IoC\\DependencyInjection\\DI.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAcwEwAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T16:10:15.602Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             }
           ]
         },

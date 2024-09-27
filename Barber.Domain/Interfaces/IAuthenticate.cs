@@ -11,6 +11,7 @@ namespace Barber.Domain.Interfaces
     {
         Task<Validator> Authenticate(string email, string password);
         Task<Validator> RegisterUser(string email, string password);
+        Task<bool> AddRefreshToken(string email, string token, DateTime expiration);
         Task Logout();
     }
 }

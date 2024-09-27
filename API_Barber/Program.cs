@@ -21,7 +21,6 @@ builder.Services.AddControllers(options =>
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.IgnoreReadOnlyProperties = true;
-        options.JsonSerializerOptions.IgnoreNullValues = true;
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.JsonSerializerOptions.MaxDepth = 64;
