@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 
 namespace Barber.API.Controllers
@@ -60,12 +61,14 @@ namespace Barber.API.Controllers
             var result = await _authenticate.Authenticate(userInfo.Email, userInfo.Password);
             if (result.IsSucceded)
             {
-                var token = await GenerateToken(userInfo);
+                var token = await GenerateToken(userInfo.Email);
                 var refreshToken = GenerateRefreshToken();
                 _ = int.TryParse(_configuration["Jwt:RefreshTokenValidityInMinutes"], out int refreshTokenValidityInMinutes);
                 var isSuccessTokenRefresh = await _authenticate.AddRefreshToken(userInfo.Email, refreshToken, DateTime.Now.AddMinutes(refreshTokenValidityInMinutes));
 
                 token.RefreshToken = refreshToken;
+                Response.Headers.Authorization = token.Token;
+                Response.Headers.Expires = token.Expiration.ToString("dd/MM/yyyy hh:mm:ss");
                 return Ok(token);
                 
             }
@@ -74,6 +77,58 @@ namespace Barber.API.Controllers
                 ModelState.AddModelError("Error","Invalid login attempt");
                 return BadRequest(ModelState);
             }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Revoke(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                return BadRequest("Invalid username");
+            }
+            var user = await _user.FindByNameAsync(username);
+            if(user is null)
+            {
+                return BadRequest("Invalid user");
+            }
+            user.RefreshToken = null;
+            await _user.UpdateAsync(user);
+            return NoContent();
+        }
+        [HttpPost]
+        [Route("Refresh")]
+        public async Task<IActionResult> Refresh(RefreshTokenModel model)
+        {
+            if(model is null)
+            {
+                return BadRequest("Invalid client request");
+            }
+            string acessToken = model.Token ?? throw new ArgumentNullException(nameof(model));
+            string refreshToken = model.RefreshToken ?? throw new ArgumentNullException(nameof(model));
+            var principal = GetPrincipalFromExpiredToken(model.Token, _configuration);
+
+            if(principal is null)
+            {
+                return BadRequest("Invalid Acess token");
+            }
+            string userName = principal.Claims.FirstOrDefault(p => p.Type == "Name").Value;
+
+            var user = await _user.FindByNameAsync(userName);
+            if(user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+            {
+                return BadRequest("Invalid term of refresh");
+            }
+            var newAcessToken = await GenerateToken(user.UserName);
+            var newRefreshToken = GenerateRefreshToken();
+
+            user.RefreshToken = newRefreshToken;
+            await _user.UpdateAsync(user);
+
+            return new ObjectResult(new
+            {
+                acessToken = newAcessToken,
+                refreshToken = newRefreshToken
+            });
 
         }
         [HttpPost("logout")]
@@ -110,6 +165,7 @@ namespace Barber.API.Controllers
             {
                 throw new SecurityTokenException("Invalid Token");
             }
+            
             return principal;
         }
         private string GenerateRefreshToken()
@@ -122,20 +178,23 @@ namespace Barber.API.Controllers
             var refreshToken = Convert.ToBase64String(secureRandomBytes);
             return refreshToken;
         }
-        private async Task<TokenViewModel> GenerateToken(LoginModel userInfo)
+        private async Task<TokenViewModel> GenerateToken(string credentialNameOrEmail)
         {
             string role = "Member";
-            var user =  await _user.FindByEmailAsync(userInfo.Email);
+            var user =  await _user.FindByEmailAsync(credentialNameOrEmail);
             if (await _user.IsInRoleAsync(user,"Admin"))
             {
                 role = "Admin";
             }
             var claims = new[]
             {
+                new Claim("Name",user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
+                new Claim(JwtRegisteredClaimNames.Name, credentialNameOrEmail),
+                new Claim(JwtRegisteredClaimNames.Email, credentialNameOrEmail),
                 new Claim(ClaimTypes.Role, role)
             };
+           
             var privateKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
 
             var credentials = new SigningCredentials(privateKey, SecurityAlgorithms.HmacSha256);
@@ -151,6 +210,7 @@ namespace Barber.API.Controllers
                 SigningCredentials = credentials
             };
             var tokenHandler = new JwtSecurityTokenHandler();
+
             var token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
 
             return new TokenViewModel()

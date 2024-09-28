@@ -430,6 +430,22 @@
   },
   {
     "ContainingType": "Barber.API.Controllers.TokenController",
+    "Method": "Revoke",
+    "RelativePath": "api/Token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Barber.API.Controllers.TokenController",
     "Method": "Login",
     "RelativePath": "api/Token/login",
     "HttpMethod": "POST",
@@ -452,6 +468,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Barber.API.Controllers.TokenController",
+    "Method": "Refresh",
+    "RelativePath": "api/Token/Refresh",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Barber.API.Models.RefreshTokenModel",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
