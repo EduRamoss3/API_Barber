@@ -80,6 +80,8 @@ namespace Barber.API.Controllers
 
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [Route("revoke")]
         public async Task<IActionResult> Revoke(string username)
         {
             if (string.IsNullOrEmpty(username))
@@ -124,7 +126,7 @@ namespace Barber.API.Controllers
             user.RefreshToken = newRefreshToken;
             await _user.UpdateAsync(user);
 
-            return new ObjectResult(new
+            return Ok(new
             {
                 acessToken = newAcessToken,
                 refreshToken = newRefreshToken

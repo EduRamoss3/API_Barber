@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 	<SelfContained>true</SelfContained>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
