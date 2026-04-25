@@ -67,8 +67,8 @@ namespace Barber.API.Controllers
                 var isSuccessTokenRefresh = await _authenticate.AddRefreshToken(userInfo.Email, refreshToken, DateTime.Now.AddMinutes(refreshTokenValidityInMinutes));
 
                 token.RefreshToken = refreshToken;
-                Response.Headers.Authorization = token.Token;
-                Response.Headers.Expires = token.Expiration.ToString("dd/MM/yyyy hh:mm:ss");
+                Response.Headers.Authorization = token.AccessToken;
+                Response.Headers.Expires = token.AccessTokenExpiration.ToString("dd/MM/yyyy hh:mm:ss");
                 return Ok(token);
                 
             }
@@ -124,12 +124,13 @@ namespace Barber.API.Controllers
             var newRefreshToken = GenerateRefreshToken();
 
             user.RefreshToken = newRefreshToken;
+            user.RefreshTokenExpiryTime = user.RefreshTokenExpiryTime;
             await _user.UpdateAsync(user);
 
             return Ok(new
             {
                 acessToken = newAcessToken,
-                refreshToken = newRefreshToken
+                refreshToken = newRefreshToken,
             });
 
         }
@@ -217,8 +218,8 @@ namespace Barber.API.Controllers
 
             return new TokenViewModel()
             {
-                Token = tokenHandler.WriteToken(token),
-                Expiration = expiration,
+                AccessToken = tokenHandler.WriteToken(token),
+                AccessTokenExpiration = expiration,
                 Message = "Authenticated",
                 Authenticated = true,
                 Role = role,
