@@ -13,8 +13,6 @@ namespace Barber.Application.DTOs
         [StringLength(200,ErrorMessage ="Max 200 characters")]
         public string Name { get; init; }
 
-        [Required(ErrorMessage = "Scheduled  is required!")]
-        public bool Scheduled { get; init; }
         [Required]
         [EmailAddress]
         public string Email { get; init; }  
